@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        
+        /* 1 */
+        /* *{
+            margin: 0;
+            padding: 0;
+        }
+        .wrapper{
+            margin-left: 100px;
+            margin-top: 100px;
+            width: 100px;
+            height: 100px;
+            background-color: black;
+        }
+        .content{
+            margin-left: 50px;
+            margin-top: 50px; /* 只有设置它比它父亲设置的margin-top的值大时候 不但它动了 还带着它的父级一起动了 否则无动于衷  */
+            /* width: 50px;
+            height: 50px;
+            background-color: green;
+        } */
+
+
+
+
+        /* 2 */
+        /* *{
+            margin: 0;
+            padding: 0;
+        }
+        .wrapper{
+            margin-left: 100px;
+            margin-top: 100px;
+            width: 100px;
+            height: 100px;
+            background-color: black;
+            border-top: 1px solid #000;
+        }
+        .content{
+            margin-left: 50px;
+            margin-top: 150px; 
+            width: 50px;
+            height: 50px;
+            background-color: green;
+        } */
+        
+
+
+
+        /* 3 */
+        /* *{
+            margin: 0;
+            padding: 0;
+        }
+        .wrapper{
+            margin-left: 100px;
+            margin-top: 100px;
+            width: 100px;
+            height: 100px;
+            background-color: black;
+             */
+            /* overflow: hidden; */
+            /* display: inline-block; */
+            /* position: absolute; */
+            /* float: left; */
+        /* }
+        .content{
+            margin-left: 50px;
+            margin-top: 50px; 
+            width: 50px;
+            height: 50px;
+            background-color: green;
+        } */
+    
+
+
+
+        /* 4 */
+        /* .box1{
+            background-color: red;
+            margin-right: 100px;
+        }
+        .box2{
+            background-color: green;
+            margin-left: 100px;
+        }
+        .demo1{
+            background-color: red;
+            margin-bottom: 100px;
+        }
+        .demo2{
+            background-color: green;
+            margin-top: 100px;
+        } */
+
+
+
+
+        /* 5 */
+        /* .demo1{
+            background-color: red;
+            margin-bottom: 100px;
+        }
+        .wrapper{
+            overflow: hidden;
+        }
+        .demo2{
+            background-color: green;
+            margin-top: 100px;
+        } */
+
+
+
+
+        /* 6 */
+        /* .demo1{
+            background-color: red;
+            margin-bottom: 100px;
+        }
+        .wrapper{
+            overflow: hidden;
+        }
+        .demo2{
+            background-color: green;
+            margin-top: 100px;
+        } */
+
+    </style>
+</head>
+<body>
+
+
+    <!-- 1 -->
+    <!-- <div class="wrapper">
+        <div class="content"></div>
+    </div> -->
+    <!--
+         叫做垂直的方向的margin 父子元素是结合到一起的 它两会取最大的那个值 父子嵌套的元素 垂直方向的marginb 它两个基本上会粘合上一起
+             取最大的那个值 而这个现象导致一个结果就是 正常来说你父级这个元素相对于浏览器顶层进行定位就是进行margin的这个串位是不是没问题
+             那它子级是不是也一个相对于它父级这个棚往下串 跟它父级差不多一个效果 正常应该这样的 但是现在它父级相对于浏览器边框没问题 
+             它子级相对于它父级这个棚没往下串 就好像它父级那个棚没有一样了 这个效果相当于棚塌陷一样 所以叫margin塌陷
+
+        
+             怎么解决呢 
+             1. 直接加个margin-top: 1px solid #000; 这样是一种解决方法 第一点从编程手法上不太合适 不专业 但它确实能解决这个问题 
+
+
+     -->
+
+
+
+
+     <!-- 2 -->
+     <!-- <div class="wrapper">
+        <div class="content"></div>
+    </div> -->
+
+
+
+
+    <!-- 3 -->
+    <!-- 
+        bfc   block format context 这个是它的专业名词 块级格式化上下文
+
+        CSS把html里面的元素都当成一个盒子 而且它进一步的认为每一个盒子里面都有一套渲染规则 这个渲染规则是你写完这个代码 
+           它能按照你写的这个代码把你这个东西绘制出来 就是每一个盒子里面都有一套一模一样的语法规则 这个是所有盒子里面正常的规则
+
+        BFC是通过一些手段让其中的几个盒子它里面的渲染规则发生改变 正常来说每个盒子里面的渲染规则都是一定的 但是在特殊的盒子里面你可以触发BFC这个语法
+            让这个盒子所符合的语法规则和原来有点不一样 触发BFC之后 特定的盒子会遵循另一套语法规则 这个BFC和margin有什么问题呢 
+            
+            
+        如何触发一个盒子的BFC
+            1. position: absolute;
+            2. display: inline-block;
+            3. float: left/right;
+            4. overflow: hidden;    溢出盒子的部分隐藏
+
+        改变父级的渲染规则 改变之后margin塌陷的问题解决
+
+
+        这么多的方法都能解决 用哪一个  这个bug就没有办法完美的解决 只能找到一种方法来弥补一下  这些都能解决margin 但是解决问题的同时又产生新的问题
+        
+
+        overflow: hidden; 如果我里面的盒子就是想溢出一部分的 你加这个属性就不合适了 
+        position: absolute; 比如这个盒子我就想好好的摆到哪里 后面的元素罗列到它下面 但是这个你为了解决margin塌陷 你加了这个属性是不是也不合适
+        display: block; 有的时候不想变成inline-blokck 想让它独占一行
+
+        这么多的方式都能触发BFC  我们得有针对的需求 如果你用这个属性没有什么影响就用它  配合的使用 只能叫弥补 不能叫解决
+
+     -->
+    <!-- <div class="wrapper">
+        <div class="content"></div>
+    </div> -->
+
+
+
+
+    <!-- 4 -->
+    <!--
+         margin合并问题 
+         
+         区域不能共用 就好像国家不能共用一个领土范围
+
+         这个规律是 两个兄弟结构的元素它两的垂直方向的margin是合并的 
+
+         这个bug依然可以通过BFC来解决 想解决它们 必须让它们处于BFC的环境下 给它们两个加一个父级 让这个父级有BFC加持 他俩符合语法规范变了
+             把它们放到BFC的语法规则里面就解决这个问题了 
+    -->
+    <!-- <span class="box1">123</span>
+    <span class="box2">234</span>
+    <div class="demo1">1</div>
+    <div class="demo2">2</div> -->
+
+
+
+
+    <!-- 5 -->
+    <!-- <div class="demo1">1</div>
+    <div class="wrapper">
+        <div class="demo2">2</div>
+    </div> -->
+     
+
+
+
+    <!-- 6 -->
+    <!-- <div class="wrapper">
+        <div class="demo1">1</div>
+    </div>
+    <div class="wrapper">
+        <div class="demo2">2</div>
+    </div> -->
+
+
+    <script>
+    
+    
+        // margin塌陷 margin合并  两个经典的bug
+            
+        // 叫bug就是没有解决的问题  可以绕个弯弥补一下 
+
+
+        // 针对这两个bug margin塌陷这个问题从解决上来看我们是多加了CSS还是多加了HTML还是两个都多加了 margin塌陷在它父级加一个CSS就可以了 没有改HTML
+        //    但是margin合并解决的时候必须给它上面加一层html  每一个html都是每一块结构 结构你是不能随便乱加随便乱改的 你这改一个结构对其他的CSS 
+        //    对其他的JavaScript的影响是特别大的  不能因为解决一个Bug随随便便加一个没有意义的结构 这是在开发当中不允许的 不能因为改bug而加结构
+        //    那怎么办呢  这个margin合并我们不解决 直接在上面加个margin值就行 没有必要两个都加 可以通过计算的方法来弥补
+        //    
+        // margin塌陷用BFC来解决 这个margin合并的问题我们选择不解决     
+    
+
+    </script>
+    
+    
+</body>
+</html>
