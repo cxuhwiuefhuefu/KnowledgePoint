@@ -1504,3 +1504,42 @@ function TreeDepth(pRoot)
 
 
 
+40.
+第一种方法：使用js中的indexOf()和lastIndexOf(),只要两个相等，就是只出现一次的数。
+function FindNumsAppearOnce(array)
+{
+    var res = [];
+    var len = array.length;
+    for(var i = 0; i < len ;i++) {
+        if(array.indexOf(array[i]) === array.lastIndexOf(array[i])) {
+            res.push(array[i]);
+        }
+    }
+    return res;
+}
+
+
+第二种方法：使用map记录下每个数的次数，占空间。
+function FindNumsAppearOnce(array)
+{
+    var map = {};
+    var res = [];
+    var len = array.length;
+
+    for(var i = 0; i < len; i++) {
+	if(!map[array[i]]) {
+	    map[array[i]] = 1;
+	}else {
+	    map[array[i]] ++;
+	}
+    }
+
+    for(var prop in map) {
+	if(map[prop] === 1) {
+	    res.push(prop);
+	}
+    }
+
+    return res;
+}
+    
