@@ -1542,4 +1542,10 @@ function FindNumsAppearOnce(array)
 
     return res;
 }
-    
+
+第三种方法 位运算操作符？？？？
+
+
+
+
+41.
