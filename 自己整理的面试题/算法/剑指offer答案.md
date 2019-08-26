@@ -1502,50 +1502,98 @@ function TreeDepth(pRoot)
 平衡二叉树的常用算法有红黑树、AVL、Treap、伸展树、SBT等。
 
 
-
-
-40.
-第一种方法：使用js中的indexOf()和lastIndexOf(),只要两个相等，就是只出现一次的数。
-function FindNumsAppearOnce(array)
+第一种方法：
+　　正常思路，应该会获得节点的左子树和右子树的高度，然后比较高度差是否小于1。
+　　可是这样有一个问题，就是节点重复遍历了，影响效率了。
+(
+这种做法有很明显的问题，在判断上层结点的时候，会多次重复遍历下层结点，增加了不必要的开销。如果改为从下往上遍历，如果子树是平衡二叉树，则返回子树的高度；如果发现子树不是平衡二叉树，则直接停止遍历，这样至多只对每个结点访问一次)
+/* function TreeNode(x) {
+    this.val = x;
+    this.left = null;
+    this.right = null;
+} */
+function IsBalanced_Solution(pRoot)
 {
-    var res = [];
+    if(pRoot === null) {
+        return true;
+    }
+    var pLeftLen = TreeDepth(pRoot.left);
+    var pRightLen = TreeDepth(pRoot.right);
+    
+    return Math.abs(pLeftLen - pRightLen) <= 1 && IsBalanced_Solution(pRoot.left) && IsBalanced_Solution(pRoot.right);
+}
+function TreeDepth(pRoot) {
+    if(pRoot === null) {
+        return 0
+    }
+    var pLeft = TreeDepth(pRoot.left) + 1;
+    var pRight = TreeDepth(pRoot.right) + 1;
+    return Math.max(pLeft, pRight);
+}
+
+
+
+
+40. 
+第一种方法：使用js中的indexOf()和lastIndexOf(),只要两个相等，就是只出现一次的数。 function FindNumsAppearOnce(array) { 
+    var res = []; 
+    var len = array.length; 
+    for(var i = 0; i < len ;i++) { 
+        if(array.indexOf(array[i]) === array.lastIndexOf(array[i])) { res.push(array[i]); 
+        } 
+    } 
+    return res; 
+}
+
+第二种方法：使用map记录下每个数的次数，占空间。 
+function FindNumsAppearOnce(array) { 
+    var map = {}; 
+    var res = []; 
     var len = array.length;
-    for(var i = 0; i < len ;i++) {
-        if(array.indexOf(array[i]) === array.lastIndexOf(array[i])) {
-            res.push(array[i]);
+    for(var i = 0; i < len; i++) {
+        if(!map[array[i]]) {
+            map[array[i]] = 1;
+        }else {
+            map[array[i]] ++;
+        }
+    }
+    for(var prop in map) {
+        if(map[prop] === 1) {
+            res.push(prop);
         }
     }
     return res;
 }
 
 
-第二种方法：使用map记录下每个数的次数，占空间。
-function FindNumsAppearOnce(array)
-{
-    var map = {};
-    var res = [];
-    var len = array.length;
+第三种方法 位运算操作符？？？？????
 
-    for(var i = 0; i < len; i++) {
-	if(!map[array[i]]) {
-	    map[array[i]] = 1;
-	}else {
-	    map[array[i]] ++;
-	}
+
+
+41. 
+//左神的思路，双指针问题
+//当总和小于sum，大指针继续+
+//否则小指针+
+ function FindContinuousSequence(sum) {
+    var plow = 1;
+    var phigh = 2;
+    var result = [];
+    while(phigh > plow) {
+        var cur = (phigh + plow) / 2 * (phigh - plow + 1);    
+        if(cur === sum) {
+            var arr = [];
+            for(var i = plow; i <= phigh; i++) {
+                arr.push(i);
+            }
+            result.push(arr);
+            plow ++;
+        }else if(cur < sum) {
+            phigh ++;
+        }else if(cur > sum) {
+            plow ++;
+        }
     }
-
-    for(var prop in map) {
-	if(map[prop] === 1) {
-	    res.push(prop);
-	}
-    }
-
-    return res;
+    return result;
 }
 
-第三种方法 位运算操作符？？？？
 
-
-
-
-41.
