@@ -1597,3 +1597,57 @@ function FindNumsAppearOnce(array) {
 }
 
 
+
+
+42. 
+function FindNumbersWithSum(array, sum)
+{
+    if(array === null || array.length < 2) {
+        return [];
+    }
+    var plow = 0,
+        phigh = array.length - 1,
+        list = [];
+    
+    while(plow < phigh) {
+        var current = array[plow] + array[phigh];
+        if(current === sum) {
+            list.push(array[plow]);
+            list.push(array[phigh]);
+            break;
+        }else if(current < sum) {
+            plow ++;
+        }else {
+            phigh --;
+        }
+    }
+    return list;
+}
+
+
+
+
+43. 
+function LeftRotateString(str, n)
+{
+    if(str === null || str.length === 0) {
+        return "";
+    }
+     var arr = str.split("");
+     var spliceArr = arr.splice(0, n);
+     return (arr.concat(spliceArr)).join("");
+}
+
+
+function LeftRotateString(str, n)
+{
+    if(str === null || str.length === 0) {
+        return "";
+    }
+    var len = str.length;
+    var temp = str.slice(0, n);
+    return str.substr(n, len).concat(temp);
+    
+}
+
+
