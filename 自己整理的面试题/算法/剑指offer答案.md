@@ -1647,7 +1647,22 @@ function LeftRotateString(str, n)
     var len = str.length;
     var temp = str.slice(0, n);
     return str.substr(n, len).concat(temp);
-    
+
 }
 
 
+
+
+44. 
+function ReverseSentence(str) {
+    return str.split(' ').reverse('').join(' ');
+}
+
+
+
+
+45. 
+function IsContinuous(numbers)
+{
+    // write code here
+}
