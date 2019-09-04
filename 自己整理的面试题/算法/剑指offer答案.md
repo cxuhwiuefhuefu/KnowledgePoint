@@ -1662,7 +1662,87 @@ function ReverseSentence(str) {
 
 
 45. 
-function IsContinuous(numbers)
-{
-    // write code here
+// 1. 排序
+// 2. 计算0的个数
+// 3. 将除0之外剩余部分取出
+// 4. 如果存在相等元素，不是顺子
+// 5. 如果缺失元素个数大于0的个数，不是顺子，反之就是顺子
+//       （也就是计算最大元素和最小元素的差，需要小于0的个数加1，再加上非0元素的个数） 
+function IsContinuous(numbers) {
+
+    // 次数
+    var times = [-5];
+    var len = numbers.length;
+    var max = -1,
+        min = 13;
+
+    // 如果数字长度不为5 则返回false    
+    if(len !== 5) {
+        return false;
+    }    
+
+    // 占位次数    
+    for(var i = 0; i < 13; i++) {
+        times.push(0);
+    }
+
+    for(var i = 0; i < len; i++) {
+        
+        times[numbers[i]] ++;
+        
+        // 如果出现重复的数字或者0的出现次数大于5 则返回false  -5 -4 -3 -2 -1 0
+        if(times[numbers[i]] > 1) {
+            return false;
+        }
+        
+        // 如果数字为0 则跳出此次循环
+        if(numbers[i] === 0) {
+            continue;
+        }
+
+        if(numbers[i] > max) {
+            max = numbers[i];
+        }
+        if(numbers[i] < min) {
+            min = numbers[i];
+        }
+    }
+
+    return max - min < 5;
 }
+
+
+
+
+46. 
+?? 还没理解
+function LastRemaining_Solution(n, m)
+{
+    // 没有小朋友返回-1
+    if(n === 0) {
+        return -1;
+    }
+
+    // 只有一个人就返回0
+    if(n === 1) {
+        return 0;
+    }
+
+    return (LastRemaining_Solution(n-1, m) + m) % n;
+}
+
+
+
+
+47. 
+function Sum_Solution(n)
+{
+    return n + (n < 1 ? 0 : Sum_Solution(n - 1));
+}  
+
+
+function Sum_Solution(n)
+{
+    var res = n;
+    return n > 0 && n + Sum_Solution(n - 1);
+}  
