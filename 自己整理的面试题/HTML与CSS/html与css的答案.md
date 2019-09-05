@@ -92,9 +92,9 @@ inherit: 继承父级的定位
 1)    (二)(1)
 2)    (三)(2)
 3)
-display: block 块级元素: 沾满整行 不可以改变宽高 <div/><form/><address/><hr/><h1/>
-display: inline 行级(内联)元素: 不沾满整行 不可以改变宽高<a/><br/><em/><span/>
-display: inline-block 行级(内联)块元素: 可以改变宽高 也不独站整行<img/><input/>
+display: block 块级元素: 占满整行 可以改变宽高 <div/><form/><address/><hr/><h1/>
+display: inline 行级(内联)元素: 不占满整行 不可以改变宽高<a/><br/><em/><span/>
+display: inline-block 行级(内联)块元素: 可以改变宽高 也不独占整行<img/><input/>
 
 
 
