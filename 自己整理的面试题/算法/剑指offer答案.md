@@ -1746,3 +1746,32 @@ function Sum_Solution(n)
     var res = n;
     return n > 0 && n + Sum_Solution(n - 1);
 }  
+
+
+
+
+48. 
+?? 还没理解
+function Add(num1, num2)
+{
+    do{
+        var sum, carry;
+        sum = num1 ^ num2;
+        carry = (num1 & num2) << 1;
+        num1 = sum;
+        num2 = carry;
+    }while(num2 !== 0)
+    return num1;
+}
+
+
+
+
+49. 
+<!-- 要求不能使用字符串转换整数的库函数 -->
+function StrToInt(str)
+{
+    return Number(str) ? parseInt(str) : 0;
+}
+
+3个解法<!-- 正则 -->
