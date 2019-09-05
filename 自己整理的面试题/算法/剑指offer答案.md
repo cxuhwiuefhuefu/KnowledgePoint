@@ -1774,4 +1774,21 @@ function StrToInt(str)
     return Number(str) ? parseInt(str) : 0;
 }
 
-3个解法<!-- 正则 -->
+
+<!-- 正则 -->
+ function StrToInt(str)
+{
+    if(str === '-0') {
+        return 0;
+    }
+    var reg = /^[\+\-]?[0-9]+$/;
+    if(!reg.test(str)) {
+        return 0;
+    }else {
+        if(str.charAt(0) === '+') {
+            return str.substring(1);
+        }else {
+            return str;
+        }
+    }
+}
