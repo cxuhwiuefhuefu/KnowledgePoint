@@ -1792,3 +1792,56 @@ function StrToInt(str)
         }
     }
 }
+
+
+
+
+50.
+function duplicate(numbers, duplication)
+{
+    if(numbers.length === 1 || numbers == null) {
+        return false;
+    }
+    var len = numbers.length;
+    var obj = {}
+    for(var i = 0; i < len; i++) {
+        if(!obj[numbers[i]]) {
+            obj[numbers[i]] = 1;
+        }else {
+            duplication[0] = numbers[i];
+            return true;
+        }
+    }
+    return false;
+}
+
+
+
+
+51. 
+不理解????
+function multiply(array) {
+    if(array.length === 0) {
+        return false;
+    }
+    var list = [];
+    for(var i = 0; i < array.length; i++) {
+        list[i] = 1;
+        for(var j = 0; j < array.length; j++) {
+            if(i != j) {
+                list[i] = list[i] * array[j];
+            }    
+        }
+    }
+    return list;
+}   
+
+
+
+
+52. 
+
+
+
+
+53. 
