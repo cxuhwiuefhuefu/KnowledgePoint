@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // == 和 === 区别
+        // 对于 如果对比双方的类型不一样的话 就会进行类型转换 
+        // 1. 首先会判断两者类型是否相同 相同的话就是比较大小
+        // 2. 类型不相同的话 那么就会进行类型转换
+        // 3. 判断两者类型是否为string和number 是的话把字符串转换为number
+        // 4. 判断其中一方是否为boolean 是的话就会把boolean转换为number
+        // 5. 判断其中一方是否是object 且另一方是string number symbol 是的话就会把object转换成原始类型再进行判断
+        // console.log(1 == '1');
+        // console.log('1' == true);
+        // console.log('1' == {name: 'yck'});
+        // console.log(undefined == null);
+        // console.log([] == ![]); // 隐式转换 Number([]) == Number(Boolean([]))
+
+
+
+
+        // 闭包: 函数A内部有一个函数B 函数B可以访问到函数A中的变量 那么函数B就是闭包
+        // 闭包存在的意义就是让我们可以间接的访问函数内部的变量
+        // function A() {
+        //     let a = 1;
+        //     window.B = function() {
+        //         console.log(a);
+        //     }
+        // }
+        // A();
+        // B();
+
+
+        // for(var i = 1; i <= 5; i++) {
+        //     setTimeout(function() {
+        //         console.log(i);
+        //     }, i * 1000);
+        // }
+
+        // 每个函数对应一个闭包
+        // for(var i = 1; i <= 5; i++) {
+        //     (function(j) {
+        //         setTimeout(function timer() {
+        //             console.log(j);
+        //         }, j * 1000)
+        //     })(i)
+        // }
+
+        // setTimout第三个参数 传给执行函数的其他参数      缺点：IE9 及其更早版本不支持该参数
+        // for(var i = 1; i <= 5; i++) {
+        //     setTimeout(function(j   ) {
+        //         console.log(j);
+        //     }, i * 1000, i)
+        // }
+
+        // for(let i = 1; i <= 5; i++) {
+        //     setTimeout(function() {
+        //         console.log(i);
+        //     }, i* 1000);
+        // }
+
+
+
+
+        // 深浅拷贝
+        // let a = {
+        //     age: 1
+        // }
+        // let b = a;
+        // a.age = 2;
+        // console.log(b.age);
+
+        
+        // 浅拷贝  缺点：只解决第一层的问题 如果接下去的值还有对象的话 就要使用深度拷贝 
+        // 1. Object.assign不是用来深度拷贝的 只会拷贝所有的属性值到新的对象中 如果属性值是对象 拷贝到是地址 所以不是深度拷贝
+        // let a = {
+        //     age: 1
+        // }
+        // let b = Object.assign({}, a);
+        // a.age = 2;
+        // console.log(b.age);
+
+        // 2. ...拓展运算符 
+        // let a = {
+        //     age: 1
+        // }
+        // let b = {...a};
+        // a.age = 2;
+        // console.log(b.age);
+
+
+        // 深拷贝
+        // 1. JSON.parse(JSON.stringify(object))
+        //    缺点： 会忽略undefined
+        //           会忽略symbol
+        //           不能序列化函数
+        //           不能解决循环引用的对象
+        //           在遇到函数 undefined symbol  该对象不能正常序列化
+        // let a = {
+        //     age: 1,
+        //     jobs: {
+        //         first: 'FE'
+        //     }
+        // }
+        // let b = JSON.parse(JSON.stringify(a));
+        // a.jobs.first = 'native';
+        // console.log(b.jobs.first);
+
+        // let obj = {
+        //     a: 1,
+        //     b: {
+        //         c: 2,
+        //         d: 3
+        //     }
+        // }
+        // obj.c = obj.b;
+        // obj.e = obj.a;
+        // obj.b.c =  obj.c;
+        // obj.b.d = obj.b;
+        // obj.b.e = obj.b.c;
+        // let newObj = JSON.parse(JSON.stringify(obj));
+        // console.log(newObj);
+
+        // let a = {
+        //     age: undefined,
+        //     sex: Symbol('male'),
+        //     jobs: function() {},
+        //     name: 'yck'
+        // }
+        // let b = JSON.parse(JSON.stringify(a));
+        // console.log(b);
+
+
+        function structualClone(obj) {
+            return new Promise(resolve => {
+                const {port1, port2} = new MessageChannel();
+                port2.onmessage = ev => (ev.data);
+                port1.postMessage(obj);
+            })
+        }
+        var obj = {
+            a: 1,
+            b: {
+                c: 2
+            }
+        }
+        obj.b.c = obj.b;
+        const test = async() => {
+            const clone = await structualClone(obj);
+            console.log(clone);
+        }
+        test();
+
+
+        function deepClone(obj) {
+            function isObject(o) {
+                return (typeof o === 'object' || typeof 0 === 'function') && o != null; 
+            }
+
+            if(!isObjet(obj)) {
+                throw new Error('非对象');
+            }
+
+            let isArray = Array.isArray(obj);
+            let newObj = isArray ? [...obj] : {...obj};
+            Reflect.ownKeys(newObj).forEach(key => {
+                newObj[key] = isObject(obj(obj[key]))
+            })
+        }
+
+
+    
+    
+    
+    </script>
+
+</body>
+</html>

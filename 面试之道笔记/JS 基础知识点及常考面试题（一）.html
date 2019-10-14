@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+        
+        // 原始值：boolean number string undefined symbol null 
+        // 对象类型：object 
+
+
+
+
+        // function test(person) {
+        //     person.age = 26;
+        //     person = {
+        //         name: 'yyy',
+        //         age: 30
+        //     }
+        //     return person;
+        // }
+        // const p1 = {
+        //     name: 'yck',
+        //     age: 25
+        // }
+        // const p2 = test(p1);
+        // console.log(p1); // {name: 'yck', age: 26}
+        // console.log(p2); // {name: 'yyy', age: 30}
+
+
+
+
+        //  typeof返回的值 缺点：不能正确判断对象的正确类型 可以使用instanceof来判断
+        //      number string boolean undefined symbol
+        //      object function
+        //      null => object 
+        
+
+        // A instanceof B =》 A的原型链上有没有B的原型 缺点：不能判断原始值
+        // const Person = function() {};
+        // const p1 = new Person();
+        // console.log(p1 instanceof Person) // true
+        // var str = 'hello word';
+        // console.log(str instanceof String) // false 
+        // var str1 = new String('hello word');
+        // console.log(str1 instanceof String); // true
+
+
+        // class PrimitiveString {
+        //         static [Symbol.hasInstance](x) {  // Symbol.hasInstaceof是自定义instanceof行为的东西
+        //             return typeof x === 'string';
+        //         }
+        // }
+        // console.log('hello word' instanceof PrimitiveString);
+
+
+
+        // 类型转换：隐式类型转换 显示类型转换
+        // 原始值之间的转换：
+        // number           => 布尔值           除了0 -0 NaN 都为true
+        // string           => 布尔值           除了空串都为true
+        // undefiend丶null  => 布尔值           false
+        // 引用类型          => 布尔值          true
+            
+        // number           => 字符串           5=>"5"
+        // Boolean丶函数丶Symbol => 字符串      ???????????????
+        // 数组             => 字符串           [1, 2] => "1, 2"
+        // 对象             => 字符串           "[object Object]"
+  
+        // string           => 数字             '1'=> 1     'a'=> NaN
+        // 数组             => 数字             空数组为0 存在一个元素且为数字转数字 其他情况为NaN
+        // null             => 数字             0
+        // 除了数组的引用类型 => 数字             NaN
+        // Symbol           => 数字             抛错  
+
+
+        // 对象转原始类型
+        // 对象在转换类型得时候 会调用内置的[[ToPrimitive]]函数 对于该函数来说 算法逻辑一般如下
+        // 1. 如果已经是原始类型了 那就不需要转换了
+        // 2. 调用x.valueOf() 如果转换为基础类型 就返回转换的值
+        // 3. 调用x.toString() 如果转换为基础类型 就返回转换的值
+        // 4. 如果都没有转为原始类型 就会报错 
+        // 5. 重写Symbol.toPrimitive 该方法在转原始类型调用优先级最高
+        // let a = {
+        //     valueOf() {
+        //             return 0;
+        //     },
+        //     toString() {
+        //         return '1';
+        //     },
+        //     [Symbol.toPrimitive]() {
+        //         return 2;   
+        //     }
+        // }    
+        // console.log(1 + a);     
+
+    
+
+            
+        // 四则运算
+        // 加法运算
+        // 运算中其中一方为字符串 那么就会把另一方转换为字符串
+        // 如果一方不是字符串或者数字 那么会将为转换为数字或者字符串
+        // console.log(1 + '1')
+        // console.log(true + true);
+        // console.log(4 + [1, 2, 3]);
+        // console.log('a' + + 'b');
+
+
+        // 除了加法的运算符 只要其中一方是数字 那么另一方也会转换为数字
+        // console.log(4 * '3');
+        // console.log(4 * []);
+        // console.log(4 * [1, 2]);
+
+
+        // 比较运算符
+        // 1. 如果是对象 就通过toPrimitive转换对象
+        // 2. 如果是字符串 就通过unicode字符索引来比较  
+        // let a = {
+        //     valueOf() {
+        //         return 0;
+        //     },
+        //     toString() {
+        //         return '1';
+        //     }
+        // } 
+        // console.log(a > -1);
+
+
+
+
+        // this   
+        // 1. 直接调用函数 指向window
+        // 2. 谁调用的函数 谁就是this
+        // 3. new 
+        // 4. 箭头函数是没有this的 this指向最外层非箭头函数 对箭头函数使用bind无效 
+        // function foo() {
+        //     console.log(this.a);
+        // }
+        // var a = 1;
+        // foo(); // 1
+        // const obj = {
+        //     a: 2,
+        //     foo: foo
+        // };
+        // obj.foo(); // 2
+        // const c = new foo(); // undefined
+        
+
+        // function a() {
+        //     return () => {
+        //         return () => {
+        //             console.log(this);
+        //         }
+        //     }
+        // }
+        // console.log(a()()());
+
+
+        // 不管给函数bind几次 fn中的this永远由第一次bind决定      
+        // let a = {};
+        // let fn = function() {
+        //     console.log(this);
+        // };
+        // fn.bind().bind(a)();
+
+        // let fn2 = function fn1() {
+        //     return function() {
+        //         return fn.apply();
+        //     }.apply(a);
+        // }
+        // fn2();
+
+
+        // let a = {
+        //     name: 'yck'
+        // };
+        // function foo() {
+        //     console.log(this.name);
+        // }
+        // foo.bind(a)();
+
+
+        // this优先级 
+        //      普通函数： 1. new 2. bind 3. obj.foo() 4. foo();
+        //      箭头函数的this一旦被绑定 就不会再被任何方式所改变
+
+    
+    
+    
+    
+    </script>
+    
+</body>
+</html>
