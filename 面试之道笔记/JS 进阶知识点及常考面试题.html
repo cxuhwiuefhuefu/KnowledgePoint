@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        
+        // 手写call apply bind函数
+        // call实现
+        // Function.prototype.myCall = function(context) {
+        //     if(typeof this != 'fcuntion') {
+        //         throw new TypeError('Error');
+        //     }
+        //     context = context || window;
+        //     context.fn = this;
+        //     const args = [...arguments].slice(1);
+        //     const result = context.fn(...args);
+        //     delete context.fn;
+        //     return result;
+        // }
+
+
+        // apply实现
+        // Function.prototype.myApply = function(context) {
+        //     if(typeof this != 'function') {
+        //         throw TypeError('error');
+        //     }
+        //     context = context || window;
+        //     context.fn = this;
+        //     let result;
+        //     // 处理参数和call有区别
+        //     if(arguments[1]) {
+        //         result = context.fn(...arguments[1]);
+        //     }else {
+        //         result = context.fn();
+        //     }
+        //     delete context.fn;
+        //     return result;
+        // }
+
+
+        // bind？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？
+        // Function.prototype.bind = function() {
+
+        // }
+
+
+
+
+        // new
+        // 1. 新生成了一个对象
+        // 2. 绑定到原型 
+        // 3. 绑定this
+        // 4. 返回新对象 
+        
+        
+        // new实现
+        // function create() {
+        //     let obj = {};
+        //     let Con = [].shift.call(arguments);
+        //     obj.__proto__ = Con.prototype;
+        //     let result = Con.apply(obj, arguments);
+        //     return result instanceof Object ? result : obj;
+        // }
+
+
+        // 对于对象来说 其实都是通过new产生的 无论是functon Foo() {} 还是let a = {b: 1}
+        // 对于创建一个对象来说 更推荐使用字面量的方式创建对象 无论是性能还是可读性 
+        //     因为你使用new oObject() 的方式创建对象需要通过作用域一层层找到Objet
+        //     但是你使用字面量的方式就没有这个问题了
+        // Function Foo() {}
+        // function就是个语法糖
+        // 内部等同于new Function();
+        // let a = {b: 1};
+        // 这个字面量内部也是使用了new Object();
+
+
+
+
+        // instanceof原理
+        // 能正确判断对象的类型 因为内部机制是通过判断对象的原型链中是不是找到类型得prototype
+        // function myInstanceof(left, right) {
+        //     let prototype = right.prototype;
+        //     left = left.__proto__;
+        //     while(true) {
+        //         if(left == null || left === undefined) {
+        //             return false;
+        //         }
+        //         if(prototype === left) {
+        //             return true;
+        //         }else {
+        //             left = left.__proto__;
+        //         }
+        //     }
+        // }
+
+
+
+
+        // 0.1+0.2    ??？？？？？？？？？？？？？
+        // console.log(parseFloat(0.1 + 0.2).toFixed(10));
+
+
+    
+
+        // 垃圾回收机制
+        // V8实现了准确式GC GC算法采用了分代式垃圾回收机制 因此 V8将内存分为新生代和老生代两部分
+
+        // 新生代算法 
+        // 新生代中的对象一般存活时间较短 使用Scavenge GC 算法
+        // 在新生代空间中 内存空间分为两部分 分别为From空间和To空间 在这两个空间中 必定有一个空间是使用的
+        //     另一个空间是空闲的 新分配的对象会被放入From空间中 当From空间被占满的时 新生代GC就会启动了
+        //     算法就检查From空间中存活的对象复制到To空间中 如果有失活的对象就会销毁 当赋值完成后将From
+        //     空间和To空间互换 这样GC就结束了
+
+
+        // 老生代算法
+        // 1. 老生代中的对象一般存活时间较长且数量也多 使用了两个算法 分别是标记清除算法和标记压缩算法 
+        // 2. 什么情况下对象会存在老生代空间中？ 
+        //      a. 新生代中的对象是否已经经历过一次Scavenge算法 如果经历过的话  会将对象从新生代空间移到老生代空间中
+        //      b. To空间的对象占比大小超过25% 在这种情况下 为了不影响内存分配 会将对象从新生代空间转移到老生代空间
+        // 3. 老生代空间比较复杂
+        // 4. 在老生代中 以下情况会先启动标记清除算法 
+        //      某一个空间没有分块的时候
+        //      空间中被对象超过一定限制
+        //      空间不能保证新生代中的对象移动到老生代中
+        // 5. 在这个阶段中 会遍历堆中所有的对象 如何比较活的对象  在标记完成后 销毁所有没有被标记的对象
+        //        在标记大型堆内存时 可能需要几百毫秒才能完成一次标记 这就会导致一些性能上的问题 
+        //        为了解决这个问题 2011年 V8从stop-the-word标记切换成增量标志 在增量标记期间
+        //        GC将标记工作分解成更小的模块 可以让JS应用逻辑在模块间隙执行一会 从而不至于让应用出现停顿情况
+        //        但在2018年 GC又有一个重大突破 这项技术名为并发标记 该技术可以让GC扫描和标记对象时
+        //        同时允许JS运行 
+        // 6. 清除对象后造成对内存出现碎片的情况 当碎片超过一定限制的时候会启动压缩算法 在压缩的过程中
+        //        将活的对象像一端移动 直到所有对象都移动完成如何清理不需要的内存
+    
+    
+    
+    
+    
+    </script>
+
+</body>
+</html>

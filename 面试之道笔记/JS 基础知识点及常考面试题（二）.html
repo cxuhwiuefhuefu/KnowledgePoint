@@ -138,42 +138,66 @@
         // console.log(b);
 
 
-        function structualClone(obj) {
-            return new Promise(resolve => {
-                const {port1, port2} = new MessageChannel();
-                port2.onmessage = ev => (ev.data);
-                port1.postMessage(obj);
-            })
-        }
-        var obj = {
-            a: 1,
-            b: {
-                c: 2
-            }
-        }
-        obj.b.c = obj.b;
-        const test = async() => {
-            const clone = await structualClone(obj);
-            console.log(clone);
-        }
-        test();
+        // 2. MessageChannel
+        // function structualClone(obj) {
+        //     return new Promise(resolve => {
+        //         const {port1, port2} = new MessageChannel();
+        //         port2.onmessage = ev => (ev.data);
+        //         port1.postMessage(obj);
+        //     })
+        // }
+        // var obj = {
+        //     a: 1,
+        //     b: {
+        //         c: 2
+        //     }
+        // }
+        // obj.b.c = obj.b;
+        // const test = async() => {
+        //     const clone = await structualClone(obj);
+        //     console.log(clone);
+        // }
+        // test();
 
 
-        function deepClone(obj) {
-            function isObject(o) {
-                return (typeof o === 'object' || typeof 0 === 'function') && o != null; 
-            }
+        //3. ？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？ 
+        // function deepClone(obj) {
+        //     function isObject(o) {
+        //         return (typeof o === 'object' || typeof o === 'function') && o != null; 
+        //     }
 
-            if(!isObjet(obj)) {
-                throw new Error('非对象');
-            }
+        //     if(!isObject(obj)) {
+        //         throw new Error('非对象');
+        //     }
 
-            let isArray = Array.isArray(obj);
-            let newObj = isArray ? [...obj] : {...obj};
-            Reflect.ownKeys(newObj).forEach(key => {
-                newObj[key] = isObject(obj(obj[key]))
-            })
-        }
+        //     let isArray = Array.isArray(obj);
+        //     let newObj = isArray ? [...obj] : {...obj};
+        //     Reflect.ownKeys(newObj).forEach(key => {
+        //         newObj[key] = isObject(obj[key]) ? deepClone(obj[key]) : obj[key];
+        //     })
+
+        //     return newObj;
+        // }
+        // let obj = {
+        //     a: [1, 2, 3],
+        //     b: {
+        //         c: 2,
+        //         d: 3
+        //     }
+        // }
+
+        // let newObj  = deepClone(obj);
+        // newObj.b.c = 1;
+        // console.log(obj.b.c);
+
+
+
+
+        // 原型链
+        // 1. Object是所有对象的爸爸 所有对象都可以通过__proto__ 找到它
+        // 2. Function是所有函数的爸爸 所有函数都可以通过__proto__找到它
+        // 3. 函数的prototype也是一个对象 
+        // 4. 对象的__proto__属性指向原型 __proto__将对象和原型连接起来组成了原型链
 
 
     

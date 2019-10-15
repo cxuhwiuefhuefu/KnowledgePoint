@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+        
+        // JS是单线程
+        // 线程和进程的区别
+        // 1. 线程和进程本质上都是CPU工作时间片的一个描述
+        // 2. 进程描述的是CPU在运行指令及加载和保存上下文所需的时间 放在应用上来说就代表了一个程序 
+        //    线程是进程中更小的单位 描述了执行一段指令所需的时间
+        // 3. 把这些概念拿到浏览器上来说 当你打开一个Tab页时 其实就是创建了一个进程 一个进程可以有多个线程
+        //     比如渲染线程 JS引擎线程 HTTP请求线程等等 当你发起一个请求时 其实就是创建了一个线程 当请求结束后
+        //     该线程可能就会被销毁
+        // 4. 上文说到了JS引擎线程和渲染线程 在JS运行的时候可能会阻止UI渲染 这说明了两个线程是互斥的
+        //     这其中的原因是因为JS可以修改DOM 如果JS执行的时候UI线程还在工作 就可能导致不能安全的渲染UI
+        //     这其实也是一个单线程的好处 得益于JS是单线程运行的 可以达到节省内存 节省上下文切换时间 
+        //     没有锁的问题的好处 当然前面两点在服务端中更容易体现 对于锁的问题 形象来说就是当我读取一个数字15的时候
+        //     同时又两个操作对数字进行加减 这时候结果就会出现了错误 解决这个问题只需在读取的时候加锁 
+        //     直到读取完毕都不能进行写入操作
+        
+
+
+
+        // 执行栈
+        // 1. 可以把执行栈认为是一个存储函数调用的栈结构 遵循先进后出的原则
+        // function foo() {
+        //     var a = 5;
+        //     return a * b + 10;
+        // }
+        // function bar(x) {
+        //     var y = 3;
+        //     return foo(x * y);
+        // }
+        // console.log(bar(6));
+
+
+        // function foo() {
+        //     throw new Error('error');
+        // }
+        // function bar() {
+        //     foo();
+        // }
+        // bar();
+
+
+        // 2. 当我们使用递归的时候 因为栈可存放的函数是有限制的 一旦存放了过多的函数且没有释放的话 就会出现爆栈的问题 
+        // function bar() {
+        //     bar();
+        // }
+        // bar();
+
+
+
+
+        // Event Loop
+        // 1. 首先执行同步代码 这属于宏任务
+        // 2. 当执行完同步任务 执行栈为空 查询是否有异步代码需要执行 
+        // 3. 执行完所有微任务 
+        // 4. 当执行完所有微任务 如有必要会渲染页面 
+        // 5. 如何开始下一轮的Event Loop 执行宏任务中的异步代码 也就是setTimout中的回调函数
+        // 微任务 process.nextTick promise mutationObserver
+        // 宏任务 script  setTimout setInterval setImmediate I/O UI rendering
+        console.log('script start'); // 1     
+        async function async1() {
+            await async2();
+            console.log('async1 end'); // 5    5
+        }    
+        async function async2() {
+            console.log('async2 end'); // 4    2
+        }
+        async1();
+        setTimeout(function(){
+            console.log('setTimeout'); // 6    8
+        }, 0);
+        new Promise(resolve => {
+            console.log('promise'); // 2       3
+            resolve();
+        })
+        .then(function() {
+            console.log('promise1'); // 7      6
+        })
+        .then(function() {
+            console.log('promise2'); // 8      7
+        })
+        console.log('script end'); // 3         4
+        // //////???????????????????????????????????????????????????????????
+    
+    
+    
+    
+    
+    
+    
+    
+    </script>
+    
+</body>
+</html>

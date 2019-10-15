@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        
+        // 并发和并行区别
+        // 1. 并发是宏观概念 我分别有任务A和任务B 在一段时间内通过任务间的切换完成了这两个任务 这种情况就可以称之为并发
+        // 2. 并发是微观任务 假设CPU中存在两个核心 那么我就可以同时完成A丶B 同时完成多个任务的情况就可以称之为并行
+
+
+
+
+        // 回调函数
+        // 回调函数会出现回调地狱 假设多个请求存在依赖的话
+        // 缺点：不利于阅读和维护 
+        // 回调地狱的根本问题
+        //      1. 嵌套函数存在耦合性 一旦有所改动 就会牵一发而动全身
+        //      2. 嵌套函数多一多 就很难处理问题
+        //      3. 不能使用tru catch捕获错误
+        //      4. 不能直接return 
+        // ajax(url, () => {
+        //     // 处理逻辑
+        //     ajax(url1, () => {
+        //         // 处理逻辑
+        //         ajax(url2, () => {
+        //             // 处理逻辑
+        //         })
+        //     }) 
+        // })
+
+
+
+
+        // Genarator
+        // function *foo(x) {
+        //     let y = 2 * (yield (x + 1));
+        //     let z = yield(y / 3);
+        //     return (x + y + z);
+        // }
+        // let it = foo(5);
+        // console.log(it.next());    // {done: false, value: 6}
+        // console.log(it.next(12));  // {done: false, value: 8} // 传值上一次yeild的返回值
+        // console.log(it.next(13));  // {done: false, value: 41} 
+
+        // // 一般会配合co函数库去使用
+        // // 可以使用Generator函数解决地狱的问题
+        // function  *fetch(params) {
+        //     yield ajax(url, () => {});
+        //     yield ajax(url1, () => {});
+        //     yield ajax(url2, () => {});
+        // }
+        // let it = fetch();
+        // let result = it.next();
+        // let result2 = it.next();
+        // let result3 = it.next();
+
+
+
+
+        // Promise
+        // 1. Promise翻译过来就是承诺的意思 这个承诺会在未来有一个确切的答复 并且承诺有三种状态
+        //      等待中(pending)
+        //      完成了(resolved)
+        //      拒绝了(rejected)
+        // 2. 这个承诺一旦等待状态变成其他状态就永远不能更改状态 也就是说一旦状态变成resolved后 就不能再次改变
+        // new Promise((resolve, reject) => {
+        //     resolve('success');
+        //     // 无效
+        //     reject('reject');
+        // })
+
+
+        // 3. 当我们构造Promise的时候 构造函数内部的代码是立即执行的 
+        // new Promise((resolve, reject) => {
+        //     console.log('new Promsie');
+        //     resolve('success');
+        // })
+        // console.log('finish');
+       
+        // 4. Promise实现了链式调用 也就是说每次调用then之后返回的都是有个Promsie 并且是一个全新的Promsie 原因是因为状态不可变
+        //        如果你在then中使用了return 那么return的值会被Promsie.resolve()包装
+        // Promise.resolve(1)
+        //     .then(res => {
+        //         console.log(res);
+        //         return 2;
+        //     })
+        //     .then(res => {
+        //         console.log(res);
+        //     })
+
+        // 5. Promise也很好解决了回调地狱的问题 
+        // ajax(url)
+        //   .then(res => {
+        //       console.log(res);
+        //       return ajax(url1);
+        //   })
+        //   .then((res) => {
+        //       console.log(res);
+        //       return ajax(url2);
+        //   })
+        //   .then(res => console.log(res));
+
+        // 缺点: 1. 无法取消Promise 
+        //       2. 错误需要通过回调函数捕获
+
+
+
+
+        // async及await
+        // 一个函数加上async 该函数会返回一个promise
+        // async function test() {
+        //     return '1';
+        // }
+        // console.log(test());
+        // async就是将函数返回值使用Promise.resolve()包裹一下 
+        
+        // 和then中处理返回值一样 并且await只能配套async使用
+        // async function test() {
+        //     let value = await sleep();
+        // }
+
+        // 优点： 
+        //      1. async和await可以是异步解决的终极方案 
+        //      2. 相比直接使用Promsie来说 优势在于处理then的调用链 能够更清晰准确的写出代码 毕竟写一大堆then也很恶心
+        //      3. 并且能优雅解决回调地狱的问题 
+        // 缺点: 
+        //      1. await将异步代码改造成同步代码 如果多个异步代码没有依赖性却使用了await会导致性能上的降低
+        // async function test() {
+        //     // 以下代码没有依赖性的话 可以使用Promsie.all的方式
+        //     // 如果有依赖性的话 其实就是解决回调地狱的例子
+        //     await fetch(url);
+        //     await fetch(url1);
+        //     await fetch(url2);
+        // }
+
+    
+        // await内部实现了generator 其实await就是generator加上Promsie的语法糖 且内部实现了自动执行generator
+        // generator会保留堆栈中的东西 
+        // let a = 0;
+        // let b = async() => {
+        //     a = a + await 10;
+        //     console.log('2', a);
+        // }
+        // b();
+        // a++;
+        // console.log('1', a);
+    
+
+
+
+        // 定时器
+        // 1. 前面的代码影响了性能 就会导致setTimout不会按期执行 当然
+        // 2. 通常来说不建议使用 setInterval。第一，它和 setTimeout 一样，不能保证在预期的时间执行任务。第二，它存在执行累积的问题，请看以下伪代码
+        // function demo() {
+        //     setInterval(function() {
+        //         console.log(2);
+        //     }, 1000);
+        //     sleep();
+        // }
+        // demo(); 
+        // 3. 以上代码在浏览器中 如果定时器执行过程中出现了耗时操作 多个回调函数会在耗时结束以后同时执行 这样可能会代理性能上的问题
+
+        
+        // requestAnimationFrame自带函数节流功能 基本可以保证在16.6毫秒内只执行一次(不掉帧的情况下)
+        //    并且该函数的延迟效果是精确的 没有其他定时器不准的问题
+        // function setInterval(callback, interval) {
+        // let timer
+        // const now = Date.now
+        // let startTime = now()
+        // let endTime = startTime
+        // const loop = () => {
+        //     timer = window.requestAnimationFrame(loop)
+        //     endTime = now()
+        //     if (endTime - startTime >= interval) {
+        //     startTime = endTime = now()
+        //     callback(timer)
+        //     }
+        // }
+        //     timer = window.requestAnimationFrame(loop)
+        //     return timer
+        // }
+        // let a = 0
+        // setInterval(timer => {
+        //     console.log(1)
+        //     a++
+        //     if (a === 3) cancelAnimationFrame(timer)
+        // }, 1000)
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    </script>
+
+</body>
+</html>
