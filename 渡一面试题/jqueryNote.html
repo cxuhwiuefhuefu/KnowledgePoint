@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+封装一个自己的jquery：
+    (function () {
+
+        cQuery = function () {
+            return new cQuery.prototype.xxx();
+        }
+
+        cQuery.prototype = {
+            xxx : function () {}
+        }
+   window.$ = window.cQuery = cQuery;这行语句不能放第一行，因为一开始cQuery是undefined
+
+        var xxx = cQuery.prototype.xxx;
+        var cQuery;
+        xxx.prototype = cQuery.prototype;
+    }())
+
+
+
+
+
+
+<!--整个JQuery是一个立即执行函数  跟以前版本不同的是兼容其他版本的JQuery
+     重要的：$()       extend()
+        .css()
+        sizzle()
+        ajax();
+        下面的用得少   涉及到模式
+        callback()  队列
+        promise() 延迟  延迟对象
+        deffered()
+  
+
+
+        以前的window是可以赋值的,全局的情况下  this一定是指向window的，-->
+    
+        // (function (global, factory) {
+        //     if () {
+
+        //     } else {
+        //         factory(global, noGlobal);
+        //     }
+        // } (typeof window !== "undefined" ? : window : this, function (window, noGlobal) {
+
+        // }))
+
+        // $(): 什么是jquery对象，它是怎么生成对象？
+        // $ = ?
+        // if (!noGlobal) {
+        //     window.jQuery = window.$ = jQuery;
+        //     在window上有一个属性jQuery，把接口放到全局，
+        // }
+
+        // $()调用init构造方法-->$() --> init(),而init这个构造函数是定义在$的原型上的
+        // $本来就是一个函数，函数就会有原型，最后又将init的prototype指向了$的prototype
+        // 这就使得init它New出来的对象可以使用$原型上定义的方法
+
+
+        jQuery = function (select, context) {
+            return new jQuery.fn.init(selector, context);
+        }
+
+        在8000多行那里：
+            1.$('#id') $('.class') $('.class', 'ul') $('li', 'ul') $('<div></div>')
+            2.$('<li>1</li><li>2</li><li>3</li>') $('<div>demo')
+            $(DOMElement)
+            $(function () {})
+            4.$(jQueryObj)--> $($('div'))
+        
+
+            创建一个标签的时候，如果后面跟着json格式的数据，json里的属性就会变成div上的特性
+           3. $('<div></div>', {html: 123, tittle: 234})--><div tittle="234">123</div>
+
+
+           //rquickExpr = /^$/以什么开头以什么结尾这样可以限制字符串的长度
+                    rquickExpr = /^()$/第几个括号代表第几个正则子表达式
+                    /^(?:     \s*(<[\w\W]+>)[^>]      |       #([\w-]*))$/
+                            \s*只要有空格就行0-n                这个匹配'#demo' '#demo-abc'
+                            (<[\w\W]+>):\w\W代表全集 1-n个，
+                            即匹配的是'<jfkdsljfio>jfsjk',
+                            除了'<jfkdsljfio>jfsjk>'这个   <>后面可以跟任意除了‘>’它的字符
+                            这里是匹配'<div>demo'  这里会把demo忽略掉  直接生成div
+                            ？：忽略此表达式   所以这里的第一个子表达式不是大的括号的内容
+                            而是(<[\w\W]+>)[^>]
+
+        $(null) $(undefined) $("")
+        init = jQuery.fn.init = function (select, context, root) {
+            //这里有一大堆if-else用来选择$执行（执行或创建）的是什么
+            if (!selector) {
+                //如果是空的   就返回空数组
+                return this;
+            }
+            //rootjQuery = jQuery(document)
+            root = root || rootjQuery;
+            if (是否是字符串) {
+                //1、2、3、都是字符串类型
+
+                if ('<div/>') {
+                    //'<div/>'判断是不是创建标签
+                    match = [null, '<div><div/>', null]
+                    match = [null, '<li>1</li><li>2</li><li>3</li>', null]
+                } else () {
+                    match = rquickExpr.exec(selector);
+                    // exec返回类数组  0位存的是匹配的整体结果  之后的，这里是用
+                    // index来存匹配到的子表达式的开头位置在整体匹配结果的
+                    // 哪个位置
+
+                  1. 如果匹配的是'<div>demo'  则
+                    match = null;
+                    match = ['<div>demo', '<div>', null]
+                  2.如果是'#demo'
+                  则match = ['#demo', null, 'demo']
+                }
+
+                if (match && (match[1] || !context)) {
+                    //这里匹配的是干净的id   或创建形式的'<div>' || '<div></div>'
+                    //match除了id的情况  第[1]位都有值  有id就不用上下文 因为id是唯一标识
+                    //不用通过上下文查找
+                    if (match[1]) {
+                        //非id情况
+                        context = context instanceof jQuery ? context[0] : context;
+                        //上面这个语句是判断$('<li>', document)
+                        //由于jq里面也有自己的ducument  所以这里需要区分
+                        //能调用creatElement的是document
+                        jQuery.merge()
+                        $.parseHTML --> return arr  类数组  每一位都是原生dom
+                        会把每一字符串元素节 点当做dom解析   
+
+                        注意   这里写script标签的时候要在'/'前面加转义字符  不然parseHTML会把它当做上面的那个标签的闭合
+                        var str = '<li>1</li><li>2</li><li>3</li><script><\/script>'
+                        $.parsrHTML(strm, document, true);
+                        true这个参数是为了让script标签能作用上
+                        
+                        当前的document
+                        因为有可能有几个页面  也就是有几个document 
+                        如iframe下有window   window下有document 
+                        则可以这样写$.parsrHTML(strm, iframe[0].document);
+
+
+
+                        if (rsinggleTag.test([match[1]]) && jQuery.isPlainObject(context))
+                        判断是不是单标签                      判断是不是对象字面量  JQuery的静态方法  看context是不是json形式
+
+                        //('<div></div>', {html: 123, tittle: 234})
+                    } else {
+                        //id情况
+                    }
+                } else if () {
+
+                } else {
+
+                }
+
+
+
+
+
+
+
+
+
+            } else if (判断是否是domElement)  {
+                
+            } else if (是否是function) {
+
+            }
+            if (判断是不是里面又放了JQuery对象)
+
+
+        }
+
+        
+        加入现在页面里有单个li:
+
+        $('li').css('background-color', 'red')
+        // 相当于var obj = this = {}
+        于是：
+        this = {
+            "0":{DOMElement li},
+            "1":{DOMElement li},
+            "2":{DOMElement li},
+            "length" : 3
+        }
+        到这里会进行一个循环   遍历类数组的元素  挨个加颜色
+        在执行循环的时候是这样的：
+        for (var i = 0; i < this.length; i ++) {
+            //类数组的遍历的时候  可以用对对象的obj[属性名]
+            this[i].style.backgroundColor = 'red';
+        }
+        所以$('li').get(0) --> $('li')[0]
+
+
+        正则表达式匹配创建标签   id  
+
+        // $() =>  return new jjQuery.prototype.init(selector, context);
+        // 返回新的对象，这个对象上有很多方法可以调用
+
+        // init = jQuery.prototype.init = function (select, context, root) {
+        //     //...
+        // }
+
+        // 共享原型 使得  init构造出来的对象能调用它上面的方法
+        // init.prototype = jQuery.prototype
+
+        // jQuery.fn = jQuery.prototype
+
+
+        // 最后返回的是jQuery
+
+        // jquery压缩的时候单词会被压缩替换    所以JQuery有很多关键字需要被替换
+        // 就有了var document = window.document
+
+        (function (window) {         
+            cQuery = function () {
+                return new cQuery.prototype.xxx();
+            }
+           
+            cQuery.prototype = {
+                xxx : function () {},
+                abc : function () {
+                    alert('a');
+                }
+            }
+            var xxx = cQuery.prototype.xxx;
+            var cQuery;
+           // 因为cQuery 是个函数，也就是引用值（这些变量都指向同一个地址），所以连续赋值是可以的，
+            window.$ = window.cQuery = cQuery;
+            
+            
+            xxx.prototype = cQuery.prototype;
+
+        } (window));
+
+
+        juqery的support方法和浏览器嗅探差不多   用userAgent判断浏览器版本号  
+        navigator上有个嗅探，可以根据他判断浏览器是哪个版本
+
+        $().abc()
+
+        console.log($);
+
+        get: function (num) {
+            return num != null ? 
+            // this是jQuery对象
+            (num < 0 ? this[num + this.length] : this[num]) :
+            slice call(this);
+        }
+
+
+
+
+       
+       
+   
+
+
+
+
+
+
+            在搜关键字   ：  匹配关键字   然后拿到后台匹配
+
+    jQuery是一个非常优秀的js库
+    89千行的代码  重在封装思想  使用方法会用就可以现查现用
+
+    zepto从jQuery演变过来的
+
+
+    jQuery和zepto事件处理不同   zepto用touch    布局不一样  不能定宽  因为分辨率和宽度
+    不同
+
+    jquery的插件有很多
+
+    API:
+
+
+    //参数写selector   和css选择器一样
+    $()
+
+    jquery精髓   链式调用
+
+    如何实现链式调用   （核心是jq的prototype = xxx.prototype）
+    利用sizzle匹配dom元素   变成一个对象  对象才能调用方法
+
+    jQuery.prototype.init = function () {
+        this = {};
+        //sizzle匹配js原生dom
+
+        //然后用merge  把对象和dom拼到一起   变成类数组
+    }
+
+    var $Li = document.getElementById('li');
+
+    1.$()-->css  selector
+    2.$($Li)  --> 原生dom
+    3.$(null/undefinded)
+    4.$(selector, context)  如$('li', 'ul')找ul下的li
+    5.$($())   方jq对象
+    6.$(function () {})  这个是在模拟DocumentLoaded：dom刚加载完成就会触发（图片资源等可能还没下载）
+
+    7.$(document).ready()  这时promise()上的方法
+
+
+    容错处理也做的很好
+
+    jq特有选择器：
+    $('li:odd')奇数选择器
+    $('li:even')奇数选择器
+    $('li:first')
+    $('li:last')奇数选择器
+    $('li:eq(1)')选择第几个就选第几个
+    $('li').eq(1)    也行
+    get(2)和eq(2)也是获取dom  get 会把选中的元素编程原生的dom　
+    
+    过滤方法：
+        // 1.fiter()  过滤   filter
+    
+        用法一：$('li').filter('.active')   选中除了.active的Li
+        用法二： $('li').filter(function () {
+            //返回true的都保留  false的则过滤掉
+            return true;
+            //保留索引为3的倍数的li
+            return index % 3 === 0;
+        }).css('background','red')
+        　　
+
+    //has():
+    $('li').has('ul').css('background', 'black')  选中有ul的li
+
+    //is
+    判断选择的dom是不是你想要的dom
+
+    $('li').is(function () {
+        //这里的this是当前执行到的li   判断当前li下有没有ul
+        return $('ul', this)
+    })
+
+    $('ul', this)   this是当前的执行上下文
+
+
+    //find()  向下查找
+    $('ul').find('li').find('ul').css('....')
+
+
+    //原生innerHTML
+    var $Ul = document.getElementsByTagName('ul')[0];
+    $Ul.innerHTML = 'lalal'/'<div></div>'
+
+    //jq html():
+    选中只能选一个  赋值赋一组
+
+    $('innerUl').find('li').html(function (index) {
+        //函数里返回什么   li 就添加什么
+        return index + 'cst';
+    })
+
+
+    attr()函数主要依赖的是Element对象的getAtrribute()  和setAtrribute()两个方法
+
+    1.prop()函数主要依赖的是JS中原生的对象属性获取和设置的方法  ： 添加的属性是元素的特性时
+    才会映射到dom上
+
+    2.setAtrribute()  则添加什么属性都映射到dom上
+
+    属性和特性的区别：特性能映射到dom上
+
+
+        jq认为：attribute的checked、select、disabled就表示该属性初始状态的值
+        property的checked、selected、disable才表示改属性实时状态值（值为true或undefined）
+
+
+
+    </script>
+
+
+
+
+</body>
+</html>

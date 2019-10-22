@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+
+<script>
+"背景图片"
+图片 首先运用canvas的方式 将图片通过drawimage的方法画到canvas上，然后运用canvas的一个方法 getimagedata 获取图片每一个像素点的 rgba的像素 就是
+获取data里面rgba的数据 在网上查到高斯模糊的算法 就是好像对data里的rgba的数据进行数学方式的处理 处理之后将data输出 canvas的 putImageData()
+将图像数据放回画布 重新放进canvas里 然后利用canvas的todataurl方法转化成base的方式 就是这个编码的格式 来当作他背景图片的src 
+"移动端的兼容"
+html文件里用了meta标签 <meta name="viewport" content="width=device-width initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+背景图片考虑到不同手机的分辨率 不定宽  用 "background-size：cover; "尽可能把容器覆盖上
+"页面的结构"
+就是分成了两个模块，采用模块的方式写的，页面主要分为两个大的部分 一个是音频管理对象 用来管理播放器本身的一些功能就比如 播放 暂停 上一首 下一首点赞
+另一个就是控制对象 controlmanager 控制对象主要是针对用户来控制播放器的一些功能和方法
+//音频管理对象
+    整体就是在这之前我们将歌曲的列表还有歌曲的信息 歌曲的图片 歌曲的播放时长 作者 专辑信息之类的利用json的形式封装到后台 进行模拟后台的数据
+    用了ajax的方式进行获取 利用回调函数来处理以及渲染页面
+    首先的话我们定义一个构造函数 我们在data上定义了一些信息 像播放列表的索引之类的 播放列表的长度 设置一些属性  比如自动播放 autoplay
+     这是audio标签上的一些方法定义到他的this上 然后我们在音频管理对象的原型上定义了一些方法比如说像播放上一首播放下一首切换歌曲的一些方法
+     还有点击指定的歌曲播放到指定的一首歌 获取当前的歌曲信息 还有就是给audio对象绑定的一些事件 比如像audio对象上的ended事件就是当一首歌曲结束直接
+     播放下一首 还有的就是onloadedmetadata 这个在移动端点击了播放按钮才能触发 然后就是一些播放函数暂停函数 获取当前播放百分比 获取当前播放的时间
+     获取当前百分比的主要是用于设置播放进度条的时候 (一会再说) 這就是我们主要的音频管理对象 然后我们在ajax的回调函数里通过new操作符 来生成我们
+     音频管理对象的一个实例 然后来进行一些操作
+//控制管理对象 
+    控制管理对象的话就是说我们用来管理用户的一些操作 首先我们用一个立即执行函数的方式通过闭包来返回一个接口
+    最开始在控制对象里获取一些dom节点 比如我们页面上的一些按钮 点赞的功能或者其他的
+    然后我们绑定一些点击事件 就是操作的话肯定会点击一些按钮 比如我们的上一首 下一首 绑定一些点击事件让他播放或者暂停 还有 我们的格式化时间
+    我们的进度条会有左右 播放到哪里 会有显示到哪里的时间 右边是歌曲的一个总时长 对这两边的显示我们写了一个方法 然后就是渲染图片的方法 将
+    背景图片添加到里面 还有就是点赞 会将心形变成红色这样的一些功能
+    还有就是设置我们的进度条 设置我们的拖拽进度条 进度条这块感觉有点难  整体就是我们设成了两层 下边一层是大的条状的div 然后我们上边又写了一层
+    用定位写在上边写到一个细一点的div  最开始用css3的translateX全部-100% 全部给他隐藏到左边 然后通过我们移动端的touch事件 就是用touch start
+    touchend touchmove 因为我们每touch一下会产生一个事件对象 他里面有那个changetouch列表 它里面保存了我们手指的信息 我们可以取到它里面的pageX
+    利用他的坐标除以我们底层的宽度来获取这个百分比 然后我们不断地通过这个百分比来确定我们拖动的位置到哪里 然后我们不断的拖 拖 拖 这样就实现了一个拖拽
+    的功能然后上边有一个小圆点  小圆点是特别小的一个圆点 点的话不太好点 我们在后边选了一个大的span作为背景就是拖动的时候拖动上边的这个块给他设置成透明
+    这样好拖一点  然后我们怎么让进度条进行自动播放呢 我们之前写了一个方法就是获取当前播放的百分比 当前播放的百分比我们用了一个动画的效果就是用resquest
+    animationframe  我们首先就是写了一个相当于frame的运动函数 在这里面我们每次都获取当前的额百分比 然后利用这个百分比每次我们都渲染当前的播放时间
+    通过这个百分比每次都进行进度条的渲染 也是用了translateX的方法每次让他自动的往前动 就是我们用了request animation frame和一个运动函数不断地进行循环调用
+    达到这样的效果 产生的一个动画的效果 然后我们在控制对象上只返回了一个init一个函数的一个接口 就是在这个init 函数里面调用一些方法 比如渲染页面 添加点击事件
+    还有就是设置进度条的一些事件 通过这一个返回函数里边就可以达到这些效果 然后我们在全局的作用域上绑定了一个 相当于重新渲染页面的一个事件 这个事件里边
+    我们的回掉函数重新的渲染页面 重新的设置页面重新设置我们的进度条因为我们点击上一首下一首或者切换歌曲的时候 就是不同的歌曲必须要渲染不同的页面
+    所以我们将这个绑定到了全局的作用域上 就是为了在另一个模块里边用trigger的方法来触发我们的这个自定义事件 比如说我们点击上一首下一首 这里都是音频管理对象
+    上的一些方法 然后每次点击的话我们用trigger的方法来触发我们的自定义事件 然后又写了一个播放列表的功能  点击之后可以实现播放歌曲的功能 点击播放列表可以弹出来
+    一个列表就是可以播放指定的歌曲 点击之后用了css3的transition 功能 改变translateY 让他有个动画的效果让他弹出 点击关闭按钮让他缓慢的关闭这样一个功能   
+
+    大概就是这样   自己写成的一个构造函数  也请教了学长学姐   
+
+ 
+控制和执行分开   在原型链上编程 符合面向对象的思想 在程序设计过程中提高重用，是如何设计出一个容易维护，扩展性好的东西
+先定义一个AudioManager构造函数，参数为要传入的数据，再
+在原型上写各种方法
+
+setAudio获取当钱前歌曲信息
+playIndex播放指定的歌
+bindAudioEvent给audio对象绑定事件，ended 当一首歌结束，直接放下一首，loadedmetadata 事件在手机上只有点击了播放按钮才触发
+playNext播放下一首
+playPrev播放上一首
+playIndex播放指定
+setAudio首先获取到当前歌曲信息
+play播放函数
+pause暂停函数
+getCurInfo获取当前歌曲信息
+
+getPlayRatio获取当前播放百分比
+	
+
+用立即执行函数来写controlmanger，用来响应用户的操作，然后修改audioManager
+
+添加事件，绑定点击事件，暂停播放前进后退格式化时间，参数为各首歌时间，渲染页面
+设置歌曲信息、设置图片和模糊背景、设置当前歌曲时间、渲染like按钮  切换歌曲会改
+变点赞样式，设置进度条让他自己动、设置拖拽事件
+
+通过ajax取数据
+
+先定义一个audio管理对象，加入方法
+
+进度条分两层
+
+组件化：
+把歌曲的索引和点赞设为状态，组件分歌曲信息图片什么的，播放条，底下控制部分算一个，通过
+在祖先组件中传入的函数，把索引和点赞的状态传回给祖先组件，祖先组件在数据中加个是否播放
+的状态，通过筛选把当前播放的歌曲信息传给歌曲信息和播放条的组件。
+
+
+//H5音乐播放器：
+          配置环境：               
+               1.安装node环境&npm
+               2.安装fis3 npm install fis3 -g
+               3.配置文件
+               4.启动服务器 fis3 server start --root ./output
+               5.发布fis3 release -d ./output -w
+          安装插件
+               npm install fis-parser-utc -g
+               npm install fis-parser-node-sass -g
+               npm install fis3-postprocessor-autoprefixer -g //帮我们将标准的css语法扩展出兼容性写法
+          webpack，fis3，gulp，grunt：搭建前端构建流程
+提纲：
+var dataUrl = '/data/data.json'
+var audioManager;
+var $scope = $(document.body);
+var AudioManager = function(dataList){
+     定义了数据索引，数据长度，audio对象，设置了preload属性(下载完是否自动播放) 以及duration(总时长)和autoplay(自动播放)
+     执行了 setAudio和 bindAudioEvent()
+}
+AudioManager.prototype = {
+     playNext();// index++ index=len时候index归0 结束时调用setAudio()  playPrev();// index-- index=-1时候 index归len-1 结束时 setAudio()
+     playIndex(index);//播放指定歌曲 把index赋值给他 并调用setAudio()     
+     setAudio();//获取歌曲data，并赋值src和duration，最后$scope.trigger('changeAudio')
+     bindAudioEvent();//绑定end事件 结束后调用playNext()和changeListPlaying() 绑定loadmetadata事件 下载结束后autoplay是true自动播放
+     play();//播放 audio.play()  pause();//暂停 audio.pause()  getCurInfo();//歌曲信息 return dataList(index)  getPlayRatio(ratio);//播放百分比current/duration
+     jumpToPlay(ratio);//从当前时间播放,time = ratio*duration,currentTime = time play();
+     changeListPlaying(index);//改变列表显示的当前正在播放音乐，找到li中class含playing兄弟节点removeClass，并把当前的index的节点addClass
+}
+var controlManager  = (function(){
+给下面的按钮添加各种点击事件
+     function addClickEvent(){     点赞之后会发送数据到服务器，这里就存到js文件的变量里
+     暂停(hasClass = playing，AudioManager.pause()，播放(class不是playing，play()+setProcess设置进度条位置)，
+     上一首（playPrev() ），下一首（playNext() ），点赞（addClass（'disable'））
+     }
+controlManager初始函数
+     init = function(){
+          renderInfo(); //渲染页面
+          addClickEvent(); //绑定各种点击事件
+          addProcessEvent();//添加进度条拖拽事件
+          $scope.on('changeAudio', function () {renderInfo();setProcess(); //设置进度条位置 });
+     }
+渲染页面
+     function renderInfo(){
+          首先用getCurInfo获取歌曲数据放入curData变量
+          定义了setImage方法：on('load')时候触发$songImg.attr('src', src)； blurImg(this, $('.content-wrap'));
+          设置歌曲信息：html(infoTmpl(curData))；这里面infoTmpl= __inline('../tmpl/info.tmpl') 把图片转变为base64 方便请求
+          设置图片和模糊背景：setImage(curData.image);
+          设置歌曲总长：text(formatTime(audioManager.duration))
+          渲染like按钮：add/removeClass（'disable'）
+     }
+格式化时间
+     function formatTime(){} 纯数字计算 minute<10 设置成'0'+minute second同理 最后return
+设置播放条进度
+     setProcess() 里面首先获取当前播放比例(getPlayRatio)和播放时间(getCurrentTime)和偏移量并且渲染时间$timeCur.text(time);
+     if偏移量小于0，transform：translateX(偏移量) requestAnimationFrame(frame) else transform：'translateX(0)'cancleAnimationFrame(frameID)
+设置拖拽事件
+     addProcessEvent() 触发touchstart时候cancelAnimationFrame()  touchmove计算长度 可见长度clientX-offsetX, 计算偏移量 时间渲染 最后加css样式
+     transfrom：'translateX(偏移量)' return false 阻止默认事件 touchend jumpToPlay（ratio）跳转 addClass（'playing'） setProcess();
+}());
+通过ajax获取数据
+var success = function(d){
+          audioManager = new AudioManager(d);  controlManager.init(); 初始化audioManager
+}
+function getData (url, cb){
+          $ajax({
+               url : url,
+               type : 'GET',
+               success : cb,
+               error:function(){alert('deal wrong')}
+          })
+}
+getData(dataUrl , success);
+          
+    
+    
+</script>  
+
+</body>
+</html>

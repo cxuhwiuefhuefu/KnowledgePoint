@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="node">111111</div>
+
+
+    <script>
+        
+        // 事件机制
+        // 事件触发有三个阶段 （先捕获会冒泡）
+        // 1. window往事件触发处传播 遇到注册的捕获事件会触发
+        // 2. 传播到事件触发时触发注册的事件
+        // 3. 从事件触发处往window传播 遇到注册的冒泡事件会触发 
+
+
+        // 事件触发一般来说会按上面的顺序进行 但是也有特例 如果给一个body中的子节点同时注册冒泡和捕获事件 事件触发会按照注册的顺序执行
+        // node.addEventListener('click', event => {
+        //     console.log('冒泡');
+        // }, false);
+        // node.addEventListener('click', event => {
+        //     console.log('捕获');
+        // }, true);
+
+
+        // 一般来说 如果我们只希望事件只触发在目标上 这个时候可以使用stopPropagation来阻止事件的进一步传播 
+        //     通常我们认为stopPropagation用来阻止事件冒泡的 其实该函数也可以阻止捕获事件 ???????????????????????/
+        //     stopImmediatePropagation同样也能实现阻止事件 但是还能阻止该事件目标执行别的注册事件?????????????????
+        // var body = document.getElementsByTagName('body')[0];
+        // body.addEventListener('click', event => {
+        //     console.log('11111111');
+        // })
+        // node.addEventListener('click', event => {
+        //     event => {
+        //         event.stopImmediatePropagation();
+        //         console.log('冒泡');
+        //     }
+        // }, true);
+        // node.addEventListener('click', event => {
+        //     console.log('捕获');
+        // }, true)
+
+
+        // 事件代理  
+        // 使用场景: 如果一个节点中的子节点是动态生成的 那么子节点需要注册事件的话应该注册在父节点上
+        //  事件代理的方式相较于直接给目标注册事件来说 有以下优点
+        //      1. 节省内存
+        //      2. 不需要给子节点注销事件
+        //     <ul id="ul">
+        //         <li>1</li>
+        //         <li>2</li>
+        //         <li>3</li>
+        //         <li>4</li>
+        //         <li>5</li>
+        //    </ul>
+        //     let ul = document.querySelector('#ul');
+        //     ul.addEventListener('click', (event) => {
+        //         console.log(event.target);
+        //     });
+
+
+
+
+        // 跨域
+        // 因为浏览器出于安全考虑 有同源策略 也就是说 如果协议丶域名和端口有一个不同就是跨域 Ajax请求会失败
+        // 那么是出于什么安全考虑才会引入这种机制呢 其实主要是用来防止CSRF攻击 简单来说 CSRF攻击是利用用户的登录态发起恶意请求
+        // 也就是说 在没有同源策略的情况下 A网站可以被任意其他来源的的Ajax访问到内容 如果你当前A网站还存在登录态
+        //     那么对方就可以通过Ajax获得你的任意信息 当然跨域并不能完全阻止CSRF
+
+        
+        // 然后我们来考虑一个问题 请求跨域了 那么请求到底发出去没有? 
+        // 请求必然是发出去了 但是浏览器拦截了响应 你可能会疑惑明明通过表单的方式跨域发起跨域请求 为什么Ajax就不会 因为归根结底
+        //     跨域是为了阻止用户读取到另一个域名下的内容 Ajax可以获取响应 浏览器认为这不安全 所以拦截了响应 但是表单并不会获取新的内容
+        //     那么可以发起跨域请求 同时也说明了跨域并不能完全阻止CSRF 因为请求毕竟是发出去了 
+
+
+        // JSONP
+        // 原理是利用<script>标签没有跨域限制的漏洞 通过<script>标签指向一个需要访问的地址并提供一个回调函数来接收数据当需要通讯时
+        // <script src="http://domain/api?param1=a&param2=b&callback=jsonp" />
+        //    function jsonp(data) {
+        //        console.log(data);
+        //    }
+        //  
+        // jsonp使用简单且兼容性不错 但是只限于get请求
+        // 在开发中可能会遇到多个JSONP请求的回调函数名是相同的 这时候就需要自己封装一个JSONP
+        // function jsonp(url, jsonpCallback, success) {
+        //    let script = document.createElement('script');
+        //    script.src = url;
+        //    script.async = true;
+        //    script.type = 'text/javascript';
+        //    window[jsonpCallback] = function(data) {
+        //        success && success(data);
+        //    }
+        //    document.body.appendChild(script);
+        // }
+        // jsonp('http://xxx', 'callback', function(value) {
+        //     console.log(value);
+        // }) 
+
+
+        // CSRS 
+        // CORS需要浏览器和后端同时支持 IE8和IE9需要通过XDomainRequest来实现     
+        // 浏览器会自动进行CORS通信 实现CORS通信的关键的是后端 只要后端实现了CORS 就实现了跨域
+        // 服务器端设置Access-Control-Allow-Origin就可以开启CORS 该属性表示哪些域名可以访问资源 
+        //     如果设置通配符则表示所有网站都可以访问
+        // 简单请求
+        // 1. GET HEAD POST
+        // 2. Content-Type的值仅限下列之一
+        //    text/plain multipart/from-data application/x-www-form-urlencoded
+        // 3. 请求中的任意XMLHttpRequestUpload对象均没有任何注册事件监听 
+        // 4. XMLHttpRequestUpload对象可以使用XMLHttpRequest.upload属性访问
+        // 复杂请求
+        // 1. 对于复杂请求 首先会发起一个预检请求 该请求方法是option 通过该请求来知道服务端是允许跨域请求
+        // 对于预检请求来说 如果你使用Node来设置CORS的话 可能会遇到过这么一个坑
+        // 以下以express框架举例
+        // app.use((req, res, next) => {
+        //     res.header('Access-Control-Allow-Origin', '*');
+        //     res.header('Access-Control-Allow-Origin', 'PUT', 'GET', 'DELETE', 'OPTION');
+        //     res.header(
+        //         'Access-Control-Allow-Headers',
+        //         'Origin, X-Request-Width, '
+        //     )
+        //     next();
+        // }) 
+        // 该请求会验证你的Authorization字段 没有的就会报错
+        // 当前端发起了复杂请求后 你会发现就算你代码是正确的 返回的结果也永远是报错的 因为预检请求也会进入回调中 也会触发next方法 
+        //     因为预检请求并不包含Authorization字段 所以服务端会报错
+        // 想检查这个问题很简单 只需要在回调中过滤option方法即可 
+        // res.statusCode = 204;
+        // res.setHeader('Content-Length', '0');
+        // res.end();
+
+
+        // document.domain
+        // 该方式只能用于二级域名相同的情况下 比如a.test.com 和b.test.com适用于该方式
+        // 只需要给页面添加document.domain = 'test.html' 该二级域名都相同就可以实现跨域
+
+
+        // postMessage
+        // 这种方式通常用于获取嵌入页面中的第三方的页面数据 一个页面发送消息 另一个页面判断来源并接受消息
+        // window.parent.postMessage('message', 'http://test.com');
+        // var mc = new MessageChannel();
+        // mc.addEventListener('message', event => {
+        //     var orign = event.origin || event.originEvent.origin;
+        //     if(origin === 'http://test.com') {
+        //         console.log('通过验证');
+        //     }
+        // })
+
+
+
+
+        // 存储
+        // cookie localStorage sessionStorag indexDB区别
+        // 特性          cookie                                  localStorage            sessionStorage    indexDB
+        // 数据生命周期   一般由服务器生成 可以设置过期时间          除非被清理 否则一直存在   页面关闭就清理     除非被清理 否则一直存在
+        // 数据存储大小   4K                                      5M                      5M                无限
+        // 与服务端通信   每次都会携带在header中 对于请求性能的影响  不参与                   不参与            不参与
+
+        // cookie已经不建议用于存储 如果没有大量数据存储需求的话 可以使用localStorage和sesseionStorage   
+        //    对于不怎么改变的数据尽量使用localStorage存储 否则使用sessionStorage存储
+        // 对于cookie来说 我们还需要注意安全性
+        // 属性值 作用
+        // value 如果用于保存用户登录态 应该将该值加密 不能使用明文的用户标识
+        // http-only 不能通过JS访问cookie 减少XSS攻击
+        // secure 只能在协议为HTTPS的请求中携带
+        // same-site 规定浏览器不能在跨域中携带Cookie 减少CSRF攻击
+        
+
+        // Service Worker 是运行在浏览器背后的独立线程 一般可以用来实现缓存功能 使用Service Worker的话 传输协议必须为HTTPS
+        //    因为Service Worker中涉及请求拦截 所以必须使用HTTPS协议保障安全
+        // Service Worker实现缓存功能的一般分为三步 首先需要先注册Service Worker 然后监听到install事件以后可以缓存需要的文件 
+        //    那么在下次用户访问的时候就可以通过拦截请求的方式查询是否存在缓存 存在缓存的话就可以直接读取缓存文件 否则就去请求数据
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </script>
+    
+</body>
+</html>

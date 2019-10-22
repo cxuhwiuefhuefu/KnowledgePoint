@@ -1,0 +1,21 @@
+git从远端仓库获取和存放数据
+git pull    
+git push
+
+git add  从工作区推到缓存区   
+git commit  从缓存区推到仓库  形成一个快照
+
+每次提交都会分配一个ID  根据ID回滚
+
+git add .  把工作区的所有文件都推到缓存区
+
+小公司  为了保证我们拿到的远程master是最新的   需要在merge到本地dev之前  加一步： 把远程仓库拉出来     再merge到远程master
+
+大公司: 为了保证我们拿到的远程master是最新的   需要在merge到本地dev之前  加一步： 把远程仓库拉出来     再merge远程自己的远程分支   
+（修改之后可以@某人  给他留言什么的）  最后由项目主管人merge到主分支
+
+用github搭建自己的网页：写代码想推倒github服务器  让
+别人可以访问：
+创建一个分支   这个分分支名必须叫gh-pages   然后从本地pull
+文件上去      
+然后在浏览器url位置输入  自己的github.github.io/文件名

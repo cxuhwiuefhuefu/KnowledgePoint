@@ -1,0 +1,60 @@
+ 轮播图里面涉及到兼容性问题以及多种思路实现轮播   感觉比较有意思
+
+ 1.可以通过改变left值改变div的坐标   或者直接改变div的颜色  这里是改坐标
+ 2.平移轮播图
+ <!--分析dom结构：
+        1.可视区：wrapper    固定宽高   包裹一个ul   ul里包裹li 。 
+        每张li都是一张图片，  给ul足够的宽度，   使他包裹五个li
+        然后不断地改变ul的left值  left的值为li的大小，
+        这里li的大小和可视区的大小一样，   使得不同的li作为可视区的背景。
+        这里有四张图用于轮播   但是需要五张图片：
+        这第五章图片其实就是第一张   这是为了到最后一张切换到第一张   有滚动效果：
+        原理是当我们已经切换到第四张图片， 利用轮播4和5（即多出来的第一张图）的间隔时间 
+        让第一章迅速回到4的后面
+        -->
+
+ 
+ 
+ 
+ <script type="text/javascript">
+        window.onload = function () {
+            //可以通过改变left值改变div的坐标   或者直接改变div的颜色  这里是改坐标
+            var oInput1 = document.getElementById('left'),
+                oInput2 = document.getElementById('right'),
+                arr = [];
+            function getStyle (obj, attr) {
+                //处理兼容性问题
+                if (obj.currentStyle) {
+                    return obj.currentStyle[attr];
+                } else {
+                    return getComputedStyle(obj, false)[attr];
+                }
+            }
+            var oDiv = document.getElementsByTagName('div');
+            
+            //用循环获取所有div的坐标 并存到数组  然后再利用demo1的方法去操作
+            for (var i = 0; i < oDiv.length; i ++) {
+                arr.push([getStyle(oDiv[i], 'left'), getStyle(oDiv[i], 'top')]);
+            }
+
+            oInput1.onclick = function () {
+                arr.unshift(arr[arr.length - 1]);
+                arr.pop();
+                for (var i = 0; i < oDiv.length; i ++) {
+                    oDiv[i].style.left = arr[i][0];
+                    oDiv[i].style.top = arr[i][1]
+                }
+
+            }
+            oInput2.onclick = function () {
+                arr.push(arr[0]);
+                arr.shift();
+                for (var i = 0; i < oDiv.length; i ++) {
+                    oDiv[i].style.left = arr[i][0];
+                    oDiv[i].style.top = arr[i][1]
+                }
+
+            }
+
+        }
+    </script>

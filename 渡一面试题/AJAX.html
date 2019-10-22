@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<script>
+
+
+   什么是AJAX？
+AJAX是Asynchronous javascript and xml 的缩写，用javascript以异步的形式操作xml（现在操作的是json）。
+随着谷歌地图的横空出世，这种不需要刷新页面就可以与服务器通讯的方式很快被人们所知。
+在传统的web模型中，客户端向服务器发送一个请求，服务器会返回整个页面。
+
+我们前面学习的form表单来传输数据的方式就属于传统的web模型，当我们点击submit按钮之后，整个页面就会被刷新一下。
+ form表单有三个很重要的属性，分别是method、action和enctype。method是数据传输的方式，一般是get或者post；action是我们
+ 要把数据传送到的地址；enctype则是是否对数据进行编码。
+enctype的默认值是 “application/x-www-form-urlencoded”，即在发送前编码所有字符，这个属性值即使我们不写也是默认这个的。
+但是当我们在使用包含文件上传控件的表单的时候，这个值就必须更改成“multipart/form-data”，即不对字符进行编码。
+而在AJAX模型中，数据在客户端与服务器之间独立传输，服务器不再返回整个页面。
+
+AJAX优点
+    1.页面无刷新，在页面内与服务器通信，给用户的体验很好。
+    2.使用异步的形式与服务器进行通信，不需要打断用户的操作，给用户的体验更好。
+    3.减轻服务器的负担。
+    4.不需要插件或者小程序。
+
+AJAX缺点
+    1.不支持浏览器的后退机制。
+    2.安全问题，跨站点脚本攻击、sql注入攻击。
+    3.对搜索引擎支持较弱（seo）。
+    4.不支持移动设备。
+    5.违背了url和资源定位的初衷。
+
+
+先认识一下AJAX最重要的两个对象：
+new XMLHttpRequest()
+new ActiveXObject(‘Microsoft.XMLHTTP’)
+我们通过AJAX获取数据就是通过这两个对象，一般的主流浏览器支持第一个方法，IE6以下用第二个方法。
+
+对象上三个很重要的方法：
+.open(‘method’, ‘url’, ‘true’) 建立对服务器的调用，method参数可以是get、post或者put。url参数可以是相对url或者绝对url，第三个参数是选择异步还是同步，异步是true。这个方法还包括三个可选参数。
+5.send(content) 向服务器发送请求
+6.setRequestHeader(‘label’, ‘value’) 把指定首部设置为提供的值，在设置任何首部之前必须调用open方法。
+
+
+对象的属性
+1.onreadystatechange 状态改变触发器
+
+2.readyState 对象的状态、
+    0代表未初始化，此时已经创建了一个XMLHttpRequest对象
+    1代表读取中，此时代码已经调用XMLHttpRequest的open方法并且XMLHttpRequest已经将请求发送到服务期。
+    2代表已读取，此时已经通过open方法把一个请求发送到服务端，但是还没有收到。
+    3代表交互中，此时已经收到http响应头部信息，但是消息主体部分还没有完全接受
+    4代表完成，此时响应已经被完全接受。
+    3.responseText 服务器进程返回数据的文本版本
+    4.responseXML 服务器进程返回数据的兼容DOM的XML文旦对象
+    5.status 服务器返回的状态码
+
+这里大致介绍一下状态码。
+    状态码的功能
+        状态码是用来描述返回的请求结果。借助状态码，我们可以知道是正确的处理了请求还是出现了错误。
+        状态码的响应类别一共有5中，比如200，数字中的第一位代表响应的类别，后两位无分类。
+
+状态码的五种类别
+    1xx（信息性状态码），接受的请求正在处理
+    2xx（成功状态码），请求正确处理完毕
+    3xx（重定向状态码），需要进行附加操作以完成请求
+    4xx（客户端错误状态码），服务器无法请求类别
+    5xx（服务器错误状态码），服务器处理请求出错
+其中一般会遇到的大致有以下14种：
+    2xx 成功
+    200 OK 请求已经被服务器正常处理。
+    204 No Content 请求处理成功，但是没有资源可以返回。
+    206 Partial Content 表示客户端进行了范围请求，而服务器成功执行了这部分的GET请求。 content-Range在首部里面。
+    3xx 重定向
+    301 Moved Permanently 永久性重定向
+    302 Found 临时性重定向，禁止post变成get
+    303 See Other 请求的对应资源存在着另一个URL，因使用GET方法定性获取请求的资源
+    304 Not Modified 资源已找到，但是未符合要求
+    307 Temporary Redirect 临时重定向，与302含义相同。
+    4xx 客户端错误
+    400 Bad Request 请求报文中存在语法错误
+    401 Unauthorized 发送的请求需要有通过HTTP认证的认证信息。如果之前请求过一次，则表示用户认证失败。
+    403 Forbidden 不允许访问该资源
+    404 Not Found 服务器上没有该资源
+    5xx 服务器错误
+    500 Internal Server Error 服务器端在执行请求时发生错误
+    503 Service Unavailable 服务器暂时处于超负载或正在停机维护，无法处理请求
+    注意：不少返回的状态码响应是错误的，但是用户可能察觉不到这点。
+
+封装ajax
+function AJAX(json) {
+    var url = json.url,
+        method = json.method,
+        flag = json.flag,
+        data = json.data,
+        callBack = json.callBack,
+        xhr = null;
+    if(window.XMLHttpRequest) {
+        xhr = new window.XMLHttpRequest();
+    }else {
+        xhr = new ActiveXObject('Mircosoft.XMLHTTP');
+    }            
+    if(method == 'get') {
+                url += '?' + data + new Date().getTime(); 
+        xhr.open('get', url, flag);
+    }else {
+        xhr.open('post', url, flag);
+    }
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // 数据已经可用了
+            callBack(xhr.responseText);
+        }
+    }
+    if(method == 'get') {
+        xhr.send();
+    }else {
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send(data);
+    }    
+}
+
+
+    // 2019/3/27
+
+    </script>
+</body>
+</html>

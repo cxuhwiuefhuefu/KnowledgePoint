@@ -1,0 +1,283 @@
+      <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+     <script>
+
+//=================1.html5现在有很多新标签，浏览器不支持怎么办========================
+              document.createElement(e[i]);
+              使用Google的html5shiv包
+
+    
+ // HTML语义化
+      web语义化的意思是指，通过HTML标记表示页面所包含的信息，包括HTML标签的语义化和CSS命名的语义化。HTML标签的语义化是指：
+      通过使用包含标签语义的标签，如h1-h6、strong，来恰当的表示文档的结构；CSS命名语义化是指：为html标签添加有意义的class和id名，
+      id补充未表达的语义。
+
+      /为什么需要语义化：
+
+      1.去掉样式后页面呈现清晰的结构
+      2.盲人使用读屏器可以更好的阅读
+      3.搜索引擎更好地理解页面，有利于收录
+      4.使团队的项目可以持续的运作和维护
+
+ //     DOCTYPE
+            doctype是什么呢？
+
+            <!doctype>声明其实并不是一个html标签，它是一个告诉浏览器当前HTML版本的指令，现代浏览器的html布局引擎通过检查doctype决定
+            使用怪异模式还是标准模式对文档进行渲染。
+
+      HTML5新添标签
+           一：
+           非主体结构标签： 1.header  2.hgroup  3.footer
+           二、主体结构标签
+
+            1.article  2.section
+
+
++++ HTML5的新特性：
+
+      ①用于绘画的canvas元素
+
+      ②新媒体标签video和audio
+
+      ③对本地离线储存的更好的支持：LocalStorage、SessionStorage
+
+      ④新的标签，在上一篇文章都有介绍
+
+      ⑤新的表单控件，比如calendar、date、time、email、url、search
+
+      4.浏览器的支持：
+
+      高版本的Safari、Chrome、Firefox和Opera都支持某些HTML5特性，IE9以上也支持部分HTML5。
+
+Video元素
+video顾名思义就是视频的意思，这个标签可以让HTML5页面播放视频，从而抛弃掉Flash。
+
+video支持三种视频格式：Ogg，MPEG4，WebM
+
+video标签的写法和普通的标签没什么不同：<video src=""></video>
+
+这里的src属性就是我们的视频链接，同时行间的width和height属性可以定义视频元素的宽高，controls可以选择是否显示控制条，
+如果不用浏览器自带的控制条的话，我们可以通过js代码和csshtml配合写一个好看的控制条。
+
+一般来说video标签中间是不写内容的，但是有时候我们的一些视频格式浏览器不支持，可能就需要做兼容性的处理，让浏览器选择自己兼容的格式。
+
+而这个兼容性的写法就是在video下加上source标签
+
+      
+
+video标签的一些属性：
+autoplay   如果出现该属性，则视频在就绪后马上播放。
+controls   如果出现该属性，则向用户显示控件，比如播放按钮。
+
+video对象的方法：
+
+1.canPlayType() 检查浏览器能够播放指定的视频类型。
+
+2.load() 重新加载视频
+
+3.play() 开始播放视频
+
+4.pause() 暂停当前播放的视频
+
+Audio元素
+audio元素和video元素基本的用法都是一样的，它同样支持三种播放模式：Ogg Vorbis，MP3，Wav
+
+
+canvas:
+      一、canvas应用场景：
+
+            1.游戏:很多页面H5游戏都是用canvas绘制出来的。
+
+            2.图表
+
+      二、如何使用canvas
+
+                  1.首先在html中创建一个canvas元素，告诉浏览器我要开始绘图了！
+
+                  <canvas width="500" height="500"></canvas>
+
+                  2.获得canvas元素
+
+                  var canvas =document.getElementById(‘myCanvas’);
+
+                  3.获得canvas的上下文
+
+                  var ctx = canvas.getContext(‘2d’);
+
+                  因为是在平面绘图，所以是2d而不是3d。
+
+                  • 这里需要区分两个对象：元素对象和上下文对象。
+
+                  • 元素对象是canvas元素，相当于我们的画布
+
+                  • 上下文对象时通过getContext(‘2d’)获取的对象，相当于我们的画笔
+
+
+
+三、绘制图案
+
+1.线段
+      moveTo——lineTo
+
+      其中moveTo就是将画笔移动到某一个点，lineTo就是从刚才我们移动到的点画到另外一个点。
+
+      不过canvas绘制还需要多两步：beginPath()、clothPath()，我们要告诉浏览器开始绘制路径和结束绘制路径。
+      重点：
+
+      1.fill和stroke方法都是作用在当前的所有子路径
+
+      2.完成一条路径之后要开启另一条路径必须要beginPath()，否则会自动归于上一条路径，closePath倒不是必须的
+
+2.矩形
+
+      矩形也有三种方法：
+
+      1.rect(x,y,dx,dy);
+
+      2.fillRect(x,y,dx,dy);
+
+      3.strokeRect(x,y,dx,dy)
+
+      由于第一种没有给路径上色，所以我们一般使用后两种，第二个是绘制并填充矩形，第三个是绘制并描边。
+
+3.弧形
+
+      arc(x, y, r, 起始弧度,结束弧度,弧形的方向 ) 其中0是顺时针 1是逆时针
+
+      arc方法将当前点和弧形和起点用一条直线连接
+
+      arcTo(x1, y1, x2, y2, r)
+
+6.渐变
+
+createLinearGradient(x1, y1, x2, y2);线性渐变
+
+• 解决模糊的方法： 有时候我们的canvas绘制出来的图片放到html里面之后会失真，出现模糊的现象，这个时候只要我们把画布的大小调大，然后再让到html中就不会出现模糊了。
+
+由此我们可以看出来，canvas其实是位图，它会出现失真的现象。
+
+svg
+svg的全称叫做Scalable Vector Graphics，可缩放矢量图形，也就是说svg是矢量图，和canvas的位图不同，矢量图的缩放是不会失真的。
+
+svg一般是用来做图表或者图表的icon，还有一些特效效果。svg
+svg的全称叫做Scalable Vector Graphics，可缩放矢量图形，也就是说svg是矢量图，和canvas的位图不同，矢量图的缩放是不会失真的。
+
+svg一般是用来做图表或者图表的icon，还有一些特效效果。
+
+一、绘制
+      1.开始
+
+            svg和canvas的另一个不同点在于：canvas需要在js中绘制，而svg只需要在html里面通过标签绘制即可。
+
+            首先我们定义一个svg标签：
+
+            <svg width="500px" height="500px"></svg>
+
+            这里我们可以声明svg的宽高。
+      2.画直线
+
+            svg中画直线只需要用一个line标签即可：
+      3.画矩形
+
+            矩形是使用rect标签：
+      6.画折线
+
+            折线的标签式polyline：
+
+
+二、viewBox
+      viewBox即是我们的可视区域，默认是和svg的大小一样，相当于给svg的元素设置一套坐标系
+
+      <svg width="400" height="300" viewBox="0,0,40,30"></svg>
+
+      当我们重新设置viewBox的时候，我们的整个画布大小就是viewBox所规定的区域，绘制完成之后会自动放大到svg的宽高然后放入文档中。
+
+      这里注意最好使viewBox的大小和宽高是成比例的，否则会出现可视区域的空白。
+
+      当viewBox和svg的宽高不成比例的时候，我们需要用preserveAspectRatio属性来进行选择：
+
+      xMin xMid xMax ->x轴左中右对齐
+
+      yMin yMid yMax ->y轴上中下对齐
+
+      meet slice none -> 设置填充方式
+
+
+九、requestAnimationFrame
+    requestAnimationFrame是制作动画很重要的一个函数，它的使用类似setTimeout，但是不需要指定间隔时间，只需要传入需要执行的函数f，
+    requestAnimationFrame会自动按照一秒60帧的频率去运行这个函数，从而达到流畅的体验，比setTimeoue效果还要好。
+
+    同时我们也需要用一个变量timer来保存requestAnimationFrame，然后动画结束之后消除timer即可，cancelAnimationFrame(timer)
+
+    不过requestAnimationFrame的兼容性还是存在一些问题的，所以我们可以封装一下
+        
+                        window.requestAnimFrame = (function(){
+                        return window.requestAnimationFrame ||
+                              window.webkitRequestAnimationFrame ||
+                              window.mozRequestAnimationFrame ||
+                              function( callback ){
+                                    window.setTimeout(callback, 1000 / 60);
+                              };
+                        })();
+
+
+三、路径
+路径是我认为svg里最万能的标签，因为在一中说的那些画线的方式，都可以用单一的路径标签来替代。
+
+路径的指令有很多种，每一种指令都有自己的作用：
+
+            1.M指令和L指令——moveTo、lineTo
+
+            <path d = "M 10 10 L 20 10"/>
+
+            首先移动到10,10坐标点，然后画到20,10点。注意这里都是大写的ML
+
+            大写的ML是绝对坐标点的意思
+
+            2.m指令和l指令
+
+            <path d = "m 10 10 l 20 10" />
+
+            小写的ml是相对坐标点的意思，即相对于上一个点移动的位置。
+
+            3.H指令和V指令
+
+            <path d="M20 20 H 90 V 90 H 20 L 20 20"/>
+
+            H是horizontal的意思，即横向，V是vertical的意思，即纵向，这两个指令就是横向或者纵向走多少
+
+            4.Z指令
+
+            如果我们绘制完之后希望回到起点位置完成曲线的封闭，我们可以用L指令画会起点，但是这样有点麻烦，我们可以直接在最后加一个Z，
+            这样路径就会自动回到原点了。
+
+            5.A命令
+
+            A命令就是canvas里的那个arc，画弧形用的，它有7个参数：
+
+            rx ry x-axis-rotation large-arc-flag sweep-flag x y
+
+            rx ry表示圆弧的x轴半径和y轴半径
+
+            x-axis-rotation 圆弧相对x轴旋转角度，默认是顺时针，可以设置为负值
+
+            large-arc-flag 大圆弧还是小圆弧，1表示大圆弧，0表示小圆弧
+
+            sweep-flag 表示从起点到终点是顺时针还是逆时针，1表示顺时针，0表示逆时针
+
+            x y表示终点坐标
+
+
+
+            // 2019/3/26            
+
+
+
+     </script>
+</body>
+</html>

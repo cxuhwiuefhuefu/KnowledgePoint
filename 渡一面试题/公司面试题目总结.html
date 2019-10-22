@@ -1,0 +1,781 @@
+========百度化云================
+1.IE6  的兼容性问题关于CSS方面有哪些
+
+2.加入让你做一个聊天软件   比如QQ，你如何实现实时更新双方聊天信息   （他说说了可以试着用websql）
+
+3.IE6 不支持apocity怎么办
+
+4.了解哪些HTTP状态码
+
+5.基于seo的话   一个页面里的h1标签应该控制在多少个
+
+6.说说ajax过程
+
+7.说说你知乎影人搜索项目怎么做的     你用什么方式获取信息
+
+8.get和post的区别  get主要用于哪些方面   post呢
+
+
+9.用过webpack吗？   说说它有哪些优点
+
+10.说说react有哪些优点
+
+11.了解es6吗    说一下var和let的区别
+
+12.一个元素不设定宽高（或者说不知道宽高）    用CSS如何让它实现垂直水平居中
+
+13.怎么处理缓存问题    cookie
+
+14.你知道doctype有几种类型以及区别吗？
+
+15.浏览器不兼容h5标签怎么办
+支持HTML5新标签：
+
+* IE8/IE7/IE6支持通过document.createElement方法产生的标签，
+可以利用这一特性让这些浏览器支持HTML5新标签，
+
+16.异步和同步的区别
+
+17.加入让你在vue 和 react中选择一个区做项目，你会选择哪个？  为什么
+
+18.主流浏览器的内核    chrome和safari之间有什么联系   或者说webkit和blink有什么联系
+
+19.了解conmonJS规范吗？说说RequireJS和SeaJS的区别                AMD和CMD 规范的区别？
+
+20.基于搜索引擎做项目的话   需要注意哪些问题
+
+21.es6的数组下标index从几开始
+
+    0
+
+22.假如做一个搜索引擎，你怎么让它实现识别图片   根据图片来搜索？
+    （我答的是可以试试img标签的图片占位符和图片提示符）
+
+23.假如做一个聊天室   如何实现两个人的通讯？
+
+        过去的http请求都是发出一个请求然后很快就会有返回结果，然后人们做web聊天的时候，最初始的做法就是轮询
+
+        不断的请求服务器，有没有消息，请求服务器，看有没有消息发给我但是这样服务器的负载会很大，因为会有很多请求是无意义的。
+        毕竟一个人不能每秒都接到消息。。。所以后来使用websocket，websocket就是建立了一个socket链接
+
+        但是服务器端需要维持很多的socket这个代价也很大，服务器端也需要知道哪些socket已经关闭了所以与此共生的还需要有心跳系统，
+        来检测每个socket是否是活的，与websocket类似的就是http长连接
+
+-----------------------------------------------------------------------------------
+
+百度
+1.首先问了项目(音乐播放器)
+2.position属性值  6
+3.水平垂直居中
+4.三列布局
+5.清除浮动
+6.margin合并 触发bfc
+7.事件委托 时间冒泡  事件捕获
+8.深度克隆
+9.数组方法
+10.二分排序
+------------------------------------------------------------------------------------
+（七）人人车
+1.轮播图
+2.贪吃蛇
+3.request
+4.get post 区别
+5.是否了解es6
+6.盒子垂直水平居住
+7.本地储存
+8.jQuery
+9.说出你知道的框架
+------------------------------------------------------------------------------------
+
+（八）
+1.读过jquery源码 读它的目的 有什么收获 学到什么东西
+2.jquery提供集中绑定事件的方法
+3.jsonp的缺点
+1.优点
+    1.1它不像XMLHttpRequest对象实现的Ajax请求那样受到同源策略的限制，JSONP可以跨越同源策略；
+    1.2它的兼容性更好，在更加古老的浏览器中都可以运行，不需要XMLHttpRequest或ActiveX的支持
+    1.3在请求完毕后可以通过调用callback的方式回传结果。将回调方法的权限给了调用方。
+    这个就相当于将controller层和view层终于分开了。我提供的jsonp服务只提供纯服务的数据，
+    至于提供服务以 后的页面渲染和后续view操作都由调用者来自己定义就好了。如果有两个页面需要渲染同一份数据，
+    你们只需要有不同的渲染逻辑就可以了，逻辑都可以使用同 一个jsonp服务。
+2.缺点
+    2.1它只支持GET请求而不支持POST等其它类型的HTTP请求
+    2.2它只支持跨域HTTP请求这种情况，不能解决不同域的两个页面之间如何进行JavaScript调用的问题。
+    2.3 jsonp在调用失败的时候不会返回各种HTTP状态码。
+    2.4缺点是安全性。万一假如提供jsonp的服务存在页面注入漏洞，
+    即它返回的javascript的内容被人控制的。那么结果是什么？
+    所有调用这个 jsonp的网站都会存在漏洞。于是无法把危险控制在一个域名下…
+    所以在使用jsonp的时候必须要保证使用的jsonp服务必须是安全可信的。
+4.同源策略
+          同源策略，所谓同源，是指只有在域名、协议名、端口号都相同。
+5.访问ip地址也会跨域吗
+          需要跨域 是否符合同源策略
+6.清除浮动流的方法 为什么要清除浮动流
+加一个p标签 添加伪元素 触发bfc的方式来清除浮动
+（1）：背景不能显示 （2）：边框不能撑开 （3）：margin 设置值不能正确显示
+7.绑定事件函数
+8.数组删除特定元素的方法 splice
+9.介绍自己 怎么学习技术 在哪学习
+------------------------------------------------------------------------------------
+
+（九）
+1.css3 html5 jsonp
+2.BOM(Browser Object Module)浏览器对象模型
+          BOM对象包括：Window、History、Navigator、Screen和Location
+3.Navigator
+          navigator.userAgent是我们经常使用的属性，它可以返回客户端的代理值。用这个我们就可以判断当前用户使用的是pc端还是移动端，是什么浏览器。
+4.Screen
+screen.availHeight/availWidth 可以查看除了window任务栏之外的屏幕的高度和宽度。
+screen.height/width 返回显示器的屏幕的高度和宽度。不过这个兼容的较少。
+screen.deviceXDPI/deviceYDPI返回显示屏幕每英寸的水平/垂直点数，即分辨率。DPI越高，分辨率越高。
+5.History
+history.length 可以返回当前窗口查看过的网页记录的数量，即浏览历史的长度。
+history.back() 可以让浏览器进入到下一个历史页面。
+history.forward()  可以让浏览器返回到上一个历史页面。
+history.go() 这个方法有一个参数，当参数是正数的时候，前进到下一个历史页面，当是负数的时候，回退到上一个历史页面。即前两个的综合方法
+Location
+location.host 可以返回当前的主机名和当前的URL端口号。比如百度就返回www.baidu.com
+location.search 设置或返回从问好开始的URL（查询部分）
+location.hash 可以跳转到相应的id的元素的位置，和a标签的锚点功能差不多。可以配合css3的:target一起使用改变元素的样式。
+location.reload() 方法可以重新加载当前页面
+------------------------------------------------------------------------------------
+
+
+（十）
+1.基本数据类型
+          undefined null boolean string number
+2.引用数据类型
+          object array date RegExp function
+3.BOM对象包括：Window、History、Navigator、Screen和Location
+4.git的简单操作有哪些？
+          http://www.cnblogs.com/ys-ys/p/5493153.html
+git init 在目录中创建新的git仓库
+git clone 拷贝一个 Git 仓库到本地
+git add 命令可将该文件添加到缓存
+git status 以查看在你上次提交之后是否有修改
+git diff 来查看执行 git status 的结果的详细信息
+git commit 将缓存区内容添加到仓库中
+git reset HEAD 命令用于取消已缓存的内容
+git branch开启一个新的分支
+git checkout切换到分支上
+git rm删除文件
+git push 将暂存区的文件提交到远程仓库
+git pull 将远程仓库的修改拉取到本地
+------------------------------------------------------------------------------------
+
+（十一）百度二面
+1.你对前端性能优化有什么了解？
+我当时用高性能JavaScript答的，但她会问细节
+详见博客，渡一公众号
+2.问了promise和三个状态值，答上了，但她问我promise用来解决什么问题？
+详见博客  pending resolve reject 用回调函数解决异步的问题
+3.像淘宝一样要展现很多图片怎么办？
+               雪碧图（精灵图）  懒加载（瀑布流）
+               如果每一个icon都是一个单独的图片，分别发送请求会请求十次，网络消耗很大，这时候用雪碧图把每一个icon搞成一张图片，只访问这一张
+               base64方法，fis3内置功能 url（../img/a.png?__inline）可以直接把图片转换为base64，放到background-image中 打包进css文件
+4.图片除了url以外怎么加载？base64
+5.iconfont？好像阿里巴巴开发的一个什么东西
+6.完美适配里面相关的知识
+http://www.html-js.com/article/3041?from=message&isappinstalled=1
+参考这个吧 我按着这个基本都答上了 老哥(手动@思彤哥) 很稳
+7.react
+8.你了解模块化开发吗？
+    amd cmd
+9.跨域 主要问了jsonp
+10.用过canvas么？用canvas做了什么？有什么优点？
+    哆啦A梦=.=
+    优点：可以导出成具体的图片然后用base64转码，绘图方便，
+11.用css3的时候动画卡了怎么解决？
+    transform: transition3d(0, 0, 0);
+    transform: translateZ(0);
+    这两个属性可以开启GPU加速模式
+    然而面试官问我为什么，你知道原理么？
+    这两个属性都会开启GPU硬件加速模式，从而让浏览器在渲染动画的时候从CPU转向GPU。
+    我是这么答的不知道对不对。。。
+------------------------------------------------------------------------------------
+
+（十二）百度
+1.栈和队列的区别
+2.数组方法中哪些方法是进行栈操作和队列操作
+3.数组的各种方法
+4.html中的meta标签都有那些r
+5.移动端的适配问题 viewport
+6.了解css3属性
+7.display  position  清除浮动
+8.h5  audio标签是在移动端和pc端什么区别
+移动端浏览器大部分是禁用video和audio的autoplay功能，并且，很多移动浏览器也不支持首次js调用play方法进行播放
+9.闭包
+10.this指向问题 call和apply区别
+11.响应式布局的了解
+11.ajax 跨域
+12.jsonp原理
+13.getpost区别 怎么判断
+14.jsonp为什么能实现本地数据上传
+15.http协议流程  三次握手 四次挥手 响应报文请求报文区别  状态码
+16.请求头有什么
+    请求方法 请求URL HTTP协议以及版本
+   响应头
+       报文协议以及版本（HTTP） 状态码以及状态描述
+------------------------------------------------------------------------------------
+
+
+
+
+（十三）百度
+1.自我介绍
+2.贪吃蛇 如何写食物 键盘事件
+3.轮播图为什么用jq写
+4.ajax
+5.怎么学习
+6.移动端适配(弹性盒子)
+7.position
+8.怎么算两个日期有多少天
+  不用gettime()
+9.绑定事件
+10.时间冒泡事件捕获有什么区别
+11.怎么样阻止默认事件怎么封装
+12.百度搜索框 用jsonp，说下写的过程，详见博客
+------------------------------------------------------------------------------------
+（十四）滴滴出行一面（电话）：50minutes
+1.说说css的权重问题，说一说通配符选择器。
+（这个小意思，背下来就可以了，聊到通配符选择器的时候，说一下一般用来初始化css啊，再跟他扯一扯为什么要初始化啦♪(^∇^*)浏览器默认8px的margin啦，列表的小圆点~\(≧▽≦)/~等等）
+2.封装过哪些兼容性的函数
+（我一脸懵逼啊，要是问问具体的我还能答一点，突然把主动权给我了，直接让我说，我估计面试官也确实不知道该从哪里入手，就问了个开放性的。我脑子告诉运转啊，只想到了组织默认时间，想到这个之后，我又想到了阻止冒泡，然后又是事件源对象等等）
+3.事件冒泡、事件捕获、事件源对象、事件委托
+（成哥讲得好啊 ，不多说，把上课讲得复述一遍perfectO(∩_∩)，讲到事件代理的时候，我给他讲了扫雷的例子）
+4.说一说清楚浮动的方法，为什么要清除浮动：
+        Wrapper::after {
+        Content: ‘’;
+        Clear: both;
+        Display: block;
+}
+但是ie6/ie7没有伪元素
+Wrapper {
+        *zoom：1
+        会问你知道为什么这么做可以清楚浮动，了解底层原理吗
+}
+（问到ie的时候，就问我，你知道为什么这样做吗？又是一阵尴尬，平时就这么用，我哪里知道，或者知道但是早就忘了啊，我就很谦虚的说不是很了解，然后面试官就给你巴拉巴拉一阵指点江山，我只需认可就行）
+5.知道http吗，一般发送网络请求的方式（get和post），说说两者的区别
+（因为自己学网络，问道这个问题还得意了一下，跟面试官嘚瑟了一下，但是也确实不知道该怎么答，就给他讲了http的发展历史，然后就是get和post，简单的说了一下区别，然后又问我具体访问的机制（这是人问的问题吗）我就说是头部，反正就是不会，然后他又吧啦吧啦，静静听就好）
+6.Canvas和svg做过图表是什么，做过什么项目吗？
+（说实话，问到这个的时候，我是真的忘了，模棱两可，讲了彤哥带我们做的那个app图表，他看我不熟，也没多问）
+7.说一说闭包。
+（装逼的时候来了。首先就想到了jquery，稍微说了一下jquery的封装思想，讲讲对待闭包的优势和劣势，指出应当避免，再给他举个闭包的例子）
+8.你是网络工程专业的，平时应该没有前端方面的课，你是怎么解除到这一块的，平时又是怎么学习的？
+（这个问题其实就是成哥讲得那个，你是不是自学的问题，肯定要讲故事，希望大家想一个不重复的故事）
+9.你有什么问题可以问问我？
+（这个就是推崇他，肯定要请他指点指点江山啊，谦虚一下嘛，给人留个好的印象）
+面试官对我的总结就是，html和css掌握的还是可以的，但是对于为什么这方面还是不够深入，尤其是搞技术的，我们不仅要知道怎么做，还要知道为什么！
+（说的确实都是自己身上的缺点，所以的确要好好听一听，对下一轮面试有很大的帮助）
+最后面试官对我印象还不错，给我留了电话，说有问题可以找他，期待进入下一轮面试。2016/11/10   19:00
+------------------------------------------------------------------------------------
+（十五）
+1.<!DOCTYPE html>这一行写不写对页面有什么影响
+2.标准模式 混杂模式 不写h5的一些标签会失效
+3.闭包
+4.原型链
+5.继承方式
+6.call与apply区别
+7.数组的方法
+8.css3新增属性 transform都有哪些
+9.h5新增结构标签
+10.setimeout(function(){},0),先执行括号里面的函数 还是先执行外部代码
+          先执行外部代码再执行函数，因为js是单线程语言
+11.react webpack 的优点
+12.display属性
+13.position属性
+14.css选择器权重
+15.盒模型都有哪些
+16.多列布局都有哪些方式
+17.for of循环
+18.es6的方法 可以避免双子节字符的bug，详见博客
+19.你用canvas和svg都做过什么
+20.canvas的使用方法
+21.栈和队列的区别
+22.数组方法中哪些方法是进行栈操作和队列操作
+          push pop为栈操作
+          shift unshift为队列操作
+23.数组的各种方法
+24.html中的meta标签
+25.wise端   spider端
+------------------------------------------------------------------------------------
+
+（十六）滴滴面试
+1.你是lsf同学么？ 不，我不是，你打错了，不好意思
+2.来来来，说说你都做过什么项目？（说完讲两句，印象深刻的地方多说一直说）
+3.哎呦？知乎邀请组件你提到了react？redux？那聊聊吧你分别了解多少，redux扮演什么角色？（阮一峰说过redux是将军）
+3.关于兼容你知道什么？
+4.xmlhttprequest ie没有可咋整？
+5.你还看过jq源码是吧？你告诉告诉我ajax他里面整个随机数是嘎哈用的？（同原生js封装的ajax里面的时间戳）
+6.来你给我讲讲轮播图吧，我看看你真会假会
+7.啥是闭包
+8.给我讲讲三栏布局
+9.line-height 110%和1.1啥区别？？？？（一个是相对于父级fontsize，一个是相对自己fontsize的）
+基本就这些
+相对于各种框架滴滴更重视基础，感觉把jq源码视频和轮播图视频好好看三遍比较克滴滴。
+------------------------------------------------------------------------------------
+（十七）
+1.常见的数据类型
+2.arr[3] = 1 打印arr.length = 4 稀松数组
+3.position的值有哪些
+4.盒模型
+5.CSS选择符有哪些，哪些属性可以继承
+6.介绍一下ajax
+7.''I am a student''分割成单词
+8.常见的排序算法 实现一个快速排序接口
+9.函数如何访问外部变量的
+10.函数如何从外部访问到内部变量
+11.prototype工作原理
+12.前端页面由那几层构成 分别是什么 作用是什么？
+13.ECMAscript和javascript有什么联系？
+14.如何处理移动端 PC端页面兼容问题？
+
+------------------------------------------------------------------------------------
+
+
+（十八）百度一面
+1.几种基本数据类型
+2.如何判断是不是数组
+3.原型继承都有哪些形式
+4.说一说对事件的了解
+5.动态创建一个标签插入另一个标签
+6.选择出dom有哪些形式
+7.settimeout设置为0有什么作业？用来异步实现操作
+8.addEventListener第三个参数的作用
+9.封装ajax post和get区别
+10.跨域方法有哪些
+11.jsonp原理
+12.本地存储形式
+13.cookie的原理 如何设置cookie 是不是跨域的(domain来实现)
+14.css3动画有那几种
+15.css3动画卡顿怎么办
+16.display-flex可以实现什么功能
+17.css选择器
+18.响应式布局
+     二面
+1.对模块化的理解 播放器如何写成模块化
+2.webpack理解
+3.es5哪个方法实现了继承 了不了解freeze
+4.linux的基本命令 如何查看一个文件夹下的js
+5.后台会不会 他认为node.js太难
+6.正则表达式 验证用户名 以字母开头中间可以数字下划线 6-20个字符
+------------------------------------------------------------------------------------
+
+（十九）百度 85/100 知识面比较广 回答比较满意 灵机应变 沟通顺利 通过
+1.git用过吗？git pull , git push
+2.less有什么好处？便于管理, class命名不会冲突
+3.less和sass有什么区别，为什么使用less？
+4.为什么选择webpack？方便，注册，loader
+5.react和vue的差别和优势？react的虚拟dom渲染更快，diff需要更新的dom，组件化。
+6.ajax实现jsonp方法？实现方法很多，原生方法理解比较清楚
+7.ajax运行的流程？讲了大致实现原理
+8.css盒子模型？两种盒模型
+9.移动端的适配？媒体查询，viewpoint
+10.position？答得比较全
+11.清除浮动？比较满意
+12.js绑定的函数？adddEventListener attachEvent
+13.smarty模板？具体没用过
+14.http状态码？404 403 200 302
+15.css实现三列布局？讲解了两种实现方法
+提问？如何提高自己的技术水平？百度工作流程？
+------------------------------------------------------------------------------------
+附：百度某部门题库
+     js
+1.跨域的解决方法
+2.前端性能优化方案
+3.用过什么库或者框架，Jquery,backone,undercore,sizzle,anguler,sea.js
+4.做过什么项目，在项目中遇到什么问题，怎么解决的
+5.数组的各种split，splice,shift,unshift,trim等等处理方法
+6.数组的一般常见算法，诸如去重，排序（倒叙，顺序），排序的方法（快速，插入，二分--用js实现）
+7.js操作dom，创建，删除，添加，复制，insertBefore，appendChild
+8.js继承方式--对象冒充，call()，apply()，混合方法，原型继承
+9.js面向对象--工厂方式，this指向及何时this会改变
+10.事件绑定addEventListener/attachEvent,事件委托event.srcElement/event.target,时间冒泡，事件捕获
+11.编写原生Ajax
+12.post和get区别
+13.http协议基本码 100-500都是什么
+14.jquery使用优化，选择器优化，变量缓存，函数绑定优化，请求优化
+15.XHR攻击，XSS攻击
+16.原生js实现手势操作
+     css
+1.css3和html5新属性和标签
+2.盒模型
+3.块元素和行内元素的区别有哪些
+4.浏览器的渲染模式
+5.CSS-position的属性，大致十多种，常见的absolute reletive fixed static以及区别
+6.CSS-float的清除方法，大致八种，设置高度，overfloat：hidden/auto，添加clear：both 添加clearfix类 父元素浮动
+7.CSS左边自适应，右边固定宽度
+8.移动端适配方案flexible和rem
+9.webp格式理解-图片解决方案
+10.用过fis3吗，平时用的构建
+     html
+1.html标签的语义化理解
+2.html种mate标签的各种属性 keywords description expries refer
+3.ls本地储存使用方法
+
+------------------------------------------------------------------------------------
+
+
+
+（一）百度糯米
+1.canvas和svg有什么区别？
+          canvas和svg都允许在浏览器中创建图形
+          SVG: 1) : 是一种XML描述性2D图形语言
+                  2) : 每一个元素都是可用的，可以为摸一个元素添加javascript时间处理器
+                  3) : 每一个被绘制的图形均视为对象，如果SVG对象属性发生变化，浏览器能自动重现图形 适合大型区域渲染的应用 例如谷歌地图 不适合游戏应用
+          Canvas：1) ： 通过javascript来绘制2D图形 逐像素进行渲染 依赖分辨率 不支持事件处理
+                        2) ： 一旦图形绘制完成将不会继续得到浏览器的关注。如果位置发生变化，整个场景也需要重新绘制
+                        3) ： 比较弱的文本渲染能力 适合图像密集型的游戏 其中许多对象都会被频繁重绘
+                        4) ： 可以以.png .jpg格式保存图像
+          png越放大越清晰 是无损画质 因图片较大 不适合web开发
+          jpg越放大越模糊
+2.storage和cookie区别？
+          cookie优点
+          1.通过良好的编程，控制保存在cookie种的session对象大小
+          2.在cookie中存放不敏感的数据或者控制cookie生命周期，使之不会永久有效 ，被盗也不会有损失
+          cookie缺点
+                    1.受长度数量的限制，每一个domain只能存放20条cookie，每个cookie长度不能超过4KB
+                    2.安全性较差，被拦截的话会获得所有session信息
+          h5中web stroage由两种存储方式：sessionstroage 和 localstorage
+                    sessionstorage：用于本地存储一个会话中的数据，只有在同一会话的页面才能访问而且会话结束随之销毁
+                    localstorage：持久化本地存储，除非主动删除，数据永远不会过期
+          区别：storage是为了增大容量存储设计。cookie大小受限，每次请求新页面cookie都会被发送过去，cookie需要指定作用域，不可以跨域调用，
+                    cookie作用是与服务器进行交互，作为http规范存在，storage只为本地存储数据而生。
+          webstorage一些操作方法：setItem，getItem，removeItem
+3.浏览器的渲染机制：
+          1.Create/Update DOM And request css/image/js：浏览器请求HTML代码后.在生成DOM最开始的阶段(bytes->characters).并行发起css image js请求
+          2.Create/Updata Render CSSOM：CSS文件下载完成，开是构建CSSOM
+          3.Create/Updata Render Tree : 所有CSS文件下载完成后，CSS构建结束，和DOM一起生成Render Tree
+          4.Layout：通过Render Tree 浏览器已经知道网页有哪些节点，各个节点CSS定义以及他们的从属关系，计算出每个节点屏幕中的位置
+          5.Painting：根据Layout，按照算出来的规则，通过显卡，把内容画到屏幕上
+          以上五个步骤，前三步都有Create/Updata是因为DOM，CSSOM，Render Tree可能在第一次Painting后多次更新，比如JS修改了DOM，CSS
+          Layout和Painting也会被重复执行，除了DOM，CSSOM更新原因外，图片下载完成后也需要调用Layout和Painting来更新网页
+4.如何清除浮动？
+        1.在父级元素内容里添加一个p标签。p标签里面添加p{ clear：both } 因为p标签可以看到上面的浮动元素 而wrapper看不到里面的浮动元素
+         2.添加伪元素，即便没有内容也要加content属性。display改为block。 在父级上加一个clear。(ie6 ie7清除浮动)触发haslayout即可和bfc一样 *zoom：1;
+             ie6为_zoom：1;
+         3.触发bfc：overflow:hidden/auto;
+                          display:inline-block/table-cell/table-caption;
+                          position:absolute/fixed;
+5.什么是react，为什么要学react？
+     Facebook由于不满MVC(Model View Controller 类似于一个工具箱)的复杂而开发的一款JS库, 以某种方式组织代码，使其更加可预测，构建那些数据会随时
+      间改变的大型应用。React不是一个MVC框架 不是用模板 响应式更新简单。
+      React主要原理：Virtual Dom（虚拟）
+                                    传统的web应用，操作DOM一般是直接更新的，但是我们知道DOM更新通常是比较昂贵的。React为了尽可能减少对DOM操作，提供了一种虚
+                                    拟DOM来代替DOM，一个轻量级的DOM就是React抽象出来的一个对象，通过虚拟DOM更新真实的DOM。React有一个diff算法(红黑树算法)
+                                    更新Virtual Dom并不能马上影响真实DOM，React等到时间循环结束，然后利用这个diff算法， 计算出最小的步骤更新真实DOM
+                             npm install babel-loader babel-core babel-preset-es2015 babel-preset-react react react-dom
+     优点：1）利用diff算法 计算出实际渲染dom的最少步骤，把虚拟dom和上一次的dom进行比较，仅仅将变化的部分更新到浏览器上，因为虚拟dom是内存数据
+               性能极高，能达到提高性能的目的
+               2）组件化，将UI每一个功能相对独立的模块定义成组件，将小的组件组合嵌套成打的组件，完成UI整体构建
+6.CSS选择器？
+     1.id选择器 2.class选择器 3.标签选择器 4.通配符选择器 5.属性选择器[id]{}有id属性的标签被选择出来 6.父子选择器(派生选择器) div p {} 这里权重值相加不能
+     超过四层 7.直接子元素选择器div>strong  8.并列选择器 div和p标签都有一个class 使用div.class 9.分组选择器 span， div ， p{}
+     ！important       10000
+     行间                   1000
+     id                       100
+     class 属性 伪类    10
+     标签 伪元素         1
+     通配符                 0
+7.ajax delay源码是什么？
+     delay：核心部分就是setTimeout，jquery源码里涉及到一些出列，入列的问题，自行阅读
+     ajax：感兴趣的可以去飞翔博客上读，这里写一些方法作为提示
+               Ajax两个对象：newXMLHttpRequest()，newActiveXObject(''Microsoft.XMLHttp'');
+               对象方法：open('method' , 'url' , 'ture')建立对服务器的调用，其中method参数为get和post，第三个参数是表示同步还是异步
+                               send(data) 向服务器发送请求
+                               setRequestHeader('label', 'value')把指定首部设置为提供值，一般用来设置数据发送格式('Content-Type' , 'application/x-www-form-urle')
+               Ajax原理：简单的说就是通过XMLHttpRequest()对象向服务器端发送异步请求，从服务器端获取数据后，用javascript来操作DOM而更新页面
+               Ajax流程：1).创建对象：window.XMLHttpRequest() 或者 ActiveXObject('Microsoft.XMlHttp');
+                               2).创建与服务器的连接和调用：open() , send() 其中url需要加上当前时间戳
+                               3).实时监听对象的改变：xhr.readyState===4 && xhr.status ==200为了防止数据返回过快导致监听失效 监听一般写在open和send之间
+               post和get区别：get资源类型为主动或者被动（主动，数据类型为文本（文本或者二进制，数据量不超过255字符（没限制）
+                                       数据作为url一部分在浏览器地址栏中可见（不可见），数据可以在浏览器的URL历史中缓存（没缓存）
+               jquery源码：构建jsonp回调函数时候用到一个独一无二的函数名，jsc = now()；
+                                  ajax请求时候可能会有缓存文件，这里ts = now()，放置取浏览器的本地缓存，这两个时间戳有面试会问到
+------------------------------------------------------------------------------------
+（二）
+1.谈一谈面向对象
+          面向对象：是把构成问题事物分解成个各个对象，建立对象的目的不是为了完成一个步骤，而是为了描述某个食物在整个解决问题的步骤中的行为。
+          面向过程：是分析出解决问题所需要的步骤，然后用函数一步一步实现，使用时候依次调用
+          面向对象的三个基本特征：封装，继承，多态
+                                       封装：把客观事物分装成抽象的类，把自己的数据和方法只让可信的类或者对象操作，封装保持了程序良好的独立性，使程序维护容易
+                                       继承：指让某个类型的对象获得另一个类型的对象的属性和方法，继承性很好的解决了软件的可重用性
+                                       多态性：一个相同实例的方法在不同情形有不同表现形式，针对不同对象的具体操作不同，但是通过一个公共类，那些操作可以通过相
+                                                  同方式予以调用
+2.一个页面如何看出来是html5还是html4的？
+          文档申明：第一行如果是：<!DOCTYPE HTML>就是html5，否则不是
+3.数组的深度克隆？
+          arr.concat()：连接两个或者多个数组
+4.h5音乐播放器如何兼容手机不通尺寸？
+          <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+          meta标签属性：name：用于描述页面 参数：keywords（关键字），description（描述内容），viewport（移动端视口），以及generator（网页制作软
+                                             件），author（作者），robots（搜索引擎爬虫索引方式），renderer（双核浏览器渲染方式）copyright（版权）等等
+                                  http-equiv：相当于http文件头作用 参数：content-Type（设置字符集），X-UA-Compatible（采取何种版本渲染的当前页面）
+                                                      expires（文件到期日期），refresh（自动更新），set-Cookie（cookie设定）
+5.js封装过的一些函数？
+          1).遍历元素节点树 retChild()：childNodes遍历所有子节点，查看其所有子节点的nodeType是否为1，为1调用hasChildNodes()检测是否他有子节点，递归
+          2).返回e的第n层父节点：n为0直接返回该元素，遍历每一层元素，ele = ele.parentNodes 最后return e
+          3).返回e的第n个兄弟元素节点，n为正，返回后面的兄弟节点，n为正，返回前面的，n为0，返回自己：
+               n > 0 : while(e&&n!=0) -> if(n > 0) -> if(e.nextElementSibling) -> e = e.nextElementSibling(ie加一条nodeType = 1的判断 e = e.nextSibling)
+                           n-- 最后 return e
+               n < 0 : nextElementSibiling 换成 previousElement  n++ 最后return e  if(n ===0){return e}
+          4).实现children功能：Element.prototype上编程 childNodes找到所有子节点，定义一个obj，里面定义push方法（Array.prototype.push）遍历所有子节点
+                                      如果nodeType=1 把该节点push到obj 最后返回obj
+          5).封装是否含有元素子节点的方法:Element.prototype上编程 childNodes找到所有子节点 遍历一边查看nodeType是否为1 是就返回true 否则false
+          6).获取元素样式：getStyle(obj, prop, fake) obj.currentStyle[prop](ie浏览器) window.getComputedStyle(obj,fake)[prop] fake参数为true和false(伪元素)
+          7).查看元素几何尺寸：getBoundingClientRect();
+6.jquery和js原生那个用的多？ 熟悉什么说什么
+7.this?
+          ele.onclick = function(){
+                                   setTimeout(function(){
+                                        alert(this)
+                                   },1000)
+                              }
+          这里的this默认指向window  谁调用指向谁
+          call(obj, 1, 2)；
+          apply(obj, [1 , 2])；都可以改变this指向，call参数一个一个传，apply是数组形式传
+          new操作符也会改变this指向：new关键词会创建一个空对象，自动调用apply方法，将this指向这个空对象，这样函数内部的this会被这个空对象替代
+8.事件冒泡和事件捕获？IE下的捕获？：
+               事件冒泡：子元素冒泡向父元素，结构自底向上。focus，blue，change，submit，reset，select等方法没有冒泡
+               事件捕获：父元素捕获至子元素，结构上自顶向下，addEventListener最后一个参数填true时，捕获开启，开启捕获后就不会冒泡了  顺序是先捕获后冒泡
+                               IE上有一个类似捕获的方法：domEle.setCapture();调用方法后 页面后续操作全部归于domEle上，调用releaseCapture()来释放捕获
+               取消冒泡：e.stopPropegation(）w3c标准方法    event.cancelBubble = true  IE方法
+               取消默认事件：preventDefalut(），returnValue = false IE方法  a标签中协议限定符<a href = 'javascript : void(0);'>www.baidu.com</a>同理
+9.事件委托和事件源对象？
+               事件委托：在父级上绑定addEventListener事件，由于冒泡，子元素会调用父元素方法，称为事件委托
+                               event.target() 火狐方法，event.srcElement() IE方法，事件委托优点不需要循环所有子节点绑定事件，有新的子元素添加不需要重新绑定
+               事件源对象：时间冒泡之后，哪一个对象触发了该事件，这个对象就是事件源对象
+10.集中跨域？就是跨域，详情见飞翔博客（三十一）
+               1).Flash：很久之前的方法 不做考虑
+               2).服务器代理中转：服务器不受同源策略的影响，把所有资源放在服务器上，让后让服务器上的网页获取这些资源
+               3).iframe+document.domain：主域相同，子域不同的情况下使用。页面的domain默认值等于window.location.hostname，缺点：一个网页被攻击
+                                                              另外一个站点就会引起安全漏洞，操作繁琐一个页面引入多个iframe，并且他们必须都设置相同的domain
+               4).iframe+location.hash：利用location.hash来传值，改变hash不会刷新页面，
+                                                      缺点：数据直接暴露在url中，数据长度和类型都有限制
+               5).iframe+window.name：和location.hash方法差不多，主页面有一个iframe，通过修改
+               6).HTML5中postMessage：h5中有一种功能就是跨文档消息传输 getMessageHTML.postMessage(message,targetOrigin);
+                                                        getMessageHTML是我们对于谣接受信息的页面引用，可以是iframe的contentWindow，window.open的返回值
+                                                        targetOrigin是用于限制getMessageHTML的 填*的时候不做限制
+               7).Jsonp：原理：Web页面上调用js文件不收跨域影响，凡是具有src属性标签都不受同源策略的影响，正是这个特性，我们把资源放到script标签里的
+                                        src里面，把数据放到服务器上，并且是json形式（js很容易操作json）
+                              script标签中src属性的格式是'url+参数'，比如 url？cd=doJSON，cd是我们和后台协商好的类似于形参的东西，是一个留给我们写处理函数
+                                        接口，doJSON就是我们事先定义好的函数，也就是回调函数，所有数据会以参数的形式传递给该函数
+                              json是一种数据格式，jsonp是一种约定俗成的非正式传输协议
+11.使用的jsonp是封装的还是jq的？
+                jq里操作jsonp的语句为 jsonp:''callback''//传递给请求处理程序或者页面的，用以获得jsonp回调函数名作为参数一般默认callback
+                                                  jsonpcallback:''handler''//自定义jsonp回调函数名，默认为jq自动生成的随机函数名，也可以写'？',jq自动为你处理
+                                                  success:function(json){alert（''json.xxx''）}
+                                                  如果不写处理函数handler，也可以运行成功，因为jq在处理jsonp形式的ajax时候，自动生成回调函数并把数据取出来供
+                                                  success属性方法调用
+12.除css3外的盒模型?
+               盒模型有margin部分，而盒子不算margin部分
+               1).w3c标准盒模型：盒子大小是width+padding+border，width不包含padding和border
+               2).IE混杂盒模型：盒子大小是width-padding-border，width包含padding和border
+               弹性盒子：给父级设置display:flex，父元素就变成一个弹性盒子 flex是一个复合属性包括flex-grow，flex-shrink，flex-basis
+                              容器上的属性：flex-direction：row  | row-reverse | column | column-reverse 即项目排列方向
+                                                     flex-wrap：nowrap | wrap | wrap-reverse 定义如何换行
+                                                     flex-flow：为前两个的简写形式，值有两个 中间空格分割
+                                                     justify-content：flex-start | flex -end | center | space-between | space-around 在主轴上的对齐方式
+                                                     align-items：flex-start | flex-end | center | baseline | stretch 在交叉轴上如何对齐
+                              项目上的属性：order：排列顺序 数值越小越靠前
+                                                     flex-grow：放大比例 默认为了0  空间过大 也不填充
+                                                     flex-shrink：缩小比例 默认为1 空间不足自动缩小
+                                                     flex-basis：计算主轴是否有多余空间，如果设置成xxxpx，则项目占据固定空间
+                                                     flex：上面三个的简写 默认值 0 1 auto
+
+
+13.经常浏览的博客？
+               阮一峰，廖雪峰，追梦子，刘飞翔
+------------------------------------------------------------------------------------
+（三）百度
+1.盒模型 box-sizing？
+               见（二）-12
+2.react + redux?
+               见（一）-5
+
+3.position？
+               absolute：绝对定位，相对于最近有定位的父级进行定位，没有就相对于浏览器定位
+               relative：相对定位，保留原来位置，相对于最近有定位的父级进行定位
+               fixed：相对于视口进行定位
+               static：默认值
+               center：以定位祖先元素中心点为参考，在其容奇中垂直水平居中
+               page：
+               sticky：relactive和fixed的合体，滚动到屏幕外表现如fixed
+4.rem?
+               px：相对长度单位，px是相对于显示器屏幕分辨率而言
+               em：相对长度单位，相对于当前对象的文本字体尺寸，未被设置则相对于浏览器默认字体尺寸，em会继承父级字体大小
+               rem为元素设定字体大小时，仍然是相对大小，相对的是html根元素 一般html的font-size：62.5% = 10px 一般为了方便计算 其他方法和em一样用
+5.amd cmd commonJS?
+               都是为了js加载模块而生，使得加载模块时能够更好的组织和管理
+               amd：可以实现异步加载依赖模块，并且会提前加载 ，和CommonJS基本一样，amd调换一下调用方法也可以实现同步加载，在requestJS在推广产生的
+                         define（id？，dependenices？，factory）；第一个参数表示模块标识，第二个参数当前模块的依赖，第三个参数需要进行实例化的方法或对象
+               cmd：cmd标准更倾向于在使用中的依赖，seajs推广时候产出的，cmd中一个模块就是一个文件格式就是define（factory）
+                         require作为第一个参数，用来获取其他模块提供的接口
+                         export作为第二个参数，又来向外提供模块接口
+                         module第三个参数，存储了当前模块相关联的属性方法 moudle.id 作为模块的唯一标识 module,uri 模块的绝对路径 module.exports 模块接口
+               区别：对于依赖的模块,AMD提前执行，CMD是延迟执行
+     AMD依赖前置，CMD依赖就近
+     AMD的API一个当多个用，CMD职责单一
+6.css3 三列布局？
+               flex布局：左侧部分 order:-1；flex : 0 0 200px，中间部分 flex:1 自动填充，右侧部分 flex:0 0 200px;
+               column：把count设置为3 也可以实现三栏布局，类似于报纸
+          其他方法：
+               绝对定位：左右两侧position定位，中间部分margin-left 和 margin-right都设为左右栏的宽
+               负外边距：所有元素float：left，左侧元素 margin-left：-100%，中间元素 margin：0 200px，右侧元素 margin-left：-200px;
+7.闭包？
+          一个新函数的作用域上保存着对原本函数作用域的引用，进而产生了闭包
+          解决闭包方法：立即执行函数
+8.原性链？
+          原型是function对象的一个属性，他定义了构造函数构造出来的对象的公共祖先，通过构造函数产生对象可以继承该原型的属性和方法，原型也是对象
+          构造函数创建对象时候隐式创建this对象，this中一个默认属性叫做_proto_，这个属性就是指向对象的原型
+          原型上还有原型的结构叫原性链，绝大部分原型都继承自Object.prototype即为原性链上的终点 object.create(null)可以构造没有原型的对象
+          继承：构造函数直接继承：通过祖父构造出父亲，父亲构造出儿子，这样的方法继承太多没用的属性方法
+                    共享原性：a.prototype = b.prototype 无法改变儿子的原型，要改两个都改了
+                    圣杯模式：中间引入F来沟通P和C 五句话
+                                    function F (){}  ，F.prototype = P.prototype，C.prototype = new F()，C.prototype.constructor = C ，C.prototype,uber = P
+9.es6 promise 浏览器不兼容es6怎么办？
+          下载babel 可以把ES6语法翻译成ES5
+           promise：
+10.响应式布局？
+          iphone4以上使用了retina屏，分辨率极高但屏幕较小，在这样笑的物理显示界面打开一个页面，再用极高的分辨率来显示，导致所有元素小的可怜，所以
+          采取响应式布局
+          媒体查询语法：@media screen and (max-width: 768px){在里面添加文字等样式，文字以rem配合作为单位}，同时再head标签里写上meta一大串
+11.数组去重？
+               遍历数组中的所有值，如果对象里没有名为这个值的属性，把数组的这个值当成属性名添加到对象里，值赋为1，最后return arr
+12.call，apply？
+               （一）-2
+13.本地存储 cookie localstrage sessionstroage？
+               （二）-7
+------------------------------------------------------------------------------------
+（四）
+1.自我介绍？
+2.react的作用优点，和vue的区别？
+3.为什么用webpack？
+4.盒模型？
+5.position？
+6.rem？
+7.取消事件冒泡？
+8.绑定事件？
+9.git从远端仓库获取和存放数据？
+10.清除浮动 ：after这个方法从哪里来的？
+11.ajax？
+12.jsonp？
+13.三列布局有哪些方法？
+14.移动端怎么判断左划右划？
+15.zepto？
+               简化版的Jquery，
+16.less优点，与sass区别？
+17.快速排序？
+18.http返回代码有那些意思?
+------------------------------------------------------------------------------------
+（五）
+1.说一下css选择器的优先级(百度)？
+2.说一下position都有哪些，并详细的说说他们之间的区别？
+3.如果position设置成absolute属性该元素的display属性会变成什么？
+4.把一个元素设置float属性他会产生浮动，说说怎么去除浮动？
+5.说说触发bfc的几种方式？
+6.为什么给父级元素设置overflow属性会去除浮动，具体说说内部机制？
+7.说说常见的将元素垂直水平居中的方法？
+8.关于伪元素你了解多少，请说出五个常用的伪元素，那么伪类呢？也请说出五个常用的伪类？
+9.如果我想向父级元素插入子元素都有什么办法？
+10.请封装一下insertafter方法？
+11.你了解给元素绑定事件和解绑事件么，如果了解请封装兼容性的绑定事件？
+12.关于变量有基本值和引用值你知道么？ 都哪些是基本值，那些是引用值 他们的存储方式是怎样的？
+13.如何将数组去重说说你的思路？
+14.编程我们一般喜欢面向对象，说说你对面向对象的理解吧？
+15.setInterval的内部指针指向哪里(setInterval无论怎样this都指向window，强制改变this指向会导致定时器无效)？
+16.网络的都有哪些基本层 各层的的协议都是什么 各层的数据传输是怎样的？
+17.http数据不是百分百准确的，如果数据发生错误该怎么解决？
+18.说一下AJAX？
+19.跨域都有什么方法？
+20.说说webpack优点？
+21.说说react的优点和生命周期？
+------------------------------------------------------------------------------------
+
+（六）
+1.position？
+2.数组常见的方法？
+ h4: reverse() : 数组倒序
+       sort() : 数组乱序
+       push() : 在数组最后一位添加数据
+       pop() : 删除数组最后一位数据
+       shift() : 删除数组第一位数据
+       unshift() : 在数组第一位添加数据
+        concat() : 拼接两个数组(也可以克隆) 返回的是一个以逗号相隔的数组 [1,2],[2,3],[1,2,3,4]
+       splice(1，2，3) ; 剪切 第一个参数指从第几位开始 第二个参数指剪切的长度 第三个参数指剪切进去的数组
+ h5: forEach() : 让数组从头到尾遍历一边 改变原数组
+       map() : 遍历一边返回一个值 不改变原数组
+       filter() : 过滤 数组中每一个元素都会调用一次 根据里面定义的方法 返回ture的元素添加到一个新数组里 返回出来
+       every() : 如果每一个元素经过方法返回的都是true 最后返回true
+       some() : 如果一些元素经过方法返回true 最后返回true
+       reduce() reduceRight() : 将数组元素进行组合 有两个参数 第一个参数是方法 第二个参数是初值 参数中数组只有一个元素没有初值返回该值 有一个空数组并给定一个初值，返回初值 都不会调用函数
+3.字符串常见的方法？
+4.封装过的函数？
+5.浏览器可能出现的bug？
+6.html5的一些方法？
+7.ajax和七种跨域？
+8.css3？
+------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

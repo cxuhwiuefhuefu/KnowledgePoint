@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+        
+        // 生命周期钩子函数
+        // 1. 在beforeCreate钩子函数调用的时候 是获取不到props或者data 因为这些数据初始化都在initState中
+        // 2. 然后会执行created钩子函数 在这一步的时候可以访问到之前不到访问的数据 但是这个时候组件还没被挂载 
+        //     所以看不到
+        // 3. 接下来会执行beforeMount钩子函数 开始创建VDOM 最后执行mounted钩子 并将VDOM渲染为真实的DOM并且渲染数据
+        //     组件中如果有子组件的话 会递归挂载子组件 只有当子组件全部挂载完毕 才会执行根组件的挂载钩子
+        // 4. 接下来是数据更新的时会调用的钩子函数beforeUpdate和update 这两个钩子函数没什么好说的 
+        //     就是分别在数据更新之前和更新之后调用
+        // 5. 另外还有keep-live独有的生命周期 分别为actived和deactived 用keep-alive包裹的组件在切换的时不会进行销毁
+        //     而是缓存到内存中并执行deactived钩子函数 命中缓存渲染后会执行actived钩子函数
+        // 6. 最后是销毁组件的钩子函数beforeDestory和destoryed 前者适合移除事件丶定时器等等 否则会一起内存泄漏的问题 
+        //     如何进行一系列的销毁操作 如果有子组件的话 也会递归销毁子组件 
+        //     所有子组件都销毁完毕后才会执行根组件的destoryed钩子函数
+    
+
+
+
+        // 组件通信
+        // 1. 父子组件通信
+        //     父组件props
+        //     子组件emit
+        //     单向数据流 父组件通过props传递数据 子组件不能直接修改props 而是必须通过发送事件的方式告知父组件修改数据
+        // 
+        //     <!-- 父组件 -->
+        //     <input :value.async="value" />
+        //     <input :value="value" @update:value="v => value = v"> 
+        //    <!-- 子组件 -->
+        //    this.emit('ipdate:vlaue', 1);
+        // 2. 兄弟组件通信
+        //    对于这种情况可以查找父组件中的子组件实现 也就是this.$parent.$children 
+        //        在$children中可以通过组件name查询到需要的组件实例 然后进行通信
+        // 3. 跨多层级组件通信
+        // 4. 任意组件
+        //        Vuex
+        //        Event Bus
+
+
+
+
+        // extend
+        // 作用是拓展组件生成一个构造器 通常会与$mount一起使用
+
+
+
+
+
+        // mixin 与mixins区别
+        // minxin用于全局混入 会影响到每个组件实例 通常插件都是这样做初始化的
+        // 虽然文档不建议我们在应用中直接使用mixin 但是如果滥用的话也是有帮助的 比如全局混入封装好的ajax或者一些工具函数等等
+        // Vue.mixin({
+        //     beforecreate() {
+        //         // ...逻辑
+        //         // 这种方式会影响到每个组件的beforeCreate钩子函数
+        //     }
+        // }) 
+        // mixins应该是我们最常使用的拓展组建的方式 如果多个组件中有相同的业务逻辑 就可以将这些逻辑剥离出来 通过mixins混入代码
+        //     比如上拉下拉加载数据这种逻辑等等
+        // 另外需要注意的是mixin混入的钩子函数会先于子组件内的钩子函数执行 并且在遇到同名选项的时候也会有选择性的进行合并 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </script>
+    
+</body>
+</html>

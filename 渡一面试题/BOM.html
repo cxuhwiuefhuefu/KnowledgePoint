@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BOM</title>
+</head>
+<body>
+<script>
+==========BOM==========
+1.日期对象
+
+    Date()   返回当日的日期和时间。
+    getDate()    从 Date 对象返回一个月中的某一天 (1 ~ 31)。
+    getDay() 从 Date 对象返回一周中的某一天 (0 ~ 6)。
+    getMonth()   从 Date 对象返回月份 (0 ~ 11)。
+    getFullYear()    从 Date 对象以四位数字返回年份。
+    getYear()    请使用 getFullYear() 方法代替。
+    getHours()   返回 Date 对象的小时 (0 ~ 23)。
+    getMinutes() 返回 Date 对象的分钟 (0 ~ 59)。
+    getSeconds() 返回 Date 对象的秒数 (0 ~ 59)。
+    getMilliseconds()    返回 Date 对象的毫秒(0 ~ 999)。
+    getTime()
+    setDate()    设置 Date 对象中月的某一天 (1 ~ 31)。
+    setMonth()   设置 Date 对象中月份 (0 ~ 11)。
+    setFullYear()    设置 Date 对象中的年份（四位数字）。
+    setYear()    请使用 setFullYear() 方法代替。
+    setHours()   设置 Date 对象中的小时 (0 ~ 23)。
+    setMinutes() 设置 Date 对象中的分钟 (0 ~ 59)。
+    setSeconds() 设置 Date 对象中的秒钟 (0 ~ 59)。
+    setMilliseconds()    设置 Date 对象中的毫秒 (0 ~ 999)。
+    setTime()    以毫秒设置 Date 对象。
+
+    日期对象也是javascript的内置对象之一，我们可以直接使用。
+    /注意
+       getTime方法返回从1970年1月1日到现在的毫秒数，这个时间我们称之为时间戳。
+        getMonths方法返回的是0-11，我们要获取当前月份的时候记得加一。/
+
+2.JS定时器
+    在javascript中，与定时器有关的方法是：
+
+    setInterval、clearInterval以及setTimeout、clearTimeout
+
+    这些方法都是定义在window对象上面的，因此我们写window.setInterval和解setInterval的意思是一样的，前面的window可以省略掉。
+
+        1.setInterval这个定时器的功能是每过一段时间，就把我们想要执行的函数放到js的执行队列中等待执行。因为执行队列不一定是空的，
+        需要等执行队列中的所有任务都执行完之后才会执行我们的函数，因此这个函数执行的时间也会有细微的差别。
+            里面的this默认指向window
+            setInterval其实很消耗内存，这个定时器一旦执行，就不会终止，因此需要我们的内核一直监听这个函数。
+
+            定时器其实会返回一个标记，这个标记就是定时器的序号数，我们可以通过定时器的这个标记来清除掉相对应的定时器。
+            凡是写定时器，一定要清除定时器！
+
+        2.有时候我们只需要这个函数延迟一段时间执行，并不需要专门开启一个定时器，这个时候就需要用到setTimeout了
+            只是这个方法只是把函数延迟一段时间之后执行一次而已。
+            同时它也有clearTimeout，当我们不想让这个函数执行了，提前把它clear掉就可以了。
+
+
+3.查看滚动条滚动距离
+
+    js中有两套方法可以查看当前滚动条的滚动距离。
+
+    第一套是这样的：
+
+    window.pageXOffset/window.pageYOffset
+
+    这个方法可以查看滚动条的横轴和纵轴的滚动距离，但是很遗憾的是IE8以及以下的版本不兼容
+
+    因此针对于IE，但是这两个方法不仅仅是IE才可以使用。我们就需要有第二套方法：
+
+    document.body.scrollLeft/doucment.body.scrollTop
+
+    document.documentElement.scrollLeft/document.documentElement.scrollTop
+
+    这里要说明的是，这两种方法要一起使用，因为浏览器的兼容性问题，有的浏览器是document.body有值，有的是document.documentElement有值
+    ，但是所有的浏览器都只有一个有值，不会两个都有或者一个都没有，而且这里的没有值不代表是null，而是0，因此我们使用的时候一般都是两个一起使用。
+
+    兼容滚动条滚动距离的方法：
+    function getScrollOffset(){
+          if(window.pageXOffset) {
+                return {
+                      x: window.pageXOffset,
+                      y: window.pageYOffset
+                }
+          }
+          return {
+                x: document.body.scollTop + document.documentElement.scrollTop,
+                y: document.body.scrollLeft + document.documentELement.scrollLeft;
+          }
+    }
+4.查看视口的尺寸
+视口就是我们的可视区，如何来查看当前浏览器的可视区大小？
+
+这里我们依然有两套方法：
+    1.window.innerHeight/window.innerWidth;
+        这个方法可以直接获取到当前可视区的宽高，但是依然很遗憾的是IE8以及以下的版本不兼容。
+
+    2.在标准模式下，
+        doucment.documentElement.clientWidth/document.documentElement.clientHeight  在任何浏览器都兼容
+        在怪异模式（混杂模式）下，*****************************************
+        document.body.clientWidth/document.body.clientHeight
+        才能查看视口大小，而不能使用上面标准模式下的方法。
+
+
+
+
+5.什么是怪异模式和标准模式呢？
+
+    浏览器的渲染模式有两种：标准模式和怪异模式。我们常用的是标准模式，怪异模式是防止浏览器升级版本过高对后面版本的代码不兼容，
+    让浏览器可以向后兼容其他低版本的代码的法规则，比如IE6的怪异模式下可以兼容IE5个IE4的语法。
+
+    //•  我们如何变成怪异模式呢？
+
+    其实很简单，只需要把我们html代码的第一行的<!DOCTYPE HTML>去掉就可以变成怪异模式了，而加上这一行代码就可以变成标准模式。
+
+    如何判断怪异模式还是标准模式？
+
+   <!--// document上中有一个方法叫做compatMode，当浏览器处于怪异模式的时候会返回字符串“BackCompat”，在标准模式下可以返回“CSS1Compat”，
+    通过这个方法我们就可以判断了。-->
+
+
+  function getViewportOffset () {
+      if(window.innerWidth) {
+            return {
+                  w: window.innerWidth,
+                  h: window.innerHeight
+            }
+      }
+      if(document.compatMode == 'CSS1Compat') {
+            return {
+                  w: document.documentElement.clientWidth,
+                  h: document.documentElement.clientHeight
+      }else {
+            return {
+                  w: document.body.clientWidth,
+                  h: document.body.clientHeight
+            }
+      }
+}
+
+6.查看元素的几何尺寸
+domEle.getBoundingClientRect()
+
+    在获取的dom元素上，有一个getBoundingClientRect方法，这个方法可以获取到元素的宽高和左上点的位置以及右下点的位置
+    （width、height、top、left、right、bottom），老版本的IE浏览器没有实现width和height，那么我们在老版本的IE计算宽高的时候就
+    需要用bottom-top和right-left来计算宽高值了。
+//注意这里的宽高是指除去了margin的盒子模型的宽高。  这里的宽高也不是实时更新的，数据只是一个副本。
+
+    Element.getElementOffset() {
+        var objData = this.getBoundingClientRect();
+        if(objData.width) {
+                return {
+                    w: objData.width,
+                    h: objData.height
+                }
+        }else {
+                return {
+                    w: objData.right - objData.left,
+                    h: objData.bottom - objData.top
+                }
+        }
+    }
+
+6+.另一个查看元素尺寸的方法
+
+    dom.offsetWidth/dom.offsetHeight
+
+    虽然前面有一个ele.getBoundingClientRect()方法，但是由于这个方法名字是在太长了，因此用的并不是非常多
+    ，相比较而言，这两个dom元素的属性用的更多一些。
+
+    这里获取的宽高值和上面的一样，都是除去margin后的盒子模型的宽高。
+
+
+
+
+7.滚动条滚动
+
+    //让滚动条滚动的方法有三个：scroll、scrollTo、scrollBy。
+
+    这三个方法都有两个参数，分别是x值和y值。前两个方法的作用一模一样，都是让滚动条滚动到（x，y）的位置，
+    //但是最后一个scrollBy有一些区别，它是让滚动条相对于上一个位置滚动多少距离。
+
+    我们可以简单的用这个方法来实现一个自动阅读的功能：
+
+    setInterval(function () {
+        scrollBy(0, 10);
+    },50);
+
+8.查看元素的位置
+
+dom.offsetLeft/dom.offsetTop
+
+这两个值分别是元素距离左侧和上侧的距离，这里的值是相对于有定位的父级而言的，如果没有有定位的父级的话，才是相对于文档的坐标。
+
+//那么现在就来了一个问题：如何找到有定位的父级呢？
+
+//domEle上面还有一个属性是offsetParent，这个属性可以查看到元素的有定位的父级，如果没有的话就会返回body，而body的offsetParent则是null。
+
+
+Element.prototype.getPosition = function (){
+      if (!this.offsetParent){
+            return {
+                  "w": this.offsetLeft,
+                  "h": this.offsetTop
+            }
+      }
+      var width = this.offsetLeft,
+            height = this.offsetTop,
+            ele = this.offsetParent;
+      while (ele.offsetParent){
+            width += this.offsetParent.offsetLeft;
+            height += this.offsetParent.offsetTop;
+            ele = ele.offsetParent;
+      }
+      return {
+            "w": width,
+            "h": height
+      }
+}
+
+
+ 
+
+
+    //  2019/3/18
+
+
+
+</script>
+</body>
+</html>

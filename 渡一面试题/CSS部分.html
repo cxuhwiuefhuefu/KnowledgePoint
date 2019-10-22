@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<script>
+
+//========1： 说一下css选择器的优先级===================
+        1、位于<head/>标签里的<style/>中所定义的CSS拥有最高级的优先权。
+    　　2、第二级的优先属性由位于 <style/>标签中的 @import 引入样式表所定义。
+    　　3、第三级的优先属性由<link/>标签所引入的样式表定义。
+    　　4、第四级的优先属性由<link/>标签所引入的样式表内的 @import 导入样式表定义。
+    　　5、第五级优先的样式有用户设定。
+    　　最低级的优先权由浏览器默认。 
+   / 权重的进制是256
+        属性选择器的权重问题: 
+            // !important --------->   无穷
+            // 行间样式------------->   1000
+            // id------------------>   100
+            // class|属性|伪类------>   10
+            // 标签|伪元素 --------->    1
+            // 通配符--------------->   0
+
+//=========2.说一下<link/>和@import的区别=================
+    本质上，这两种方式都是为了加载CSS文件，但还是存在着细微的差别。 
+1.@import 机制不同于link，link是加载页面前css加载完毕，@import 是先读取文件再加载
+2.@import是css2.0里的 ie5以上不支持
+3.用js控制dom时改变样式，只能用link，@import不是dom能控制的
+4.最后一个很有意思，@import url有最大次数的限制，IE6最多引入31次，firefox并没有发现
+/@import的优点： 多个样式表导入一个样式表中，页面只需要引入一个即可
+
+//======3. 说一下position都有哪些，并详细的说说他们之间的区别=========
+    position：  1、absolute  绝对定位 脱离原来位置进行定位 相对于自身最近的父级进行定位
+                2、relative	相对定位  保留原来位置进行定位 参照元素自身 用于设置参照物
+                3、static	默认属性 元素默认定位是static
+                4、fixed		可视窗口进行定位 网页上应用的广告栏
+                4.position:sticky是一个新的css3属性，它的表现类似position:relative和position:fixed的合体，
+                在目标区域屏幕中可见时，它的行为就像position:relative;
+                而当页面滚动超出目标区域时，它的表现就像position:fixed，它会固定在目标位置。
+                淘宝的侧边栏
+                5.inherit:继承父级的定位
+
+//===========4：如果position设置成absolute属性该元素的display属性会变成什么==============
+		position:absolute和float会隐式的改变display类型，不论之前是什么类型的元素（display:none除外），
+		只要设置了position:absolute或float，都会让元素以display:inline-block的方式显示，可以设置长宽
+		，默认宽度并不占满父元素，就算是显示的设置display:inline或display:block，仍然无效。
+		inline-block
+
+//==========5.块级元素行级元素的区别================
+       "block" 块级元素  ：占满整行 可以改变宽高  
+                        <div/><from/><address/><hr/><h1/>
+       "inline" 行级元素内联元素 ：不占满整行 不可以改变宽高
+                        <a/><br/><em/><span/>
+       "inline-block" 行级块元素：可以改变宽高 也不独占整行
+                        <img/> <input />                      
+
+
+//	=====4.把一个元素设置float属性他会产生浮动，说说怎么去除浮动======
+
+        /(1)为什么要清除浮动？
+			浮动起来的元素不会脱离文字流 但是会脱离文档流
+			不脱离文字流：display属性是inline和inline-block 的元素还是可以看见他的  文字本身是inline属性
+			脱离文档流的意思是 正常元素看不见他了  类似absolute属性
+			内部改元素的样式display：inline-block;
+		/(2)不清除浮动的效果： ??????????????????????????
+			border不能被撑开 背景不能显示  margin设置值不能正确显示
+        /(3)清除浮动的方法：
+            1.底下添加新的元素 ，应用 clear：both;
+            2.父级属性：overflow：hidden;
+			3.可以在外层套一个标签</p> 设置属性 clear:both;
+			4.添加一个after
+				xxx:after{
+					content: '';
+					clear:both;
+					display: block; 
+				}
+                //IE67触发haslayout ：wrapper{ zoom：1}
+			  "原理"：他就是在最后加了一个伪元素  这个元素不是浮动的，他是抗浮动的，所以能看到浮动元素来定位自己的位置
+				然后父级元素能看到这个伪元素 所以他只是按照这个伪元素的位置来改变自己的宽高 
+
+
+			"clear解释"：该属性的值指出了不允许有浮动对象的边情况，又对象左边不允许有浮动、右边不允许有浮动、不允许有浮动对象
+
+        /(4)为什么给父级元素设置overflow属性会去除浮动，具体说说内部机制
+			overflow属性相当于给父级元素定型了，必须有参数的
+			overflow:hidden属性相当于是让父级紧贴内容，这样即可紧贴其对象内内容
+			是因为overflow除了(visible)会重新给他里面的元素建立块级格式化(block formatting context)floats, 
+			position absolute, inline-block, table-cell和table-caption都不是块级样式，
+			所以才会用到clear来控制浮动overflow也可以清除浮动是因为当在父级元素设置overflow时候
+			，除了visible，就是只有auto, hidden或者scroll时候，也会建立新的块级格式给他的子元素, 从而起到清楚浮动效果
+
+
+//===================5：说说触发bfc的几种方式===========================
+	
+    　  1.设置除 float:none 以外的属性值（如：left | right）就会触发BFC
+    　　2.设置除 overflow: visible 以外的属性值（如： hidden | auto | scroll）就会触发BFC
+    　　3.设置 display属性值为: inline-block | flex | inline-flex | table-cell | table-caption 就会触发BFＣ
+    　　4.设置 position 属性值为：absolute | fixed 就会触发BFC
+    　　5.使用 fieldset 元素（可以给表单元素设置环绕边框的html元素）也会触发BFC
+
+
+//==================6. 说说常见的将元素垂直水平居中的方法 shuiping=====================
+
+            /1.知道父级大小
+                {
+                    left:50%;
+                    top:50%;
+                    margin-left:-父级元素一半的大小;
+                    margin-top:-父级元素一半的大小;
+                }
+           / 2.不知道宽高  transform:translateX(-50%)translateY (-50%);
+           / 3.flex 布局 ：在父级上
+					position:absolute;
+					display:flex;
+					justify-content:center;//水平
+					aligin-items:center;//竖直
+           / 4.行内元素水平居中 ： text-align: center;
+           /5.定宽高 父级定宽高 子级一个绝对定位 
+                   子集里面 left:0 right:0 bottom:0 top:0 margin:0
+                   定宽 用margin：auto；
+
+//===========7： 关于伪元素你了解多少，请说出五个常用的伪元素，那么伪类呢？也请说出五个常用的伪类 weiyuansu===============
+    "区别"：伪元素是相当于添加一个元素 伪类相当于是在元素上添加样式 这俩都不实际存于在dom树中
+        用来格式化文档流之外的东西
+        伪类则是像真正的类一样发挥着类的作用，没有数量上的限制，只要不是相互排斥的伪类，也可以同时使用在相同的元素上
+			伪元素：：：first-line                     
+					:first-letter
+					:last-letter 
+					:before 
+					:after
+
+			伪类：	  :first-child 
+					:link: 
+					:visitive 
+					:hover 
+					:active 
+					:focus 
+					:lang 
+
+//=============8.盒模型========================================
+
+
+              / 盒模型
+    首先我们要区分盒模型和盒子：盒模型有margin部分，而盒子不算margin部分。
+
+     / 1.w3c的标准盒模型，一个盒子的大小是width+padding+border，width是内容区，即width不包含padding和border。
+
+      而IE6混杂模式的盒模型，一个盒子的大小是width-padding-border，即width包含padding和border。
+
+     / 2. css3中就有一个属性可以设置我们使用哪一种盒模型。
+
+           box-sizing: border-box  IE6混杂模式的盒模型
+                       content-box; 标准模式的盒模型
+
+
+             /弹性盒子
+            这是我认为css3中最重要的一部分。
+
+            我们在移动端开发的时候，由于手机的大小都各不相同，所以我们的元素不能定宽，要用弹性盒子来按照百分比分配元素的宽度。
+
+            我们给父级的display设置成flex之后，就让父元素变成了一个弹性盒子，里面的子元素都可以使用flex属性了。
+
+            这个时候，所有的元素会自动变成一行，因为加上display：flex之后还会默认加上一个flex-wrap：nowrap，即不换行，
+                  这个时候如果子元素的总宽度大于父元素的宽度，就会压缩子元素，让它们可以在父级容器中排成一行。如果改成wrap值，
+                  那么超过容器的宽度之后就会换行了。
+
+            //flex属性是一个复合属性，它包括flex-grow、flex-shrink、flex-basis
+
+                  flex-grow  按比例分配剩余空间。
+                  flex-shrink 设置收缩比例，多出盒子的部分按照比例的大小去掉相应的大小，比例越大，削减的越多，
+                              具体的削减数值有一个复杂的计算公式：
+                  flex-basis 伸缩基准值。该属性设置元素的宽度，如果同时出现了width和该属性，那么会覆盖掉width属性的值。
+
+            justify-content:center
+
+            align-items:center
+
+            这两个属性同时在父级中设置的时候，会让子元素在父级中水平垂直居中，其中justify-content是设置水平方向，align-item是设置垂直方向。
+
+//==================9.两栏布局类比三栏布局==========================
+  /1.columns width：宽度列
+            count：列数
+  /2.浮动  左定宽高 浮动 右边设置margin-left
+        .left{
+                width:100px;
+                height:100px;
+                background-color: red;
+                float:left;
+            }
+            .right{
+                height:100px;
+                background-color:green;
+                margin-left: 100px;
+            }
+  /3.定位 ：左边定宽高 设置定位position absolute left 0 ;
+            .left{
+                width:100px;
+                height:100px;
+                background-color: red;
+                position:absolute;
+                left:0;
+            }
+            .right{
+                height:100px;
+                background-color:green;			
+                right:0;
+            }
+ /4.flex 布局   外容器设置display：block;
+            .wrapper{
+                display:flex;
+            }
+            .left{
+                width:100px;
+                height:100px;
+                background-color: red;
+
+            }
+            .right{
+                height:100px;
+             "   flex-grow:1;"
+                background-color:green;			
+                
+            }
+
+
+//==================三列布局 sanliebuju=============================
+1.flex布局  
+    .wrapper{ display:flex}
+    .left.right{定宽高 背景色}
+    .middle{flex-grow:1;定高}
+    middle必须放在中间布局
+2.浮动
+    .left{float:left}  -------> 定宽高
+    .right{float:right} ------>定宽高
+    .middle{定高,margin-left margin-right}
+3.定位
+    .right{position:absolute;right:0}---定宽高
+    .left{position:absolute;left:0}-----定宽高
+    .middle{定高}
+4.columns属性
+
+//================10.原生JS的ofsetwidth求得的宽度包括什么==================
+原生JS的offsetwidth求得的宽度包括什么:  content   padding   border 
+css('width')求得的宽度包括什么： content     padding   border 
+jq的innerWidth求得的宽度包括什么:   content   padding
+
+
+
+//=================11.给我讲讲三栏布局=======================
+有两种实现方式  1.左右两侧的div先用absolute定位，再给中间的div加margin-left和margin-right（值分别是两个div的宽度）
+               2.用flaot替换上面的absolute就行
+
+        .left {
+            float: left;
+            width: 100px;
+            height: 100px;
+            background-color: orange;
+        }
+        .right {
+            float: right;
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+        .mid {
+            height: 100px;
+            margin-left: 100px;
+            margin-right: 100px;
+            background-color: blue;
+        }
+要注意的是，div.mid记得写在后面，如果写在最前面的话，因为div是block块级元素会独占一行，
+这样就会把右侧的div给挤到下一行了。当然我们给.left和.right都加上top:0px;之后，这个问题也就不用考虑了。
+
+//============12.line-height 110%和1.1啥区别？？？？============================
+
+        （一个是相对于父级fontsize，一个是相对自己fontsize的）
+
+//================13.margin合并和margin塌陷==========================
+    margin合并问题的现象：并列结构的话 上下两个margin 分别有一个margin-bottom 下边这个元素有一个margintop 这样的画会产生一个重叠
+                        取最大的一个margin的值作为他们之间的距离
+
+
+                    /3.解决合并外边距的问题
+
+在CSS当中，相邻的两个盒子（可能是兄弟关系也可能是父子关系）的外边距可以结合成一个单独的外边距。这种合并外边距的方式被称为折叠，
+并且因而所结合成的外边距称为折叠外边距。按照BFC的定义，只有同属于一个BFC时，两个元素才有可能发生垂直Margin的重叠，这个包括相邻元素
+，嵌套元素，只要他们之间没有线盒（其实就是非空内容），没有间隙（clearance，设置clear以闭合相关方向的浮动 ）
+，没有padding和border将他们分隔开就会发生margin重叠。
+
+因此要解决margin重叠问题，只要让它们不在同一个BFC就行了，但是对于两个相邻元素来说，意义不大，没有必要给它们加个外壳，
+但是对于嵌套元素来说就很有必要了，只要把父元素设为BFC就可以了。这样子元素的margin就不会和父元素的margin发生折叠了。
+
+//折叠的结果：
+两个相邻的外边距都是正数时，折叠结果是它们两者之间较大的值( 10px 20px 结果为20px )。
+两个相邻的外边距都是负数时，折叠结果是两者绝对值较大的值( -10px -20px 结果是-20px )。
+两个外边距一正一负时，折叠结果是两者的相加的和( 10px -20px 结果是10px )。
+产生折叠的必备条件：margin必须是边缘毗邻的
+//而根据w3c规范，两个margin是垂直毗邻的必须满足以下条件：
+元素的margin-top与其第一个常规文档流的子元素的margin-top
+元素的margin-bottom与其下一个常规文档流的兄弟元素的margin-top
+height为auto的元素的margin-bottom与其最后一个常规文档流的子元素的margin-bottom
+高度为0并且最小高度也为0，不包含常规文档流的子元素，并且自身没有建立新的BFC的元素的margin-top和margin-bottom
+只要触发Block Formatting Contexts的条件 或者是使用非空内容，空隙（clearance），padding和border将他们分隔开margin便不会折叠。 
+
+
+//margin塌陷问题
+
+因为CSS中存在一个margin collapse，即边界塌陷或者说边界重叠。对于上下两个并列的div块而言，上面div的margin-bottom和下面div的margin-top会塌陷
+，也就是会取上下两者margin里最大值作为显示值，所以从这个意义上说：CSS及浏览器的设计者们希望我们在布局时，如果遇到上下两个并排内容块的安排
+，最好只设置其中每个块上或下margin的一处即可。
+
+对于父块DIV内含子块DIV的情况，就会按另一条CSS惯例来解释了，那就是：对于有块级子元素的元素计算高度的方式,如果元素没有垂直边框和填充,
+那其高度就是其子元素顶部和底部边框边缘之间的距离。
+/解决方式
+ 解决父子DIV中顶部margin cllapse的问题，需要给父div设置：
+     1、边框，当然可以设置边框为透明;
+     2、为父DIV添加padding，或者至少添加padding-top;
+     3.还可以通过over-flow来解决，给父DIV写入： over-flow:hidden;
+
+//14.=============================bfc问题===========================================
+//14.=============================bfc问题===========================================
+//14.=============================bfc问题===========================================
+        /BFC的通俗理解：
+
+        Block Formatting Context（块级格式化上下文）是W3C CSS 2.1 规范中的一个概念，它决定了元素如何对其内容进行定位
+        ，以及与其他元素的关系和相互作用。简单来讲，我们可以把它理解为，我们在进行盒模型布局的时候，如果一个元素符合了成为BFC的条件，
+        该元素成为一个隔离了的独立容器，元素内部元素会垂直的沿着其父元素的边框排列，和外部元素互不影响 。比如浮动元素会触发BFC，
+        浮动元素内部的子元素主要受到该浮动元素的影响，而两个浮动元素之间是互不影响的。
+
+        在CSS3 中，BFC 叫做Flow Root。在早期的ie中也有类似的概念haslayout IE6、7的很多布局产生的bug（如3px间隙、绝对定位的继承宽度）
+        都可以通过触发hasLayout修复，比较推荐的方法为zoom:1与height:1%，不会破坏已有的样式，相信大家对它并不陌生。
+        同样的以往集中在float、绝对定位、margin collaspe中的很多困惑，在理解了bfc后，都能够被我们一一解除 。
+
+        /BFC规范中的定义：
+
+        w3c规范对BFC的解释：
+        浮动元素和绝对定位元素，不是块级盒子的块容器 （如 inline-blocks, table-cells, 和 table-captions），以及设置了overflow属性（除了visible）
+        的块级盒子 ，都会为他们的内容创建新的BFC（块级格式上下文）。
+        在BFC中，盒子从顶端开始垂直地 一个接一个地排列，两个盒子之间的垂直的间隙是由他们的margin 值所决定的。在一个BFC中，两个相邻的块级盒子的
+        垂直外边距会产生折叠。在BFC中，每一个盒子的左外边缘（margin-left）会触碰到容器的左边缘(border-left)（对于从右到左的格式来说，则触碰到右边缘）。
+       
+       / 触发BFC的方法：
+
+        float 元素
+        position（absolute，fixed）
+        display (table-cell，table-caption，inline-block)
+        overflow 除了visible 以外的值（hidden，auto，scroll ）
+        fieldset元素
+        早期IE的hasLayout会触发一个新的block formatting context
+
+     /   BFC的特性
+
+            边缘不和浮动元素重叠
+            不存在collapsing margins问题
+
+        第一个特性特别有用，因为元素触发了BFC的话，就不会被float元素覆盖，当子元素全部浮动的时候也能够正确地包含了
+        第二个margin不会叠加的特性，可以理解为两个处于普通流的盒子，会有margin叠加的问题，是因为他们属于相同的BFC，当他自身创建了一个新的BFC时，这个问题就不存在了
+       
+       / BFC的常见应用
+
+        1.通过边缘不和浮动元素重叠的特性，实现两栏结构。 
+        2.清除元素内部浮动
+        3.解决合并外边距的问题
+
+
+
+
+
+
+
+
+
+			
+
+
+
+      // 2019/3/22
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

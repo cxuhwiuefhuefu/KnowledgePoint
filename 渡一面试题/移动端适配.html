@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<script>
+
+//==============================1.你了解移动端适配问题嘛  yddsp=======================================
+
+    1.meta标签
+    2.rem vw vh
+    3.弹性盒子
+
+
+  1.  <meta name="viewport" content="width=device-width"/>
+
+    meta viewport 中有6个通用属性：
+
+    width 设置layout viewport的宽度 正整数或字符串 'width-device'
+    initial-scale 设置页面的初始缩放值，数字或小数
+    minimum-scale 允许用户的最小缩放值 数字或小数
+    maximum-scale 允许用户的最大缩放值 数字或小数
+    height 设置layout viewport 的高度，这个属性很少用到
+    user-scaleabel 是否允许用户进行缩放 'no'或‘yes’ 还有2个需要特别注意的两个属性
+
+  2.<rem/>
+    是以document.documentElement(即html标签)的font-size为基准的，举例说明：
+
+    html的font-size：10px
+    那么1rem = 10px
+
+    vw: 将视口宽度分成100份 width：100vw 表示铺满视口宽度
+    vh： 将视口高度分成100份..................
+
+   3."弹性盒子"
+
+    这是我认为css3中最重要的一部分。我们在移动端开发的时候，由于手机的大小都各不相同，
+    所以我们的元素不能定宽，要用弹性盒子来按照百分比分配元素的宽度。
+    我们给父级的display设置成flex之后，就让父元素变成了一个弹性盒子，里面的子元素都可以使用flex属性了。
+    这个时候，所有的元素会自动变成一行，因为加上display：flex之后还会默认加上一个flex-wrap：nowrap，即不换行，
+    这个时候如果子元素的总宽度大于父元素的宽度，就会压缩子元素，让它们可以在父级容器中排成一行。
+    如果改成wrap值，那么超过容器的宽度之后就会换行了。
+
+    flex属性是一个复合属性,它包括flex-grow、flex-shrink、flex-basis
+    flex-grow: 按比例分配剩余空间。
+    flex-shrink:设置收缩比例，多出盒子的部分按照比例的大小去掉相应的大小，比例越大，削减的越多
+    flex-basis:伸缩基准值。该属性设置元素的宽度，如果同时出现了width和该属性，那么会覆盖掉width属性的值。
+               子元素的宽度尽可能按照basis来，如果基准值相加大于容器的宽度，那么由下面的公式分配宽度给子元素：
+               basis/(basis的总和) * 容器的宽度
+    justify-content:center  align-items:center
+             这两个属性同时在父级中设置的时候，会让子元素在父级中水平垂直居中，
+             其中justify-content是设置水平方向，align-item是设置垂直方向。
+
+          /注意:flexbox布局和原来的布局是两个概念，部分css属性在flexbox盒子里面不起作用，eg：float， clear， column,vertical-align 等等
+
+
+
+//2.============================媒体查询 mtcx================================================
+    媒体查询是向不同设备提供不同样式的一种不错方式，它为每种类型的用户提供了最佳的体验。
+    Media Queries（媒体查询）是CSS3新增加的一个模块功能，其最大的特色就是通过CSS3来查询媒体，然后调用对应的样式。
+    作为CSS3规范的一部分，媒体查询扩展了media属性
+
+    1.设置Meta标签
+      首先我们在使用Media的时候需要先设置下面这段代码，来兼容移动设备的展示效果：
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    2.引入方式
+        <Link media="screen"></Link>
+        @import URL（） screen
+        @media
+    3."Media所有参数汇总"
+        以上就是我们最常需要用到的媒体查询器的三个特性，大于，等于，小于的写法。媒体查询器的全部功能肯定不止这三个功能，下面是我总结的它的一些参数用法解释：
+        width:浏览器可视宽度。
+        height:浏览器可视高度。
+        device-width:设备屏幕的宽度。
+        device-height:设备屏幕的高度。
+        orientation:检测设备目前处于横向还是纵向状态。
+        aspect-ratio:检测浏览器可视宽度和高度的比例。(例如：aspect-ratio:16/9)
+        device-aspect-ratio:检测设备的宽度和高度的比例。
+        color:检测颜色的位数。（例如：min-color:32就会检测设备是否拥有32位颜色）
+        color-index:检查设备颜色索引表中的颜色，他的值不能是负数。
+        monochrome:检测单色楨缓冲区域中的每个像素的位数。（这个太高级，估计咱很少会用的到）
+        resolution:检测屏幕或打印机的分辨率。(例如：min-resolution:300dpi或min-resolution:118dpcm)。
+        grid:检测输出的设备是网格的还是位图设备。
+
+  //3.============================meta 标签都有啥  metabq===========================================
+
+    /meta常用于定义页面的说明，关键字，最后修改日期，和其它的元数据。
+    /这些元数据将服务于浏览器（如何布局或重载页面），搜索引擎和其它网络服务。
+        meta标签共有两个属性，分别是http-equiv属性和name属性。
+        1.name属性  主要用来描述网页 网页的关键词，叙述
+        	有以下几种参数:
+            <meta name="keywords"content="xxx"/>说明：用于告诉搜索引擎，你网页的关键字。
+            <meta name="description"content="xxxx"/> 用于告诉搜索引擎，你网站的主要内容
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>常用于设计移动端网页
+            <meta name="robots" content="none"/> 定义搜索引擎爬虫的索引方式
+                    说明：robots用来告诉爬虫哪些页面需要索引，哪些页面不需要索引。content的参数有all,none,index,noindex,follow,nofollow。默认是all
+                               / 1.none : 搜索引擎将忽略此网页，等价于noindex，nofollow。
+                               / 2.noindex : 搜索引擎不索引此网页。
+                               / 3.nofollow: 搜索引擎不继续通过此网页的链接索引搜索其它的网页。
+                               / 4.all : 搜索引擎将索引此网页与继续通过此网页的链接索引，等价于index，follow。
+                               / 5.index : 搜索引擎索引此网页。
+                               / 6.follow : 搜索引擎继续通过此网页的链接索引搜索其它的网页。
+            <meta name="author"content="Lxxyx,841380530@qq.com"/>说明：用于标注网页作者举例
+
+            <meta name="renderer" content="webkit"/> //默认webkit内核
+            <meta name="renderer" content="ie-comp"/> //默认IE兼容模式
+            <meta name="renderer" content="ie-stand"/> //默认IE标准模
+            说明：renderer是为双核浏览器准备的，用于指定双核浏览器默认以何种方式渲染页面
+
+      2.http-equiv属性 相当于http的文件头作用
+            有以下几种参数:
+
+            (设定网页字符集)(推荐使用HTML5的方式)
+            <meta   http-equiv="content-Type"charset="utf-8"/>说明：用于设定网页字符集，便于浏览器解析与渲染页面
+            说明：用于告知浏览器以何种版本来渲染页面。（一般都设置为最新模式，在各大框架中这个设置也很常见。）
+            <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/> //指定IE和Chrome使用最新版本渲染当前页面
+            <meta http-equiv="expires" content="Sunday 26 October 2016 01:00 GMT"/>说明:用于设定网页的到期时间，过期后网页必须到服务器上重新传输。
+            <meta http-equiv="Set-Cookie" content="name, date"/> //格式 说明：如果网页过期。那么这个网页存在本地的cookies也会被自动删除。
+            <meta http-equiv="Set-Cookie" content="User=Lxxyx; path=/; expires=Sunday, 10-Jan-16 10:00:00 GMT"/> //具体范例
+            <meta http-equiv="refresh" content="2；URL=http://www.lxxyx.win/"/> //自动刷新并指向某页面 说明：网页将在设定的时间内，自动刷新并调向设定的网址
+
+            cache-control(指定请求和响应遵循的缓存机制)
+            用法1.
+            说明：指导浏览器如何缓存某个响应以及缓存多长时间。
+           举例:
+           <meta http-equiv="cache-control" content="no-cache"/>
+            共有以下几种用法：
+               / no-cache: 先发送请求，与服务器确认该资源是否被更改，如果未被更改，则使用缓存。
+               / no-store: 不允许缓存，每次都要去服务器上，下载完整的响应。（安全措施）
+               / public : 缓存所有响应，但并非必须。因为max-age也可以做到相同效果
+               / private : 只为单个用户缓存，因此不允许任何中继进行缓存。（比如说CDN就不允许缓存private的响应）
+               / maxage : 表示当前请求开始，该响应在多久内能被缓存和重用，而不去服务器重新请求。例如：max-age=60表示响应可以再缓存和重用 60 秒。
+              参考链接：HTTP缓存
+            /用法2.(禁止百度自动转码)
+           说明：用于禁止当前页面在移动端浏览时，被百度自动转码。虽然百度的本意是好的，但是转码效果很多时候却不尽人意。所以可以在head中加入例子中的那句话，就可以避免百度自动转码了。举例：
+
+            <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+// 4.================================响应式布局======================================
+
+    Web设计应该做到根据不同设备环境自动响应及调整。
+    当然响应式Web设计不仅仅是关于屏幕分辨率自适应以及自动缩放的图片等等，
+
+   利用媒体查询进行实现 meta标签  rem  弹性盒子
+//5.===================================移动端判断左划还是右划===========================
+
+
+   / 好像说判断上下滑动只要判断页面的可视区域距离页面的顶端距离在滑动过程中是变大了还是变小了即可
+   / 所以我感觉左右应该是一样的
+   / 另一种想法是判断触点移动的差值
+
+    原理：
+        第一，当开始一个touchstart事件的时候，获取此刻手指的横坐标startX和纵坐标startY；第二，当触发touchmove事件时，
+         在获取此时手指的横坐标moveEndX和纵坐标moveEndY
+        touchmove的最后坐标减去touchstart的起始坐标，X的结果如果正数，则说明手指是从左往右划动；X的结果如果负数，
+        则说明手指是从右往左划动；Y的结果如果正数，则说明手指是从上往下划动；Y的结果如果负数，则说明手指是从下往上划动。
+
+        这再逻辑上没有任何问题。但在实际操作中，手指的上下滑动其实是很难直上直下的，只要稍微有点斜，就会被X轴的判断先行接管。
+        增加的判断，在判断横纵坐标的差值的基础上，再判断一下他俩的绝对值哪个大哪个小就可以。判断哪个的差值比较大。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

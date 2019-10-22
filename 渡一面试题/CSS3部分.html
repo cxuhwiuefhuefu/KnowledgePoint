@@ -1,0 +1,139 @@
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    
+<script>
+
+    css3部分：
+
+CSS3有很大的兼容性问题，IE9以下不兼容CSS3.0，IE10才开始全面支持CSS3。
+而由于浏览器厂商的不同，我们在使用CSS3的时候，有时候需要单独为每一种浏览器写兼容。
+
+//浏览器兼容形式
+    前缀	        浏览器
+    -webkit	chrome、safari
+    -moz	Firefox
+    -ms	IE
+    -o	opera
+    因此我们在写面向所有移动端设备的CSS3属性的时候，需要先写-webkit，再写-moz，再写-ms，再写写-o，最后写一个没有前缀的，
+    这样浏览器会根据内核来选择相对应的前缀，而其他的浏览器不支持的前缀则无法识别。
+//常见浏览器内核
+    IE-------->trident
+    Chrome---->webkit/blink
+    Safari----->webkit
+    Firefox---->Gecko
+    Opera------>presto 
+
+/=================CSS3的功能======================
+CSS3提供了强大而且精准的选择器，提供了多种背景填充方案、可以实现渐变颜色、改变元素形状、角度、加阴影效果，新的报纸布局、弹性盒子，
+ie6混杂模式的盒子模型，新的计量单位，动画效果等等。
+
+//一些新的CSS3属性:
+/1.border-radius
+/2.box-shadow
+/3.border-image
+/5.background: linear-gradient
+/6.word-wrap
+
+//CSS3中新增了很多选择器
+1.属性选择器
+     /1. E[attr=””]
+      我们通过这个写法就可以选择出属性attr的值为“”的元素，
+     / 2.“*”
+      通配符可以让我们选择出属性中的任意位置有这个值的元素。
+     / 2. “^”
+      这个符号是选择属性以这个值开头的那个元素
+     / 3. “$”
+      这个符号是选择属性以这个值结尾的那个元素
+
+2.伪类选择器
+CSS3中新增的伪类选择器： 1.:first-child 
+                       2.:last-child 
+                       3.:nth-child(n) 
+                       4.:nth-last-child(n)
+                       5.:first-of-type  :last-of-type  
+                       6.:root 这个伪类选择器是单独使用的，代表html标签。
+                       7.:target目标选择器。当我们定位到这个元素的时候，才会被选中。
+                          定位的概念是通过location.hash或者a标签的href属性选择id选择出来的元素，也就是我们在URL里面可以看到#id的按个元素。
+
+3.条件选择器
+    /1.E>F
+    F是E的直接子元素
+    这里p是div的直接子元素，span不是
+    /2.E+F
+    F是E的兄弟节点而且是E后面的第一个
+    /3.E~F
+    F是E后面的兄弟节点
+
+
+4.伪元素选择器
+1.::selection
+
+这个伪元素可以改变当文本被选中状态下的样式
+
+transform属性
+            /1.rotate：这个属性值是旋转的意思，默认是沿着z轴旋转。单位是deg——度数
+            /2.scale：scale的意思是让元素进行缩放
+            /3.skew：skew的意思是对元素进行扭曲。
+            /4.translate：translate是位移的意思，而且是相对自身的位置进行位移
+            /5.translate-origin：这个属性是设置变换原点的作用，
+transition：transition就是过渡动画的属性。
+      这个属性可以让元素从一个位置变换到另外一个位置，或者宽高等属性发生变化的时候，不是突兀的过去，而是缓缓地有一个过渡动画。
+      这个属性也是一个复合属性，主要包括以下几个子属性：
+      /1.transition-property 指定过渡或者动态模拟的css属性
+      /2.transition-duration 指定过渡所需要的时间
+      /3.transition-timing-function 指定过渡函数
+      /4.transition-delay 指定延迟时间
+
+ //CSS3动画
+      二维动画——animation  这个属性必须配合@keyframes动画关键帧来使用。keyframes里面包含一个百分数，后面跟上在这段时间内变换的css样式。
+            animation是一个复合属性，它包括以下几个组成部分：
+
+                  1.animation-name：执行动画的keyframes的名字。
+                  2.animation-duration：执行动画的总时长。
+                  3.animation-timing-function：指定过渡函数。
+                  4.animation-delay：执行延迟时间。
+                  5.animation-direction：动画播放的方式。这个属性的值主要有：normal正常播放模式、reverse倒序播放、alternate
+                  动画在奇数次正向播放偶数次倒序播放、alternate-reverse动画在奇数次倒序播放偶数次正向播放。
+                  6.animation-iteration-count：动画执行的次数。infinite是无限次，写一个数字就是要执行几次。
+                  7.animation-fill-mode：执行完动画后物体停止的位置。forwards是停在结束的位置上、backwards是快速执行初始帧
+                  （这个最好配合延迟来观察）、
+                  none是回到初始帧的位置、both是同时具有forwards和backwards的效果。
+                  8.animation-play-state：控制动画的播放状态。running是播放、paused是暂停。
+
+//==============.css3动画卡了========================
+
+    用css3的时候动画卡了怎么解决？
+	transform: transition3d(0, 0, 0);
+	transform: translate3d(0);
+	这两个属性可以开启GPU加速模式
+	然而面试官问我为什么，你知道原理么？
+	这两个属性都会开启GPU硬件加速模式，从而让浏览器在渲染动画的时候从CPU转向GPU。
+    
+
+
+
+
+
+
+    // 2019/3/25
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>    
+</body>
+</html>

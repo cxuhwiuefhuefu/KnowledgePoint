@@ -352,11 +352,11 @@ isNaN()  --> isNaN()  --> Number()
 focus blur change submit reset select等事件不冒泡
 
 3)
-原型是function对象的一个属性 他定义了构造函数构造出来的对象的公共祖先 通过构造函数产生对象可以继承该原型的属性和方法，原型也是对象
+原型是function对象的一个属性 他定义了构造函数构造出来的对象的公共祖先 通过构造函数产生对象可以继承该原型的属性和方法，原型也是对象  
 
 构造函数创建对象时候隐式创建this对象 this中一个默认属性叫做_proto_ 这个属性就是指向对象的原型
 
-原型上还有原型的结构叫原型链 绝大部分原型都继承自Object.prototype即为原型链上的终点 object.create(null)可以构造没有原型的对象
+原型上还有原型的结构叫原型链 绝大部分原型都继承自Object.prototype即为原型链上的终点 Object.create(null)可以构造没有原型的对象
 
 详解: https://github.com/huyaocode/webKnowledge/blob/master/JS%E5%9F%BA%E7%A1%80/%E5%8E%9F%E5%9E%8B%E9%93%BE%E4%B8%8E%E7%BB%A7%E6%89%BF.md
 
@@ -643,7 +643,7 @@ a.test.com => 三级域名
     3. 私有成员的存在
 
 闭包的坏处: 
-    1. 增大内存的使用量 容易造成内存泄漏
+    1. 增大内存的使用量 2. 容易造成内存泄漏
 
 闭包的作用/使用场景?
     实现公有变量
