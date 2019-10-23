@@ -328,6 +328,7 @@ body默认的margin为8px
 }
 .right{
     margin-left: 100px;
+    width: 100px;
     height: 100px;
     background: green;
 }
@@ -351,7 +352,7 @@ body{
 body{
     margin: 0;
     display: flex;
-}
+}   
 .left{
     width: 100px;
     height: 100px;
@@ -378,8 +379,11 @@ border-box: border和padding计入width之内 IE盒模型
 
        (九)
 1)
-伪类和伪元素的区别: 伪元素是相当于添加一个元素 伪类相当于是在元素上添加样式 这两都不实际存在dom树中 原来格式化文档流之外的东西
-伪类则是像真正的类一样发挥作用 没有数量上的限制 只要不是互相排斥的伪类 也可以同时使用在相同的元素上
+伪类和伪元素的区别: 
+1. 伪元素是相当于添加一个元素 伪类相当于是在元素上添加样式 
+2. 这两都不实际存在dom树中 用来格式化文档流之外的东西
+3. 伪类则是像真正的类一样发挥作用 没有数量上的限制 只要不是互相排斥的伪类 也可以同时使用在相同的元素上
+
 伪元素:
     :before
     :after
@@ -627,9 +631,10 @@ https://juejin.im/post/5b55c3495188251acb0cf907
 2)  
 CSS一共三种引入方式 行内样式 内部样式 外部样式
 
-行内样式 使用style属性引入CSS样式
-内部样式表 在style标签中书写CSS代码 style标签写在head标签中
-外部引入样式表 CSS代码保存在拓展名为.css的样式表中 HTML文件引用拓展名为.css的样式表 有两种方式 链接式和导入式 
+1. 行内样式 使用style属性引入CSS样式
+2. 内部样式表 在style标签中书写CSS代码 style标签写在head标签中
+3. 外部引入样式表 CSS代码保存在拓展名为.css的样式表中 HTML文件引用拓展名为.css的样式表 有两种方式 链接式和导入式 
+
 
 链接式写法
 <link type="text/css" rel="styleSheet" href="CSS路径">
@@ -637,7 +642,13 @@ CSS一共三种引入方式 行内样式 内部样式 外部样式
 <style>
  @import url("CSS文件路径")
 </style>
-3)  (四)(3)
+本质上 这两种方式都是为了加载CSS文件 但还是有存在细微差别
+1. 加载顺序:import机制不同于link link是加载页面前css加载完毕 @import是先读取文件再加载 所以会出现一开始没有css样式 闪烁一下出现样式后的页面(网速慢的情况下)
+2. 兼容性: @import是css2.0 ie5以下不支持
+3. 操作: 用js控制dom时改变样式 只能用link @import不是dom能控制的
+4. 使用限制: import url有最大次数的限制 IE6只能引入31次 firefox并没有发现 import的优点 多个样式表引入一个样式表中 页面只需引入一个即可
+5. 加载顺序: link是并行下载css文件的 import是一个个去加载的
+6)  (四)(3)
 
 
 
@@ -1410,10 +1421,16 @@ alt属性有以下两大作用
 详解: https://blog.csdn.net/u012679583/article/details/50774139
 
 7)
-src是引用资源将该元素的内容整体替换
-href用于在当前文档和引用资源之间建立联系
+src
+1. 使用场景: img srcipt iframe 
+2. 定义: src是引用资源将该元素的内容整体替换 
+3. 特点: 当浏览器解析到该元素的时候 会暂停浏览器的渲染 知道该资源加载完毕 这也是将js脚本放在底部而不是头部的原因 
+href
+1. 使用场景: link a
+2. 定义: href用于在当前文档和引用资源之间建立联系 
+3. 特点: link a <link href="reset.css" rel="stylesheet">浏览器会识别该文档为css文档 并行下载该文档 并不会停止对该文档的处理 这也是建议使用link 而不采用@import加载css的原因
 
-8) (六)(1) (十五)(6) (三十七)(3)
+4) (六)(1) (十五)(6) (三十七)(3)
 
 
 
