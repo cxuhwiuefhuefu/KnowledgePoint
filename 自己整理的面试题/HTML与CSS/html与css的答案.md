@@ -226,7 +226,7 @@ p{
     box-shadows
     border-radius
     transform
-2. 避免过分重排 因为当发生重排的时候时候 浏览器需要重新计算布局的位置与大小 
+2. 避免过分重排 因为当发生重排的时候 浏览器需要重新计算布局的位置与大小 
     常见重排元素
     width
     height
@@ -254,7 +254,7 @@ p{
 
    如果使用基于JavaScript的动画 尽量使用 requestAimationFrame 避     免使用setTimeout/setInterval
    避免通过类似jQuery animation()style改变帧频的样式 使用CSS声明      动画会得到更好的浏览器优化
-    使用translate取代absolute定位就会得到更好的fps 动画会更流畅
+   使用translate取代absolute定位就会得到更好的fps 动画会更流畅
 7. 多利用硬件能力 如通过3D变形加速开启GPU加速    
 8. 提高CSS选择器性能 因为CSS选择器对性能的影响源于浏览器匹配选择器和文档元素时所消耗的时间 所以优化选择器的原则是应尽量避免使用消耗更多的匹配时间的选择器 CSS选择器是从右往左进行规则匹配的
     避免使用通用选择器

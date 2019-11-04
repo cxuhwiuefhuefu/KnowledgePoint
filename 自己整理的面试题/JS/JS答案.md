@@ -924,12 +924,13 @@ var inherit = (function() {
 浅拷贝: 指针拷贝 指向原有的空间
 
 使用场景?
-当你想用某个对象的值 在修改时不想改变原对象 那么可以用深拷贝来弄一个新的内存对象 像es6新增方法都是深拷贝 所以推荐使用es6语法
+当你想用某个对象的值 在修改时不想改变原对象 那么可以用深拷贝来弄一个新的内存对象
 
 详解：https://www.jianshu.com/p/8014db65e520
 
 
 浅层克隆
+1. 
 function clone(origin, target) {
     var target = target || {};
     for(var prop in origin) {
@@ -937,8 +938,12 @@ function clone(origin, target) {
     }
     return target;
 }
+2. Object.assign()
+3. 拓展运算符
+
 
 深层克隆
+1. 
 function deepClone(origin, target) {
     var target || {},
         toStr = Object.prototype.toString,
@@ -959,12 +964,32 @@ function deepClone(origin, target) {
     }    
     return target;
 }
+2. JSON.parse(JSON.stringify(obj))
+   缺点：1. 会忽略undefined
+         2. 会忽略symbol
+         3. 不能序列化函数
+         4. 不能解决循环引用的对象
+3. MessageChannel
+   注意该方法是异步的
+   可以处理undefined和循环引用对象
+   function deepClone(obj) {
+       return new Promise(resolve() => {
+           const {port1, port2} = new MessageChannel();
+           port2.onmessage = ev => resolve(ev.data);
+           port1.postMessage(obj);
+       })
+   }  
+   const test = async() => {
+       const clone = await deepClone(obj);
+       console.log(clone);
+   }
+4. lodash 的深拷贝函数
 
-5) 
-1. 服务器出口宽带不够用
-2. 服务器负载过大忙不过来 比如说CPU和内存消耗完 
-3. 网站开发代码没写好 mysql语句没有进行优化 导致数据库的读写相当耗费事件 性能优化方面也可以答把
-4. 数据库的瓶颈 当我们的数据库变愈发庞大 比如好多G好多T 那么对于数据库的读写就会    变的相当缓慢了      
+4) 
+5. 服务器出口宽带不够用
+6. 服务器负载过大忙不过来 比如说CPU和内存消耗完 
+7. 网站开发代码没写好 mysql语句没有进行优化 导致数据库的读写相当耗费事件 性能优化方面也可以答把
+8. 数据库的瓶颈 当我们的数据库变愈发庞大 比如好多G好多T 那么对于数据库的读写就会    变的相当缓慢了      
 
 详解: https://blog.csdn.net/Lv_Victor/article/details/53148421  
 详解: https://blog.csdn.net/qq_27626333/article/details/51602941
@@ -1013,7 +1038,7 @@ var
 3. 全局变量挂载到window下面
 
 let
-1. 产生块级作用域
+1. 产生块级作用域 =》解决闭包的问题 
 2. 不存在变量提升
 3. 产生暂存性死区
 4. 不可重复声明
@@ -2437,7 +2462,7 @@ Map和Set对象的引用都是强类型化的 并不会允许垃圾回收 这样
 
 如何绑定事件/注册事件
 1. ele.onxxx = function(event) {}
-   兼容性很好 但是一个元素只能绑定事件处理程序
+   兼容性很好 但是一个元素的同一个事件只能绑定事件处理程序
    基本等同于写在HTML行间上
    程序this转向的是dom元素本身
 2. obj.addEventListener(type, fn, false); 

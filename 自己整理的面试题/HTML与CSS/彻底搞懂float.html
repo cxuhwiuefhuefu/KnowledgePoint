@@ -34,7 +34,7 @@
        }
        p{
            border-top: 0px solid green; 
-           clear: both;
+           clear: both;  
        } */
 
 
@@ -48,14 +48,15 @@
            content: '';
            clear: both; /* 要使得这个clear生效的话必须是块级元素  */
            /* display: block;
-       }
+       }  
        .content{
            float: left;
            color: #fff;
            background-color: black;
            width: 100px;
            height: 100px;
-       } */ 
+       }  */
+
 
 
 
@@ -63,8 +64,23 @@
        /*
         父级因素变成BFC 触发BFC元素和文本类元素和浮动元素都可以看到浮动元素 
 
-        设置position:absolute; float:left; 打内部把元素转换成inline-block 变成行级块元素的宽高由内容决定 如果你不设置的话
+        设置position:absolute; float:left; 把内部把元素转换成inline-block
+            变成行级块元素的宽高由内容决定 如果你不设置的话
        */
+       /* .wrapper{ */
+           /* overflow: hidden; */
+           /* position: absolute; */
+           /* display: inline-block;
+
+           border: 10px solid red;
+       }
+       .content{
+           float: left;
+           color: #fff;
+           background-color: black;
+           width: 100px;
+           height: 100px;   
+       } */
 
 
 
@@ -106,12 +122,14 @@
             <p></p>
         </div> -->
 
-            <!-- 为什么它的父级别包不住它 父级是块级元素 看不到浮动元素 所以包不住它的子元素 怎么拿它的父级包住它的子级 
-                 之所以它产生这个问题 是因为里面的元素产生了浮动流 让块即元素看不到它了 主要把浮动流清除 父级就恢复正常了
-                 让最后一个逻辑元素清除浮动
-                
-                 正常我们不能在结构上乱修改 我们这样加一个结构 它从结构意义上来说没什么用 它不是充当一个结构  它是一个功能来解决一个问题的 
-                -->
+        <!-- 为什么它的父级别包不住它 父级是块级元素 看不到浮动元素 所以包不住它的子元素 
+                怎么拿它的父级包住它的子级 之所以它产生这个问题 是因为里面的元素产生了浮动流
+                让块级元素看不到它了 主要把浮动流清除 父级就恢复正常了 
+                让最后一个逻辑元素清除浮动
+            
+                正常我们不能在结构上乱修改 我们这样加一个结构 它从结构意义上来说没什么用
+                    它不是充当一个结构  它是一个功能来解决一个问题的 
+            -->
 
 
 
@@ -147,7 +165,8 @@
             
             // 一共三大模型 盒模型 层模型 浮动模型
 
-            // float能使元素站队 无论你原来是inline inline-block block也好都能站队 而且它站队的时候能加margin
+            // float能使元素站队 无论你原来是inline inline-block block也好都能站队 
+            //   而且它站队的时候能加margin
 
             // 它的浮动规则后面够站一个才站一个 不够一个挤下去 它站队的边界是父级的边界 
             
@@ -157,7 +176,8 @@
             // 1. 浮动元素产生了浮动流
             //
             //    所有产生了浮动流的元素 块级元素看不到它们  ==》 所以产生了分层的效果
-            //    产生了bfc的元素和文本类属性类(inline)的元素以及文本都能看到浮动元素  什么是文本类元素 凡是带有inline属性的属性的都叫文本类元素
+            //    产生了bfc的元素和文本类属性类(inline)的元素以及文本都能看到浮动元素  
+            //        什么是文本类元素 凡是带有inline属性的属性的都叫文本类元素
 
 
 
