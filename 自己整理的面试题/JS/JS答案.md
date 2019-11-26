@@ -2804,7 +2804,7 @@ js会阻塞dom的解析 但js不会阻塞dom的渲染 因为此时js代码已经
 2. 另一个方面在浏览器一遍又一遍的渲染DOM是非常非常消耗性能的 常常会出现页面卡死的情况 所以尽量减少堆DOM的操作成为了优化前端性能的必要手段 vdom就是将DOM的对比放在了js层 通过对比不同之处来选择新渲染DOM节点 从而提高渲染效率
 
 详解: https://segmentfault.com/q/1010000010303981/a-1020000010304010
-详解: www.cnblogs.com/gaosong-shuhong/p/9253959.html
+详解: https://www.cnblogs.com/gaosong-shuhong/p/9253959.html
 
 20)
 1. 110秒
