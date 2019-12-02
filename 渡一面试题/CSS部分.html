@@ -37,6 +37,9 @@
 4.最后一个很有意思，@import url有最大次数的限制，IE6最多引入31次，firefox并没有发现
 /@import的优点： 多个样式表导入一个样式表中，页面只需要引入一个即可
 
+
+
+
 //======3. 说一下position都有哪些，并详细的说说他们之间的区别=========
     position：  1、absolute  绝对定位 脱离原来位置进行定位 相对于自身最近的父级进行定位
                 2、relative	相对定位  保留原来位置进行定位 参照元素自身 用于设置参照物
@@ -47,6 +50,9 @@
                 而当页面滚动超出目标区域时，它的表现就像position:fixed，它会固定在目标位置。
                 淘宝的侧边栏
                 5.inherit:继承父级的定位
+
+
+
 
 //===========4：如果position设置成absolute属性该元素的display属性会变成什么==============
 		position:absolute和float会隐式的改变display类型，不论之前是什么类型的元素（display:none除外），
@@ -63,27 +69,29 @@
                         <img/> <input />                      
 
 
-//	=====4.把一个元素设置float属性他会产生浮动，说说怎么去除浮动======
+
+
+// =====4.把一个元素设置float属性他会产生浮动，说说怎么去除浮动======
 
         /(1)为什么要清除浮动？
 			浮动起来的元素不会脱离文字流 但是会脱离文档流
 			不脱离文字流：display属性是inline和inline-block 的元素还是可以看见他的  文字本身是inline属性
 			脱离文档流的意思是 正常元素看不见他了  类似absolute属性
 			内部改元素的样式display：inline-block;
-		/(2)不清除浮动的效果： ??????????????????????????
-			border不能被撑开 背景不能显示  margin设置值不能正确显示
+		/(2)不清除浮动的效果： 
+			父级border不能被撑开 背景不能显示  margin设置值不能正确显示
         /(3)清除浮动的方法：
-            1.底下添加新的元素 ，应用 clear：both;
-            2.父级属性：overflow：hidden;
-			3.可以在外层套一个标签</p> 设置属性 clear:both;
-			4.添加一个after
-				xxx:after{
+            1. 底下添加新的元素 ，应用 clear：both;
+            2. 父级属性：overflow：hidden;
+			3. 可以在外层套一个标签</p> 设置属性 clear:both;
+			4. 添加一个after
+			   xxx:after{
 					content: '';
 					clear:both;
 					display: block; 
 				}
-                //IE67触发haslayout ：wrapper{ zoom：1}
-			  "原理"：他就是在最后加了一个伪元素  这个元素不是浮动的，他是抗浮动的，所以能看到浮动元素来定位自己的位置
+            5. //IE67触发haslayout ：wrapper{ zoom：1}
+			   "原理"：他就是在最后加了一个伪元素  这个元素不是浮动的，他是抗浮动的，所以能看到浮动元素来定位自己的位置
 				然后父级元素能看到这个伪元素 所以他只是按照这个伪元素的位置来改变自己的宽高 
 
 
@@ -92,19 +100,27 @@
         /(4)为什么给父级元素设置overflow属性会去除浮动，具体说说内部机制
 			overflow属性相当于给父级元素定型了，必须有参数的
 			overflow:hidden属性相当于是让父级紧贴内容，这样即可紧贴其对象内内容
-			是因为overflow除了(visible)会重新给他里面的元素建立块级格式化(block formatting context)floats, 
-			position absolute, inline-block, table-cell和table-caption都不是块级样式，
+            是因为overflow除了(visible)会重新给他里面的元素建立块级格式化(block formatting context)
+            float, position absolute, inline-block, table-cell和table-caption都不是块级样式，
 			所以才会用到clear来控制浮动overflow也可以清除浮动是因为当在父级元素设置overflow时候
 			，除了visible，就是只有auto, hidden或者scroll时候，也会建立新的块级格式给他的子元素, 从而起到清楚浮动效果
 
 
+
+
 //===================5：说说触发bfc的几种方式===========================
-	
+    
+
+
+
+
     　  1.设置除 float:none 以外的属性值（如：left | right）就会触发BFC
     　　2.设置除 overflow: visible 以外的属性值（如： hidden | auto | scroll）就会触发BFC
     　　3.设置 display属性值为: inline-block | flex | inline-flex | table-cell | table-caption 就会触发BFＣ
     　　4.设置 position 属性值为：absolute | fixed 就会触发BFC
     　　5.使用 fieldset 元素（可以给表单元素设置环绕边框的html元素）也会触发BFC
+
+
 
 
 //==================6. 说说常见的将元素垂直水平居中的方法 shuiping=====================
@@ -283,20 +299,20 @@ jq的innerWidth求得的宽度包括什么:   content   padding
 
         （一个是相对于父级fontsize，一个是相对自己fontsize的）
 
+
+
+
 //================13.margin合并和margin塌陷==========================
 
 margin合并问题的现象：并列结构的话 上下两个margin 分别有一个margin-bottom 
-    下边这个元素有一个margintop 这样的画会产生一个重叠 
+    下边这个元素有一个margin-top 这样的话会产生一个重叠 
     取最大的一个margin的值作为他们之间的距离
 
 
-                    /3.解决合并外边距的问题
-
 在CSS当中，相邻的两个盒子（可能是兄弟关系也可能是父子关系）的外边距可以结合成一个单独的外边距。
-    这种合并外边距的方式被称为折叠，并且因而所结合成的外边距称为折叠外边距。按照BFC的定义，
-    只有同属于一个BFC时，两个元素才有可能发生垂直Margin的重叠，这个包括相邻元素，
-    嵌套元素，只要他们之间没有线盒（其实就是非空内容），没有间隙
-    （clearance，设置clear以闭合相关方向的浮动 ），
+    这种合并外边距的方式被称为折叠，并且因而所结合成的外边距称为折叠外边距。
+    按照BFC的定义，只有同属于一个BFC时，两个元素才有可能发生垂直Margin的重叠，这个包括相邻元素，嵌套元素，
+    只要他们之间没有线盒（其实就是非空内容），没有间隙（clearance，设置clear以闭合相关方向的浮动 ），
     没有padding和border将他们分隔开就会发生margin重叠。
 
 因此要解决margin重叠问题，只要让它们不在同一个BFC就行了，
@@ -309,53 +325,56 @@ margin合并问题的现象：并列结构的话 上下两个margin 分别有一
 两个相邻的外边距都是负数时，折叠结果是两者绝对值较大的值( -10px -20px 结果是-20px )。
 两个外边距一正一负时，折叠结果是两者的相加的和( 10px -20px 结果是10px )。
 产生折叠的必备条件：margin必须是边缘毗邻的
+
+
 //而根据w3c规范，两个margin是垂直毗邻的必须满足以下条件：
 元素的margin-top与其第一个常规文档流的子元素的margin-top
 元素的margin-bottom与其下一个常规文档流的兄弟元素的margin-top
 height为auto的元素的margin-bottom与其最后一个常规文档流的子元素的margin-bottom
 高度为0并且最小高度也为0，不包含常规文档流的子元素，并且自身没有建立新的BFC的元素的margin-top和margin-bottom
-只要触发Block Formatting Contexts的条件 或者是使用非空内容，空隙（clearance），
-    padding和border将他们分隔开margin便不会折叠。 
+只要触发Block Formatting Contexts的条件 或者是使用非空内容，空隙（clearance），padding和border将他们分隔开margin便不会折叠。 
 
 
 //margin塌陷问题
-
-因为CSS中存在一个margin collapse，即边界塌陷或者说边界重叠。对于上下两个并列的div块而言，上面div的margin-bottom和下面div的margin-top会塌陷
-，也就是会取上下两者margin里最大值作为显示值，所以从这个意义上说：CSS及浏览器的设计者们希望我们在布局时，如果遇到上下两个并排内容块的安排
-，最好只设置其中每个块上或下margin的一处即可。
+因为CSS中存在一个margin collapse，即边界塌陷或者说边界重叠。对于上下两个并列的div块而言，上面div的margin-bottom和下面div的margin-top会塌陷，
+也就是会取上下两者margin里最大值作为显示值，所以从这个意义上说：CSS及浏览器的设计者们希望我们在布局时，如果遇到上下两个并排内容块的安排，
+最好只设置其中每个块上或下margin的一处即可。
 
 对于父块DIV内含子块DIV的情况，就会按另一条CSS惯例来解释了，那就是：对于有块级子元素的元素计算高度的方式,如果元素没有垂直边框和填充,
 那其高度就是其子元素顶部和底部边框边缘之间的距离。
-/解决方式
- 解决父子DIV中顶部margin cllapse的问题，需要给父div设置：
+ //解决方式
+     解决父子DIV中顶部margin cllapse的问题，需要给父div设置：
      1、边框，当然可以设置边框为透明;
      2、为父DIV添加padding，或者至少添加padding-top;
-     3.还可以通过over-flow来解决，给父DIV写入： over-flow:hidden;
+     3.还可以通过overflow来解决，给父DIV写入： over-flow:hidden;
+
+
+
 
 //14.=============================bfc问题===========================================
 //14.=============================bfc问题===========================================
 //14.=============================bfc问题===========================================
         /BFC的通俗理解：
 
-        Block Formatting Context（块级格式化上下文）是W3C CSS 2.1 规范中的一个概念，它决定了元素如何对其内容进行定位
-        ，以及与其他元素的关系和相互作用。简单来讲，我们可以把它理解为，我们在进行盒模型布局的时候，如果一个元素符合了成为BFC的条件，
-        该元素成为一个隔离了的独立容器，元素内部元素会垂直的沿着其父元素的边框排列，和外部元素互不影响 。比如浮动元素会触发BFC，
-        浮动元素内部的子元素主要受到该浮动元素的影响，而两个浮动元素之间是互不影响的。
+        Block Formatting Context（块级格式化上下文）是W3C CSS 2.1 规范中的一个概念，它决定了元素如何对其内容进行定位，
+        以及与其他元素的关系和相互作用。简单来讲，我们可以把它理解为，我们在进行盒模型布局的时候，如果一个元素符合了成为BFC的条件，
+        该元素成为一个隔离了的独立容器，元素内部元素会垂直的沿着其父元素的边框排列，和外部元素互不影响。
+        比如浮动元素会触发BFC，浮动元素内部的子元素主要受到该浮动元素的影响，而两个浮动元素之间是互不影响的。
 
         在CSS3 中，BFC 叫做Flow Root。在早期的ie中也有类似的概念haslayout IE6、7的很多布局产生的bug（如3px间隙、绝对定位的继承宽度）
         都可以通过触发hasLayout修复，比较推荐的方法为zoom:1与height:1%，不会破坏已有的样式，相信大家对它并不陌生。
         同样的以往集中在float、绝对定位、margin collaspe中的很多困惑，在理解了bfc后，都能够被我们一一解除 。
 
-        /BFC规范中的定义：
 
+        /BFC规范中的定义：
         w3c规范对BFC的解释：
         浮动元素和绝对定位元素，不是块级盒子的块容器 （如 inline-blocks, table-cells, 和 table-captions），以及设置了overflow属性（除了visible）
         的块级盒子 ，都会为他们的内容创建新的BFC（块级格式上下文）。
         在BFC中，盒子从顶端开始垂直地 一个接一个地排列，两个盒子之间的垂直的间隙是由他们的margin 值所决定的。在一个BFC中，两个相邻的块级盒子的
         垂直外边距会产生折叠。在BFC中，每一个盒子的左外边缘（margin-left）会触碰到容器的左边缘(border-left)（对于从右到左的格式来说，则触碰到右边缘）。
        
-       / 触发BFC的方法：
 
+        // 触发BFC的方法：
         float 元素
         position（absolute，fixed）
         display (table-cell，table-caption，inline-block)
@@ -363,34 +382,20 @@ height为auto的元素的margin-bottom与其最后一个常规文档流的子元
         fieldset元素
         早期IE的hasLayout会触发一个新的block formatting context
 
-     /   BFC的特性
 
-            边缘不和浮动元素重叠
-            不存在collapsing margins问题
+        // BFC的特性
+           不和浮动元素重叠
+           不存在collapsing margins问题
 
         第一个特性特别有用，因为元素触发了BFC的话，就不会被float元素覆盖，当子元素全部浮动的时候也能够正确地包含了
-        第二个margin不会叠加的特性，可以理解为两个处于普通流的盒子，会有margin叠加的问题，是因为他们属于相同的BFC，当他自身创建了一个新的BFC时，这个问题就不存在了
+        第二个margin不会叠加的特性，可以理解为两个处于普通流的盒子，会有margin叠加的问题，是因为他们属于相同的BFC，
+            当他自身创建了一个新的BFC时，这个问题就不存在了
        
-       / BFC的常见应用
 
+        // BFC的常见应用
         1.通过边缘不和浮动元素重叠的特性，实现两栏结构。 
         2.清除元素内部浮动
         3.解决合并外边距的问题
-
-
-
-
-
-
-
-
-
-			
-
-
-
-      // 2019/3/22
-
 
 
 

@@ -1,0 +1,38 @@
+1. IE6的兼容问题关于CSS方面有哪些？
+a. IE6下最小高度的问题：IE6以下元素高度小于19px，会被当做19px处理。
+   解决方案：给元素加overflow: hidden
+b. IE下父级有边框的时候，子元素的margin消失。
+   解决方案：触发父级haslayout(haslayout触发：zoom:1)
+c. 在IE6下双边距bug:在IE6，块元素有浮动和横向的margin值，横向的margin值会被放大两倍。
+   解决方案：display: inline
+详解：https://www.cnblogs.com/netlzl/p/4311866.html       
+https://blog.csdn.net/gaoqiang1112/article/details/79610351
+
+
+
+
+2.加入让你做一个聊天软件   比如QQ，你如何实现实时更新双方聊天信息   （他说说了可以试着用websql）
+
+轮训：客户端不停向服务端发出请求，以达到获取最新数据的目的
+实现原理：ajax放在计时器里
+缺点：由于请求大部分是没用的，浪费宽带遮掩。    
+
+https://blog.csdn.net/lihaoen666/article/details/78009698
+
+websoket是一种网络通信协议，websocket是HTML5开始提供的一种在单个TCP连接上进行全双工通讯的协议。
+浏览器和服务器只需要完成一次握手，两者之间就直接可以创建持久性的连接，并进行双向数据传递。
+实现思路
+a. 首先将好友列表和聊天框两个组件用keep-alive包裹起来，保证当用户点击好友跳转到聊天框时websoket服务不会断开。
+b. 当好友列表页面加载时服务器会发送一个请求，用来与服务器连接websoket服务
+c. 当websocket服务创建成功后，就可以使用onmessage事件，用来获取所需要的信息，数据会通过event.data返回，
+   当我们拿到这个数据时就可以进行渲染好友列表
+d. 点击切换到聊天框时，必须保证websocket服务不能断开连接。并且获取聊天记录需要需要后端发送一个websocket请求。
+       因为必须保证在发送消息时连接的websoket服务和此时创建的websoket是同一个，哪怕在你发送信息时重新创建websocket服务，
+       地址一样都不行，所以在这里创建websocket服务我用了一个全局变量。这样就可以获取到数据了，然后我们可以通过数据来得到自己想要显示在页面上的数据。
+详解：https://www.cnblogs.com/followme789/p/10881469.html
+
+
+
+
+webpack优点
+https://www.jianshu.com/p/0c99a7653d23

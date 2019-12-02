@@ -188,26 +188,25 @@ Set和Map是es6新增的两个数据结构
 
     在Map中，键值名不限于字符串，可以使各种类型的值。
 
+
+
+
 Promise
 一、Promise含义
 
     Promise是异步编程的一种解决方案，所谓的Promise，简单来说就是一个容器，里面保存着未来才会结束的事件的结果。
 
-    Promise对象有以下两个特点：
 
+    Promise对象有以下两个特点：
         1.对象的状态不受外界影响。Promise对象代表一种异步操作，有三种状态：Pending(进行中)、Resolved(已完成)、Rejected(已失败)。
         只有异步操作的结果可以改变状态，其他的任何操作都不能改变状态。
-
         2.一旦状态改变了，就不会再变了，任何时候都可以得到这个结果。Promise对象的状态只有两种可能：Pending->Resolved或者Pending->Rejected。
         只要这两种情况发生了，状态就不会再改变了，并且会一直保持这个结果。这与事件监听不同，事件的特点是，不同时间监听，得到的结果都是不同的。
 
 
     当然Promise也有一些缺点：
-
         首先无法取消Promise，一旦创建他就会立即执行，中途无法取消。
-
         其次，如果还不设置回调函数，Promise内部跑出的错误，不会反映到外部。
-
         最后，当处于Pending状态时，无法得知目前进展到哪一个阶段了。
 
 
@@ -216,13 +215,13 @@ Promise
     Promise对象是一个构造函数，用来生成Promise实例的。
      
         var promise = new Promise(function(resolve, reject) {
-        // ... some code
+            // ... some code
         
-        if (/* 异步操作成功 */){
-            resolve(value);
-        } else {
-            reject(error);
-        }
+            if (/* 异步操作成功 */){
+                resolve(value);
+            } else {
+                reject(error);
+            }
         });
     
     Promise构造函数接受一个函数作为参数，该函数的两个参数分别是resolve和reject。他们是两个函数，由js引擎提供，不需要自己部署。
@@ -238,9 +237,9 @@ Promise
 
  
             promise.then(function(value) {
-            // success
+                // success
             }, function(error) {
-            // failure
+                // failure
             });
 
         then方法可以接受两个回调函数作为参数。第一个回调函数是Promise对象的状态变为Resolved时调用，第二个回调函数是Promise对象的
@@ -249,28 +248,25 @@ Promise
         这里我们就可以用Promise来异步加载图片：
          
             function loadImageAsync(url) {
-            return new Promise(function(resolve, reject) {
-                var image = new Image();
-            
-                image.onload = function() {
-                resolve(image);
-                };
-            
-                image.onerror = function() {
-                reject(new Error('Could not load image at ' + url));
-                };
-            
-                image.src = url;
-            });
+                return new Promise(function(resolve, reject) {
+                    var image = new Image();
+                    image.onload = function() {
+                        resolve(image);
+                    };
+                    image.onerror = function() {
+                        reject(new Error('Could not load image at ' + url));
+                    };
+                    image.src = url;
+                });
             }
 
 
 then方法返回的是一个新的Promise实例（注意，不是原来那个Promise实例）。因此可以采用链式写法，即then方法后面再调用另一个then方法。
  
             getJSON("/posts.json").then(function(json) {
-            return json.post;
+                return json.post;
             }).then(function(post) {
-            // ...
+                // ...
             });
             这一段代码中使用了then方法，依次指定了两个回调函数。第一个回调函数完成以后，会将返回结果作为参数，传入第二个回调函数中。
 
@@ -280,11 +276,12 @@ then方法返回的是一个新的Promise实例（注意，不是原来那个Pro
     Promise.prototype.catch方法是.then(null, rejection)的别名，用于指定发生错误时的回调函数。
   
         getJSON("/posts.json").then(function(posts) {
-        // ...
+            // ...
         }).catch(function(error) {
-        // 处理 getJSON 和 前一个回调函数运行时发生的错误
-        console.log('发生错误！', error);
+            // 处理 getJSON 和 前一个回调函数运行时发生的错误
+            console.log('发生错误！', error);
         });
+
 
 四、Promise.all()
 
@@ -292,11 +289,13 @@ then方法返回的是一个新的Promise实例（注意，不是原来那个Pro
         var p = Promise.all([p1, p2, p3]);
         当p1p2p3的状态都是resolved的时候，p的状态才是resolved，否则只要有一个是rejected，那么p的状态就时rejected。
 
+
 五、Promise.race()
 
     Promise.race()方法同样是将多个Promise实例，包装成一个新的Promise实例，用法和all是一样的。
 
     它与all的不同在于：race是只要有一个状态改变了，p的状态就会改变，并且变成和第一个状态改变之后的一样的状态。
+
 
 六、Promise.resolve()
 
@@ -305,7 +304,7 @@ then方法返回的是一个新的Promise实例（注意，不是原来那个Pro
         Promise.resolve('foo')
         // 等价于new Promise(resolve => resolve('foo'))
 
- Promise.resolve方法的参数分为四种情况：
+    Promise.resolve方法的参数分为四种情况：
         1.参数是一个Promise实例
 
         如果参数是Promise实例，那么Promise.resolve将不做任何修改、原封不动地返 回这个实例。
@@ -323,16 +322,18 @@ then方法返回的是一个新的Promise实例（注意，不是原来那个Pro
 
         所以，如果希望得到一个Promise对象，比较方便的方法就是直接调用Promise.resolve方法
 
+
     七、Promise.reject()
 
         Promise.reject(reason)方法也会返回一个新的Promise实例，该实例的状态为rejected。它的参数用法与Promise.resolve方法完全一样。
+
 
     八、其他两个附加方法
 
 1.done()方法
 
     Promise对象的回调链，不管以then方法或catch方法结尾，要是最后一个方法抛出错误，都有可能无法捕捉到（因为Promise内部的错误不会冒泡到全局）。
-    因此，我们可以提供一个done方法，总是处于 回调链的尾端，保证抛出任何可能出现的错误。
+    因此，我们可以提供一个done方法，总是处于回调链的尾端，保证抛出任何可能出现的错误。  
 
 2.finally()方法
 
